@@ -1,12 +1,12 @@
-package com.barocert.kakaocert.esign;
+package com.barocert.kakaocert.cms;
 
-public class ResultESignState {
+public class ResultCMSState {
 	
 	private String receiptID;
 	private String requestID;
 	private String clientCode;
-	private int state;
-	private int expireIn;
+	private String state;
+	private Integer expireIn;
 	private String callCenterName;
 	private String callCenterNum;
 	private String reqTitle;
@@ -39,16 +39,16 @@ public class ResultESignState {
 	public void setClientCode(String clientCode) {
 		this.clientCode = clientCode;
 	}
-	public int getState() {
+	public String getState() {
 		return state;
 	}
-	public void setState(int state) {
+	public void setState(String state) {
 		this.state = state;
 	}
-	public int getExpireIn() {
+	public Integer getExpireIn() {
 		return expireIn;
 	}
-	public void setExpireIn(int expireIn) {
+	public void setExpireIn(Integer expireIn) {
 		this.expireIn = expireIn;
 	}
 	public String getCallCenterName() {

@@ -1,7 +1,7 @@
 barocert.sdk.java
 ================
 
-barocert SDK for JAVA
+Barocert SDK for JAVA
 
 
     <dependency>

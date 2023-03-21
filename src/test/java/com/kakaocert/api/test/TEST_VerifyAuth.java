@@ -6,9 +6,9 @@ import com.barocert.BarocertException;
 import com.barocert.KakaocertService;
 import com.barocert.KakaocertServiceImp;
 import com.barocert.kakaocert.verifyauth.RequestVerifyAuth;
-import com.barocert.kakaocert.verifyauth.ResultReqVerifyAuth;
-import com.barocert.kakaocert.verifyauth.ResultVerifyAuth;
-import com.barocert.kakaocert.verifyauth.ResultVerifyAuthState;
+import com.barocert.kakaocert.verifyauth.ReqVerifyAuthResult;
+import com.barocert.kakaocert.verifyauth.VerifyAuthResult;
+import com.barocert.kakaocert.verifyauth.VerifyAuthStateResult;
 
 public class TEST_VerifyAuth {
 	
@@ -33,22 +33,22 @@ public class TEST_VerifyAuth {
 			RequestVerifyAuth request = new RequestVerifyAuth();
 			
 			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
-			request.setReceiverHP("01087674117");
-			request.setReceiverName("이승환");
-			request.setReceiverBirthday("19930112");
-			// request.setCi("");
+			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
+			request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
+			request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
+			// request.setCi(kakaocertService.AES256Encrypt(""));
 			
 			request.setReqTitle("인증요청 메시지 제목란");
 			request.setExpireIn(1000);
-			request.setToken("본인인증요청토큰");
+			request.setToken(kakaocertService.AES256Encrypt("본인인증요청토큰"));
 			
 			// App to App 방식 이용시, 에러시 호출할 URL
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			ResultReqVerifyAuth response = kakaocertService.requestVerifyAuth("023030000003", request, false);
+			ReqVerifyAuthResult result = kakaocertService.requestVerifyAuth("023030000003", request, false);
 			
-			System.out.println(response.getReceiptId());
-			System.out.println(response.getScheme());
+			System.out.println(result.getReceiptId());
+			System.out.println(result.getScheme());
 		} catch(BarocertException ke) {
 			System.out.println(ke.getCode());
 			System.out.println(ke.getMessage());
@@ -59,7 +59,7 @@ public class TEST_VerifyAuth {
 	@Test
 	public void getResult_TEST() throws BarocertException {
 		try {
-			ResultVerifyAuthState result = kakaocertService.getVerifyAuthState("023020000003", "0230316215733000000000000000000000000001");
+			VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023020000003", "0230316215733000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getRequestID());
@@ -85,11 +85,11 @@ public class TEST_VerifyAuth {
 		}
 	}
 	
-	// 본인인증 검증
+	// 본인인증 서명검증
 	@Test
 	public void verifyAuth_TEST() throws BarocertException {
 		try {
-			ResultVerifyAuth result = kakaocertService.verifyAuth("023020000003", "0230316215733000000000000000000000000001");
+			VerifyAuthResult result = kakaocertService.verifyAuth("023020000003", "0230316215733000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getRequestID());
