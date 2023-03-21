@@ -365,6 +365,7 @@ public class KakaocertServiceImp implements KakaocertService {
             String Signature = base64Encode(HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
 
             httpURLConnection.setRequestProperty("x-bc-auth", getLinkID() + " " + Signature);
+            httpURLConnection.setRequestProperty("x-bc-encryptionmode", "GCM");
 
             DataOutputStream output = null;
 
