@@ -138,7 +138,7 @@ public class TEST_ESign {
 	@Test
 	public void getBulkESignState_TEST() throws BarocertException {
 		try {
-			BulkResultESignState response = kakaocertService.getBulkESignState("023020000003", "0230316220145000000000000000000000000001");
+			BulkResultESignState response = kakaocertService.getBulkESignState("023020000003", "0230321223457000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
 			System.out.println(response.getClientCode());

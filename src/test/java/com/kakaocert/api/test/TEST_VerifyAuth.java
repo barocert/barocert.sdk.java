@@ -60,7 +60,7 @@ public class TEST_VerifyAuth {
 	@Test
 	public void getResult_TEST() throws BarocertException {
 		try {
-			VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023020000003", "0230316215733000000000000000000000000001");
+			VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023030000003", "0230321223606000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getClientCode());
@@ -71,7 +71,6 @@ public class TEST_VerifyAuth {
 			System.out.println(result.getReqTitle());
 			System.out.println(result.getAuthCategory());
 			System.out.println(result.getReturnURL());
-			System.out.println(result.getTokenType());
 			System.out.println(result.getRequestDT());
 			System.out.println(result.getViewDT());
 			System.out.println(result.getCompleteDT());
