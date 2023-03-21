@@ -3,7 +3,6 @@ package com.barocert.kakaocert.esign;
 public class VerifyEsignResult {
 	
 	private String receiptID;
-	private String requestID;
 	private String state;
 	private String signedData;
 	private String ci;
@@ -13,12 +12,6 @@ public class VerifyEsignResult {
 	}
 	public void setReceiptID(String receiptID) {
 		this.receiptID = receiptID;
-	}
-	public String getRequestID() {
-		return requestID;
-	}
-	public void setRequestID(String requestID) {
-		this.requestID = requestID;
 	}
 	public String getState() {
 		return state;

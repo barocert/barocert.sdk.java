@@ -3,7 +3,6 @@ package com.barocert.kakaocert.cms;
 public class ResultCMSState {
 	
 	private String receiptID;
-	private String requestID;
 	private String clientCode;
 	private String state;
 	private Integer expireIn;
@@ -26,12 +25,6 @@ public class ResultCMSState {
 	}
 	public void setReceiptID(String receiptID) {
 		this.receiptID = receiptID;
-	}
-	public String getRequestID() {
-		return requestID;
-	}
-	public void setRequestID(String requestID) {
-		this.requestID = requestID;
 	}
 	public String getClientCode() {
 		return clientCode;

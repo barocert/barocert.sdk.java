@@ -55,7 +55,7 @@ public class TEST_ESign {
 			
 			ResultESign result = kakaocertService.requestESign("023030000003", request, false);
 			
-			System.out.println(result.getReceiptId());
+			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
 		} catch(BarocertException ke) {
 			System.out.println(ke.getCode());
@@ -97,7 +97,7 @@ public class TEST_ESign {
 			
 			ResultESign result = kakaocertService.bulkRequestESign("023020000003", request, false);
 			
-			System.out.println(result.getReceiptId());
+			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
 		} catch(BarocertException ke) {
 			System.out.println(ke.getCode());
@@ -112,7 +112,6 @@ public class TEST_ESign {
 			ResultESignState response = kakaocertService.getESignState("023020000003", "0230316215859000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
-			System.out.println(response.getRequestID());
 			System.out.println(response.getClientCode());
 			System.out.println(response.getState());
 			System.out.println(response.getExpireIn());
@@ -142,7 +141,6 @@ public class TEST_ESign {
 			BulkResultESignState response = kakaocertService.getBulkESignState("023020000003", "0230316220145000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
-			System.out.println(response.getRequestID());
 			System.out.println(response.getClientCode());
 			System.out.println(response.getState());
 			System.out.println(response.getExpireIn());
@@ -172,7 +170,6 @@ public class TEST_ESign {
 			VerifyEsignResult response = kakaocertService.verifyESign("023020000003", "0230316215859000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
-			System.out.println(response.getRequestID());
 			System.out.println(response.getState());
 			System.out.println(response.getSignedData());
 			System.out.println(response.getCi());
@@ -189,7 +186,6 @@ public class TEST_ESign {
 			BulkVerifyESignResult response = kakaocertService.bulkVerifyESign("023020000003", "0230316220145000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
-			System.out.println(response.getRequestID());
 			System.out.println(response.getState());
 			
 			for(int i = 0; i < response.getBulkSignedData().size(); i++) {

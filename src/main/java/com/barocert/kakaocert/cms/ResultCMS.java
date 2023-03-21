@@ -2,14 +2,14 @@ package com.barocert.kakaocert.cms;
 
 public class ResultCMS {
 	
-	private String receiptId;
+	private String receiptID;
 	private String scheme;
 	
-	public String getReceiptId() {
-		return receiptId;
+	public String getReceiptID() {
+		return receiptID;
 	}
-	public void setReceiptId(String receiptId) {
-		this.receiptId = receiptId;
+	public void setReceiptID(String receiptID) {
+		this.receiptID = receiptID;
 	}
 	public String getScheme() {
 		return scheme;

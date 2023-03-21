@@ -40,6 +40,7 @@ public class TEST_VerifyAuth {
 			
 			request.setReqTitle("인증요청 메시지 제목란");
 			request.setExpireIn(1000);
+			
 			request.setToken(kakaocertService.AES256Encrypt("본인인증요청토큰"));
 			
 			// App to App 방식 이용시, 에러시 호출할 URL
@@ -47,7 +48,7 @@ public class TEST_VerifyAuth {
 			
 			ReqVerifyAuthResult result = kakaocertService.requestVerifyAuth("023030000003", request, false);
 			
-			System.out.println(result.getReceiptId());
+			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
 		} catch(BarocertException ke) {
 			System.out.println(ke.getCode());
@@ -62,7 +63,6 @@ public class TEST_VerifyAuth {
 			VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023020000003", "0230316215733000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
-			System.out.println(result.getRequestID());
 			System.out.println(result.getClientCode());
 			System.out.println(result.getState());
 			System.out.println(result.getExpireIn());
@@ -92,7 +92,6 @@ public class TEST_VerifyAuth {
 			VerifyAuthResult result = kakaocertService.verifyAuth("023020000003", "0230316215733000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
-			System.out.println(result.getRequestID());
 			System.out.println(result.getState());
 			System.out.println(result.getToken());
 		} catch (BarocertException ke) {

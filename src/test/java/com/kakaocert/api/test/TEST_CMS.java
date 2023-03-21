@@ -53,7 +53,7 @@ public class TEST_CMS {
 			
 			ResultCMS result = kakaocertService.requestCMS("023030000003", request, false);
 			
-			System.out.println(result.getReceiptId());
+			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
 		} catch(BarocertException ke) {
 			System.out.println(ke.getCode());
@@ -68,7 +68,6 @@ public class TEST_CMS {
 			ResultCMSState result = kakaocertService.getCMSState("023020000003", "0230317094926000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
-			System.out.println(result.getRequestID());
 			System.out.println(result.getClientCode());
 			System.out.println(result.getState());
 			System.out.println(result.getExpireIn());
@@ -98,7 +97,6 @@ public class TEST_CMS {
 			VerifyCMSResult result = kakaocertService.verifyCMS("023020000003", "0230317094926000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
-			System.out.println(result.getRequestID());
 			System.out.println(result.getState());
 			System.out.println(result.getSignedData());
 			System.out.println(result.getCi());
