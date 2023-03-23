@@ -5,10 +5,10 @@ import org.junit.Test;
 import com.barocert.BarocertException;
 import com.barocert.KakaocertService;
 import com.barocert.KakaocertServiceImp;
-import com.barocert.kakaocert.cms.RequestCMS;
-import com.barocert.kakaocert.cms.ResultCMS;
-import com.barocert.kakaocert.cms.ResultCMSState;
-import com.barocert.kakaocert.cms.VerifyCMSResult;
+import com.barocert.kakaocert.cms.CMSRequest;
+import com.barocert.kakaocert.cms.CMSResponse;
+import com.barocert.kakaocert.cms.CMSStateResult;
+import com.barocert.kakaocert.cms.CMSVerifyResult;
 
 public class TEST_CMS {
 	
@@ -30,7 +30,7 @@ public class TEST_CMS {
 	@Test
 	public void request_TEST() {
 		try {
-			RequestCMS request = new RequestCMS();
+			CMSRequest request = new CMSRequest();
 			
 			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
 			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
@@ -48,10 +48,10 @@ public class TEST_CMS {
 			request.setBankAccountBirthday(kakaocertService.AES256Encrypt("19930112"));
 			request.setBankServiceType(kakaocertService.AES256Encrypt("CMS")); // CMS, FIRM, GIRO
 			
-			// App to App 방식 이용시, 에러시 호출할 URL
+			// AppToApp 방식 이용 시 입력.
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			ResultCMS result = kakaocertService.requestCMS("023030000003", request, false);
+			CMSResponse result = kakaocertService.requestCMS("023030000003", request, false);
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
@@ -65,7 +65,7 @@ public class TEST_CMS {
 	@Test
 	public void getResult_TEST() throws BarocertException {
 		try {
-			ResultCMSState result = kakaocertService.getCMSState("023020000003", "0230317094926000000000000000000000000001");
+			CMSStateResult result = kakaocertService.getCMSState("023030000003", "0230323095321000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getClientCode());
@@ -94,7 +94,7 @@ public class TEST_CMS {
 	@Test
 	public void verifyCMS_TEST() throws BarocertException {
 		try {
-			VerifyCMSResult result = kakaocertService.verifyCMS("023020000003", "0230317094926000000000000000000000000001");
+			CMSVerifyResult result = kakaocertService.verifyCMS("023030000003", "0230323095321000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getState());

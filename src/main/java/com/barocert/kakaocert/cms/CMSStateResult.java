@@ -1,16 +1,17 @@
-package com.barocert.kakaocert.verifyauth;
+package com.barocert.kakaocert.cms;
 
-public class VerifyAuthStateResult {
+public class CMSStateResult {
 	
 	private String receiptID;
 	private String clientCode;
-	private int state;
-	private int expireIn;
+	private String state;
+	private Integer expireIn;
 	private String callCenterName;
 	private String callCenterNum;
 	private String reqTitle;
 	private String authCategory;
 	private String returnURL;
+	private String tokenType;
 	private String requestDT;
 	private String viewDT;
 	private String completeDT;
@@ -31,16 +32,16 @@ public class VerifyAuthStateResult {
 	public void setClientCode(String clientCode) {
 		this.clientCode = clientCode;
 	}
-	public int getState() {
+	public String getState() {
 		return state;
 	}
-	public void setState(int state) {
+	public void setState(String state) {
 		this.state = state;
 	}
-	public int getExpireIn() {
+	public Integer getExpireIn() {
 		return expireIn;
 	}
-	public void setExpireIn(int expireIn) {
+	public void setExpireIn(Integer expireIn) {
 		this.expireIn = expireIn;
 	}
 	public String getCallCenterName() {
@@ -72,6 +73,12 @@ public class VerifyAuthStateResult {
 	}
 	public void setReturnURL(String returnURL) {
 		this.returnURL = returnURL;
+	}
+	public String getTokenType() {
+		return tokenType;
+	}
+	public void setTokenType(String tokenType) {
+		this.tokenType = tokenType;
 	}
 	public String getRequestDT() {
 		return requestDT;

@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.cms;
 
-public class RequestCMS {
+public class CMSRequest {
 
 	private String clientCode;
 	private String requestID;

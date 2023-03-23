@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.esign;
 
-public class BulkResultESignState {
+public class ESStateResult {
 	
 	private String receiptID;
 	private String clientCode;

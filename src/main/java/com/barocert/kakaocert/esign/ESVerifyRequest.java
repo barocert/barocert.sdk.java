@@ -1,9 +1,9 @@
 package com.barocert.kakaocert.esign;
 
-public class BulkRequestStateESign {
+public class ESVerifyRequest {
 	
 	private String clientCode;
-	private String receiptId;
+	private String receiptID;
 	
 	public String getClientCode() {
 		return clientCode;
@@ -11,11 +11,11 @@ public class BulkRequestStateESign {
 	public void setClientCode(String clientCode) {
 		this.clientCode = clientCode;
 	}
-	public String getReceiptId() {
-		return receiptId;
+	public String getReceiptID() {
+		return receiptID;
 	}
-	public void setReceiptId(String receiptId) {
-		this.receiptId = receiptId;
+	public void setReceiptID(String receiptID) {
+		this.receiptID = receiptID;
 	}
-
+	
 }

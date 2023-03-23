@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.esign;
 
-public class Tokens {
+public class BulkESTokens {
 	
 	private String reqTitle;
 	private String token;

@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.verifyauth;
 
-public class RequestVerifyAuth {
+public class VARequest {
 
 	private String clientCode;
 	private String requestID;

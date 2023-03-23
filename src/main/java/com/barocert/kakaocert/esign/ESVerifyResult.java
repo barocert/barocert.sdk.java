@@ -1,6 +1,6 @@
-package com.barocert.kakaocert.cms;
+package com.barocert.kakaocert.esign;
 
-public class VerifyCMSResult {
+public class ESVerifyResult {
 	
 	private String receiptID;
 	private String state;

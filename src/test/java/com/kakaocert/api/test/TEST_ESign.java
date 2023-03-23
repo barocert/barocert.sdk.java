@@ -7,14 +7,15 @@ import org.junit.Test;
 import com.barocert.BarocertException;
 import com.barocert.KakaocertService;
 import com.barocert.KakaocertServiceImp;
-import com.barocert.kakaocert.esign.BulkRequestESign;
-import com.barocert.kakaocert.esign.BulkResultESignState;
-import com.barocert.kakaocert.esign.BulkVerifyESignResult;
-import com.barocert.kakaocert.esign.RequestESign;
-import com.barocert.kakaocert.esign.ResultESign;
-import com.barocert.kakaocert.esign.ResultESignState;
-import com.barocert.kakaocert.esign.VerifyEsignResult;
-import com.barocert.kakaocert.esign.Tokens;
+import com.barocert.kakaocert.esign.ESMultiRequest;
+import com.barocert.kakaocert.esign.ESMultiResponse;
+import com.barocert.kakaocert.esign.MultiStateResult;
+import com.barocert.kakaocert.esign.ESMultiVerifyResult;
+import com.barocert.kakaocert.esign.ESRequest;
+import com.barocert.kakaocert.esign.ESResponse;
+import com.barocert.kakaocert.esign.ESStateResult;
+import com.barocert.kakaocert.esign.ESVerifyResult;
+import com.barocert.kakaocert.esign.BulkESTokens;
 
 public class TEST_ESign {
 
@@ -37,7 +38,7 @@ public class TEST_ESign {
 	public void requestESign_TEST() throws BarocertException {
 		try {
 			// 전자서명 요청 정보 Object
-			RequestESign request = new RequestESign();
+			ESRequest request = new ESRequest();
 			
 			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
 			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
@@ -47,13 +48,13 @@ public class TEST_ESign {
 			
 			request.setReqTitle("전자서명단건테스트");
 			request.setExpireIn(1000);
-			request.setToken(kakaocertService.AES256Encrypt("전자서명단건테스트데이터"));
+			request.setToken(kakaocertService.AES256Encrypt("토큰원문 단건 테스트"));
 			request.setTokenType("TEXT"); // TEXT, HASH
 			
-			// App to App 방식 이용시, 에러시 호출할 URL
+			// AppToApp 방식 이용 시 입력.
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			ResultESign result = kakaocertService.requestESign("023030000003", request, false);
+			ESResponse result = kakaocertService.requestESign("023030000003", request, false);
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
@@ -67,35 +68,33 @@ public class TEST_ESign {
 	@Test
 	public void bulkRequestESign_TEST() throws BarocertException {
 		try {
-			BulkRequestESign request = new BulkRequestESign();
+			ESMultiRequest request = new ESMultiRequest();
 			
-			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
+			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택1
 			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
 			request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
 			request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
 			// request.setCi(kakaocertService.AES256Encrypt(""));
 			
-			request.setReqTitle("전자서명다건테스트");
+			request.setReqTitle("인증요청 구분제목 테스트");
 			request.setExpireIn(1000);
 			
-			request.setTokens(new ArrayList<Tokens>());
+			request.setTokens(new ArrayList<BulkESTokens>());
 			
-			Tokens token = new Tokens();
-			token.setReqTitle("전자서명다건문서테스트1");
-			token.setToken(kakaocertService.AES256Encrypt("전자서명다건테스트데이터1"));
-			request.getTokens().add(token);
-			
-			token = new Tokens();
-			token.setReqTitle("전자서명다건문서테스트2");
-			token.setToken(kakaocertService.AES256Encrypt("전자서명다건테스트데이터2"));
-			request.getTokens().add(token);
+			// 인증요청 메시지 제목, 토큰원문은 최대 20개.
+			for(int i = 0; i < 20; i++) {
+				BulkESTokens token = new BulkESTokens();
+				token.setReqTitle("서명요청 제목 다건 테스트 " + i);
+				token.setToken(kakaocertService.AES256Encrypt("토큰원문 다건 테스트 " + i)); // 원문길이는 2800자 까지.
+				request.getTokens().add(token);
+			}
 			
 			request.setTokenType("TEXT"); // TEXT, HASH
 			
-			// App to App 방식 이용시, 에러시 호출할 URL
+			// AppToApp 방식 이용 시
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			ResultESign result = kakaocertService.bulkRequestESign("023020000003", request, false);
+			ESMultiResponse result = kakaocertService.requestMultiESign("023030000003", request, false);
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
@@ -109,7 +108,7 @@ public class TEST_ESign {
 	@Test
 	public void getESignState_TEST() throws BarocertException {
 		try {
-			ResultESignState response = kakaocertService.getESignState("023020000003", "0230316215859000000000000000000000000001");
+			ESStateResult response = kakaocertService.getESignState("023030000003", "0230323095510000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
 			System.out.println(response.getClientCode());
@@ -138,7 +137,7 @@ public class TEST_ESign {
 	@Test
 	public void getBulkESignState_TEST() throws BarocertException {
 		try {
-			BulkResultESignState response = kakaocertService.getBulkESignState("023020000003", "0230321223457000000000000000000000000001");
+			MultiStateResult response = kakaocertService.getMultiESignState("023030000003", "0230323144042000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
 			System.out.println(response.getClientCode());
@@ -167,7 +166,7 @@ public class TEST_ESign {
 	@Test
 	public void verifyESign_TEST() throws BarocertException {
 		try {
-			VerifyEsignResult response = kakaocertService.verifyESign("023020000003", "0230316215859000000000000000000000000001");
+			ESVerifyResult response = kakaocertService.verifyESign("023030000003", "0230323095510000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
 			System.out.println(response.getState());
@@ -183,7 +182,7 @@ public class TEST_ESign {
 	@Test
 	public void bulkVerifyESign_TEST() throws BarocertException {
 		try {
-			BulkVerifyESignResult response = kakaocertService.bulkVerifyESign("023020000003", "0230316220145000000000000000000000000001");
+			ESMultiVerifyResult response = kakaocertService.multiVerifyESign("023030000003", "0230323144042000000000000000000000000001");
 			
 			System.out.println(response.getReceiptID());
 			System.out.println(response.getState());
