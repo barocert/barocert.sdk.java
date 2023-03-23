@@ -6,7 +6,7 @@ public class ESMultiVerifyResult {
 	
 	private String receiptID;
 	private String state;
-	private List<String> bulkSignedData;
+	private List<String> multiSignedData;
 	private String ci;
 	
 	public String getReceiptID() {
@@ -21,11 +21,11 @@ public class ESMultiVerifyResult {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public List<String> getBulkSignedData() {
-		return bulkSignedData;
+	public List<String> getMultiSignedData() {
+		return multiSignedData;
 	}
-	public void setBulkSignedData(List<String> bulkSignedData) {
-		this.bulkSignedData = bulkSignedData;
+	public void setMultiSignedData(List<String> multiSignedData) {
+		this.multiSignedData = multiSignedData;
 	}
 	public String getCi() {
 		return ci;

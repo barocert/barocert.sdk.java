@@ -79,13 +79,19 @@ public class TEST_ESign {
 			request.setReqTitle("인증요청 구분제목 테스트");
 			request.setExpireIn(1000);
 			
+			String num = "1";
+			StringBuilder sb = new StringBuilder();
+			for(int j=0; j < 2800; j++) {
+				sb.append(num);
+			}
+			
 			request.setTokens(new ArrayList<BulkESTokens>());
 			
 			// 인증요청 메시지 제목, 토큰원문은 최대 20개.
 			for(int i = 0; i < 20; i++) {
 				BulkESTokens token = new BulkESTokens();
 				token.setReqTitle("서명요청 제목 다건 테스트 " + i);
-				token.setToken(kakaocertService.AES256Encrypt("토큰원문 다건 테스트 " + i)); // 원문길이는 2800자 까지.
+				token.setToken(kakaocertService.AES256Encrypt(sb.toString())); // 원문길이는 2800자 까지.
 				request.getTokens().add(token);
 			}
 			
@@ -137,7 +143,7 @@ public class TEST_ESign {
 	@Test
 	public void getBulkESignState_TEST() throws BarocertException {
 		try {
-			MultiStateResult response = kakaocertService.getMultiESignState("023030000003", "0230323144042000000000000000000000000001");
+			MultiStateResult response = kakaocertService.getMultiESignState("023030000003", "0230323-023030000051-0000000000000000017");
 			
 			System.out.println(response.getReceiptID());
 			System.out.println(response.getClientCode());
@@ -182,13 +188,13 @@ public class TEST_ESign {
 	@Test
 	public void bulkVerifyESign_TEST() throws BarocertException {
 		try {
-			ESMultiVerifyResult response = kakaocertService.multiVerifyESign("023030000003", "0230323144042000000000000000000000000001");
+			ESMultiVerifyResult response = kakaocertService.multiVerifyESign("023030000003", "0230323-023030000051-0000000000000000017");
 			
 			System.out.println(response.getReceiptID());
 			System.out.println(response.getState());
 			
-			for(int i = 0; i < response.getBulkSignedData().size(); i++) {
-				System.out.println(response.getBulkSignedData().get(i));
+			for(int i = 0; i < response.getMultiSignedData().size(); i++) {
+				System.out.println(response.getMultiSignedData().get(i));
 			}
 			
 			System.out.println(response.getCi());
