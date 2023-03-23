@@ -50,8 +50,6 @@ import com.barocert.kakaocert.verifyauth.VARequest;
 import com.barocert.kakaocert.verifyauth.VAResponse;
 import com.barocert.kakaocert.verifyauth.VAStateResult;
 import com.barocert.kakaocert.verifyauth.VAVerifyResult;
-import com.google.common.base.Charsets;
-import com.google.common.io.BaseEncoding;
 import com.google.gson.Gson;
 
 import kr.co.linkhub.auth.Base64;
@@ -452,7 +450,7 @@ public class KakaocertServiceImp implements KakaocertService {
 			
 			Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
 			cipher.init(Cipher.ENCRYPT_MODE, secureKey, new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv));
-			cipherData = cipher.doFinal(plainText.getBytes(Charsets.UTF_8));
+			cipherData = cipher.doFinal(plainText.getBytes(Charset.forName("UTF-8")));
 			
 			byteBuffer = ByteBuffer.allocate(iv.length + cipherData.length);
 			byteBuffer.put(iv);
@@ -461,7 +459,7 @@ public class KakaocertServiceImp implements KakaocertService {
 			throw new BarocertException(-99999999, "AES256Encrypt Encrypt Error : ", e);
 		}
 		
-		return BaseEncoding.base64().encode(byteBuffer.array());
+		return base64Encode(byteBuffer.array());
 	}
 
 	private static String fromStream(InputStream input) throws BarocertException {

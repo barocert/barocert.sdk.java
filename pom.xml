@@ -19,8 +19,8 @@
     </licenses>
 
 	<scm>
-		<connection>scm:git:git@github.com/linkhub-sdk/kakaocert.sdk.java.git</connection>
-		<url>git@github.com/linkhub-sdk/kakaocert.sdk.java.git</url>
+		<connection>scm:git:git@github.com/barocert/barocert.sdk.java.git</connection>
+		<url>git@github.com/barocert/barocert.sdk.java.git</url>
 	</scm>
 
 	<developers>
@@ -54,12 +54,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.13.1</version>
 			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>14.0.1</version>
 		</dependency>
 	</dependencies>
 
