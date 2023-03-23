@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.esign;
 
-public class BulkESVerifyRequest {
+public class ESMultiVerifyRequest {
 	
 	private String clientCode;
 	private String receiptID;

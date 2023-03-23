@@ -13,7 +13,7 @@ public class ESMultiRequest {
 	private String reqTitle;
 	private Integer expireIn;
 	
-	private List<BulkESTokens> tokens;
+	private List<ESMultiTokens> tokens;
 	
 	private String tokenType;
 	private String returnURL;
@@ -67,10 +67,10 @@ public class ESMultiRequest {
 	public void setExpireIn(Integer expireIn) {
 		this.expireIn = expireIn;
 	}
-	public List<BulkESTokens> getTokens() {
+	public List<ESMultiTokens> getTokens() {
 		return tokens;
 	}
-	public void setTokens(List<BulkESTokens> token) {
+	public void setTokens(List<ESMultiTokens> token) {
 		this.tokens = token;
 	}
 	public String getTokenType() {
