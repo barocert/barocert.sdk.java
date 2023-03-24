@@ -5,8 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.ProtocolException;
@@ -18,7 +16,6 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,7 +34,7 @@ import com.barocert.kakaocert.cms.CMSStateResult;
 import com.barocert.kakaocert.cms.CMSVerifyResult;
 import com.barocert.kakaocert.esign.ESMultiRequest;
 import com.barocert.kakaocert.esign.ESMultiResponse;
-import com.barocert.kakaocert.esign.BulkESVerifyRequest;
+import com.barocert.kakaocert.esign.ESMultiVerifyRequest;
 import com.barocert.kakaocert.esign.MultiStateResult;
 import com.barocert.kakaocert.esign.ESMultiVerifyResult;
 import com.barocert.kakaocert.esign.ESRequest;
@@ -62,16 +59,14 @@ public class KakaocertServiceImp implements KakaocertService {
     private static final String ServiceID = "BAROCERT";
     
     private static final String Auth_Static_URL = "https://static-auth.linkhub.co.kr";
-    private static final String ServiceURL_REAL = "https://bc-api.linkhub.kr"; // TODO :: 나중에 바꿔야 함.
-    private static final String ServiceURL_Static_REAL = "https://static-barocert.linkhub.co.kr";
+    private static final String ServiceURL_Static = "https://static-barocert.linkhub.co.kr";
+    private String ServiceURL = "https://barocert.linkhub.co.kr";
     
     public static final int GCM_IV_LENGTH = 12;	
     public static final int GCM_TAG_LENGTH = 16;
     
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
-    private final String APIVersion = "2.0";
     
-    private String ServiceURL = null;
     private String AuthURL = null;
     private String ProxyIP = null;
     private Integer ProxyPort = null;
@@ -84,8 +79,8 @@ public class KakaocertServiceImp implements KakaocertService {
     private String _secretKey;
 	
     private TokenBuilder tokenBuilder;
-    
-    private Gson _gsonParser = new Gson();
+
+	private Gson _gsonParser = new Gson();
     private final SecureRandom secureRandom = new SecureRandom();
     private Map<String, Token> tokenTable = new HashMap<String, Token>();
 
@@ -120,9 +115,9 @@ public class KakaocertServiceImp implements KakaocertService {
             return ServiceURL;
         
         if(useStaticIP) 
-        	return ServiceURL_Static_REAL;
+        	return ServiceURL_Static;
         
-        return ServiceURL_REAL;
+        return ServiceURL;
     }
 
     public void setServiceURL(String serviceURL) {
@@ -163,25 +158,24 @@ public class KakaocertServiceImp implements KakaocertService {
 
     private TokenBuilder getTokenbuilder() {
         if (this.tokenBuilder == null) {
-            tokenBuilder = TokenBuilder.newInstance(getLinkID(), getSecretKey()).ServiceID(ServiceID).addScope("partner")
-            			.useLocalTimeYN(useLocalTimeYN);
+            tokenBuilder = TokenBuilder
+            		.newInstance(getLinkID(), getSecretKey()).ServiceID(ServiceID).addScope("partner")
+            		.useLocalTimeYN(useLocalTimeYN)
+            		.addScope("401")
+            		.addScope("402")
+            		.addScope("403")
+            		.addScope("404");
 
             if (AuthURL != null) {
                 tokenBuilder.setServiceURL(AuthURL);
             } else {
-            	if (useStaticIP)
-            		tokenBuilder.setServiceURL(Auth_Static_URL);
+        		if (useStaticIP) tokenBuilder.setServiceURL(Auth_Static_URL);
             }
             
             if (ProxyIP != null && ProxyPort != null) {
                 tokenBuilder.setProxyIP(ProxyIP);
                 tokenBuilder.setProxyPort(ProxyPort);
             }
-
-            tokenBuilder.addScope("401");
-            tokenBuilder.addScope("402");
-            tokenBuilder.addScope("403");
-            tokenBuilder.addScope("404");
         }
 
         return tokenBuilder;
@@ -197,7 +191,7 @@ public class KakaocertServiceImp implements KakaocertService {
         boolean expired = true;
 
         if (token != null) {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             format.setTimeZone(TimeZone.getTimeZone("UTC"));
 
             SimpleDateFormat subFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -209,11 +203,8 @@ public class KakaocertServiceImp implements KakaocertService {
                 expired = expiration.before(UTCTime);
             } catch (LinkhubException le) {
                 throw new BarocertException(le);
-            } catch (ParseException e) {
-            	StringWriter errors = new StringWriter();
-				e.printStackTrace(new PrintWriter(errors));
-				
-				throw new BarocertException(-99999999, "GetSessionToken Parse Exception : " + errors.toString());
+            } catch (Exception e) {
+				throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception : " + e.getMessage());
 			}
         }
 
@@ -287,7 +278,6 @@ public class KakaocertServiceImp implements KakaocertService {
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + getSessionToken(clientCode, null));
         }
 
-        httpURLConnection.setRequestProperty("x-bc-version".toLowerCase(), APIVersion);
         httpURLConnection.setRequestProperty("Accept-Encoding", "gzip");
 
         String Result = parseResponse(httpURLConnection);
@@ -330,8 +320,7 @@ public class KakaocertServiceImp implements KakaocertService {
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + getSessionToken(clientCode, null));
         }
 
-        httpURLConnection.setRequestProperty("x-lh-date".toLowerCase(), date);
-        httpURLConnection.setRequestProperty("x-lh-version".toLowerCase(), APIVersion);
+        httpURLConnection.setRequestProperty("x-bc-date".toLowerCase(), date);
         httpURLConnection.setRequestProperty("Content-Type", "application/json; charset=utf8");
         httpURLConnection.setRequestProperty("Accept-Encoding", "gzip");
 
@@ -351,9 +340,9 @@ public class KakaocertServiceImp implements KakaocertService {
             httpURLConnection.setRequestProperty("Content-Length", String.valueOf(btPostData.length));
 
             String signTarget = "POST\n";
+            signTarget += url + "\n";
             signTarget += sha256Base64(btPostData) + "\n";
             signTarget += date + "\n";
-            signTarget += APIVersion + "\n";
 
             String Signature = base64Encode(HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
 
@@ -443,7 +432,7 @@ public class KakaocertServiceImp implements KakaocertService {
     	byte[] iv = GenerateRandomKeyByte();
     	
     	if (null == plainText || plainText.length() == 0)
-            throw new BarocertException(-99999999, "AES256Encrypt plainText empty");
+            throw new BarocertException(-99999999, "Kakaocert AES256Encrypt plainText empty");
     	
 		try {
 			SecretKeySpec secureKey = new SecretKeySpec(base64Decode(_secretKey), "AES");
@@ -456,7 +445,7 @@ public class KakaocertServiceImp implements KakaocertService {
 			byteBuffer.put(iv);
 			byteBuffer.put(cipherData);
 		} catch (Exception e) {
-			throw new BarocertException(-99999999, "AES256Encrypt Encrypt Error : ", e);
+			throw new BarocertException(-99999999, "Kakaocert AES256Encrypt Encrypt Error : ", e);
 		}
 		
 		return base64Encode(byteBuffer.array());
@@ -566,7 +555,7 @@ public class KakaocertServiceImp implements KakaocertService {
             }
 
             if (error == null) {
-                exception = new BarocertException(-99999999, "Fail to receive data from Server.", e);
+                exception = new BarocertException(-99999999, "Kakaocert Fail to receive data from Server.", e);
             } else {
                 exception = new BarocertException(error.getCode(), error.getMessage());
             }
@@ -665,7 +654,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-        BulkESVerifyRequest request = new BulkESVerifyRequest();
+        ESMultiVerifyRequest request = new ESMultiVerifyRequest();
 		request.setClientCode(clientCode);
 		request.setReceiptID(receiptID);
         
