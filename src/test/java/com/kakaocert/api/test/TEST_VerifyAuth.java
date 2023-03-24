@@ -28,7 +28,7 @@ public class TEST_VerifyAuth {
 	
 	// 본인인증 요청
 	@Test
-	public void request_TEST() throws BarocertException {
+	public void requestVerifyAuth_TEST() throws BarocertException {
 		try {
 			VARequest request = new VARequest();
 			
@@ -58,7 +58,7 @@ public class TEST_VerifyAuth {
 	
 	// 본인인증 상태확인
 	@Test
-	public void getResult_TEST() throws BarocertException {
+	public void getVerifyAuthState_TEST() throws BarocertException {
 		try {
 			VAStateResult result = kakaocertService.getVerifyAuthState("023030000003", "0230323095837000000000000000000000000001");
 			

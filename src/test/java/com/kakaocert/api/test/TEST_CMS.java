@@ -28,7 +28,7 @@ public class TEST_CMS {
 	
 	// 출금동의 요청
 	@Test
-	public void request_TEST() {
+	public void requestCMS_TEST() {
 		try {
 			CMSRequest request = new CMSRequest();
 			
@@ -63,7 +63,7 @@ public class TEST_CMS {
 	
 	// 출금동의 상태확인
 	@Test
-	public void getResult_TEST() throws BarocertException {
+	public void getCMSState_TEST() throws BarocertException {
 		try {
 			CMSStateResult result = kakaocertService.getCMSState("023030000003", "0230323095321000000000000000000000000001");
 			

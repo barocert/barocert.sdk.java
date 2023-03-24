@@ -15,7 +15,7 @@ import com.barocert.kakaocert.esign.ESRequest;
 import com.barocert.kakaocert.esign.ESResponse;
 import com.barocert.kakaocert.esign.ESStateResult;
 import com.barocert.kakaocert.esign.ESVerifyResult;
-import com.barocert.kakaocert.esign.BulkESTokens;
+import com.barocert.kakaocert.esign.ESMultiTokens;
 
 public class TEST_ESign {
 
@@ -66,7 +66,7 @@ public class TEST_ESign {
 	
 	// 전자서명 요청(다건)
 	@Test
-	public void bulkRequestESign_TEST() throws BarocertException {
+	public void requestMultiESign_TEST() throws BarocertException {
 		try {
 			ESMultiRequest request = new ESMultiRequest();
 			
@@ -85,11 +85,11 @@ public class TEST_ESign {
 				sb.append(num);
 			}
 			
-			request.setTokens(new ArrayList<BulkESTokens>());
+			request.setTokens(new ArrayList<ESMultiTokens>());
 			
 			// 인증요청 메시지 제목, 토큰원문은 최대 20개.
 			for(int i = 0; i < 20; i++) {
-				BulkESTokens token = new BulkESTokens();
+				ESMultiTokens token = new ESMultiTokens();
 				token.setReqTitle("서명요청 제목 다건 테스트 " + i);
 				token.setToken(kakaocertService.AES256Encrypt(sb.toString())); // 원문길이는 2800자 까지.
 				request.getTokens().add(token);
@@ -141,7 +141,7 @@ public class TEST_ESign {
 	
 	// 전자서명 상태확인(다건)	
 	@Test
-	public void getBulkESignState_TEST() throws BarocertException {
+	public void getMultiESignState_TEST() throws BarocertException {
 		try {
 			MultiStateResult response = kakaocertService.getMultiESignState("023030000003", "0230323-023030000051-0000000000000000017");
 			
@@ -186,7 +186,7 @@ public class TEST_ESign {
 	
 	// 전자서명 검증(다건)
 	@Test
-	public void bulkVerifyESign_TEST() throws BarocertException {
+	public void multiVerifyESign_TEST() throws BarocertException {
 		try {
 			ESMultiVerifyResult response = kakaocertService.multiVerifyESign("023030000003", "0230323-023030000051-0000000000000000017");
 			
