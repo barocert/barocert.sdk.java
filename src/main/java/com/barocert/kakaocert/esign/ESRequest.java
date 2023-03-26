@@ -13,7 +13,7 @@ public class ESRequest {
 	private String token;
 	private String tokenType;
 	private String returnURL;
-	private boolean appUseYN;
+	private boolean isAppUseYN;
 
 	public String getClientCode() {
 		return clientCode;
@@ -104,11 +104,11 @@ public class ESRequest {
 	}
 
 	public boolean isAppUseYN() {
-		return appUseYN;
+		return isAppUseYN;
 	}
 
-	public void setAppUseYN(boolean appUseYN) {
-		this.appUseYN = appUseYN;
+	public void setAppUseYN(boolean isAppUseYN) {
+		this.isAppUseYN = isAppUseYN;
 	}
 
 }
