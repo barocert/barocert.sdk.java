@@ -572,7 +572,7 @@ public class KakaocertServiceImp implements KakaocertService {
         
         String postDate = toJsonString(eSignObject);
         
-    	return httppost("/KAKAO/ESign/Request", clientCode, postDate, ESignResponse.class);
+    	return httppost("/KAKAO/ESign/" + clientCode, clientCode, postDate, ESignResponse.class);
     }
     
     // 전자서명 요청(다건)
@@ -588,7 +588,7 @@ public class KakaocertServiceImp implements KakaocertService {
         
         String postDate = toJsonString(eSignMultiObject);
 
-        return httppost("/KAKAO/ESign/MultiRequest", clientCode, postDate, ESignMultiResponse.class);
+        return httppost("/KAKAO/ESignMulti/" + clientCode, clientCode, postDate, ESignMultiResponse.class);
     }
 
     // 전자서명 상태확인(단건)
@@ -600,7 +600,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-        return httpget("/KAKAO/ESign/Status/" + clientCode + "/" + receiptID, clientCode, ESignStateResult.class);
+        return httpget("/KAKAO/ESign/" + clientCode + "/" + receiptID, clientCode, ESignStateResult.class);
     }
     
     // 전자서명 상태확인(다건)
@@ -612,7 +612,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-        return httpget("/KAKAO/ESign/MultiStatus/" + clientCode + "/" + receiptID, clientCode, MultiESignStateResult.class);
+        return httpget("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, MultiESignStateResult.class);
 	}
 
     // 전자서명 서명검증(단건)
@@ -630,7 +630,7 @@ public class KakaocertServiceImp implements KakaocertService {
 		
 		String postDate = toJsonString(request);
         
-        return httppost("/KAKAO/ESign/Verify", clientCode, postDate, ESignVerifyResult.class);
+        return httppost("/KAKAO/ESign/" + clientCode + "/" + receiptID, clientCode, postDate, ESignVerifyResult.class);
     }
     
     // 전자서명 서명검증(다건)
@@ -648,7 +648,7 @@ public class KakaocertServiceImp implements KakaocertService {
 		
 		String postDate = toJsonString(request);
         
-        return httppost("/KAKAO/ESign/MultiVerify", clientCode, postDate, MultiESignVerifyResult.class);
+        return httppost("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, postDate, MultiESignVerifyResult.class);
 	}
 
     
@@ -665,7 +665,7 @@ public class KakaocertServiceImp implements KakaocertService {
         
         String postDate = toJsonString(verifyAuthObject);
         
-        return httppost("/KAKAO/VerifyAuth/Request", clientCode, postDate, VerifyAuthResponse.class);
+        return httppost("/KAKAO/VerifyAuth/" + clientCode, clientCode, postDate, VerifyAuthResponse.class);
     }
     
     // 본인인증 상태확인
@@ -677,7 +677,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         
-        return httpget("/KAKAO/VerifyAuth/Status/" + clientCode + "/" + receiptID, clientCode, VerifyAuthStateResult.class);
+        return httpget("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, VerifyAuthStateResult.class);
     }
     
     // 본인인증 서명검증
@@ -695,7 +695,7 @@ public class KakaocertServiceImp implements KakaocertService {
 		
 		String postDate = toJsonString(request);
 		
-        return httppost("/KAKAO/VerifyAuth/Verify", clientCode, postDate, VerifyAuthResult.class);
+        return httppost("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, postDate, VerifyAuthResult.class);
     }
     
     
@@ -724,7 +724,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-        return httpget("/KAKAO/CMS/Status/" + clientCode + "/" + receiptID, clientCode, CMSStateResult.class);
+        return httpget("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, CMSStateResult.class);
     }
 
     // 출금동의 서명검증
@@ -742,7 +742,7 @@ public class KakaocertServiceImp implements KakaocertService {
 		
 		String postDate = toJsonString(request);
 
-        return httppost("/KAKAO/CMS/Verify", clientCode, postDate, CMSVerifyResult.class);
+        return httppost("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, postDate, CMSVerifyResult.class);
     }
     
 }
