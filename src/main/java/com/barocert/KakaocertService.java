@@ -40,7 +40,7 @@ public interface KakaocertService {
 	 * @return VAResponse
 	 * @throws BarocertException
 	 */
-	public VAResponse requestVerifyAuth(String clientCode, VARequest vARequest, boolean isAppUseYN) throws BarocertException;
+	public VAResponse requestVerifyAuth(String clientCode, VARequest vARequest) throws BarocertException;
 	
 	/**
 	 * 본인인증 상태확인
@@ -79,7 +79,7 @@ public interface KakaocertService {
 	 * @return ESResponse
 	 * @throws BarocertException
 	 */
-	public ESResponse requestESign(String clientCode, ESRequest eSRequest, boolean isAppUseYN) throws BarocertException;
+	public ESResponse requestESign(String clientCode, ESRequest eSRequest) throws BarocertException;
 	
 	/**
 	 * 전자서명 요청(다건)
@@ -88,12 +88,10 @@ public interface KakaocertService {
 	 * 			이용기관코드
 	 * @param eSMultiRequest	
 	 * 			전자서명 요청정보
-	 * @param isAppUseYN
-	 * 			App to App 방식 이용 여부
 	 * @return ESMultiResponse
 	 * @throws BarocertException
 	 */
-	public ESMultiResponse requestMultiESign(String clientCode, ESMultiRequest eSMultiRequest, boolean isAppUseYN) throws BarocertException;
+	public ESMultiResponse requestMultiESign(String clientCode, ESMultiRequest eSMultiRequest) throws BarocertException;
 	
 	/**
 	 * 전자서명 상태확인(단건)
@@ -156,7 +154,7 @@ public interface KakaocertService {
 	 * @return CMSResponse
 	 * @throws BarocertException
 	 */
-	public CMSResponse requestCMS(String clientCode, CMSRequest cMSRequest, boolean isAppUseYN) throws BarocertException;
+	public CMSResponse requestCMS(String clientCode, CMSRequest cMSRequest) throws BarocertException;
 	
 	/**
 	 * 출금동의 상태확인
