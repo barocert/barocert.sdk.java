@@ -1,10 +1,12 @@
 package com.barocert.kakaocert.esign;
 
-public class ESVerifyResult {
+import java.util.List;
+
+public class MultiESignVerifyResult {
 	
 	private String receiptID;
 	private String state;
-	private String signedData;
+	private List<String> multiSignedData;
 	private String ci;
 	
 	public String getReceiptID() {
@@ -19,11 +21,11 @@ public class ESVerifyResult {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public String getSignedData() {
-		return signedData;
+	public List<String> getMultiSignedData() {
+		return multiSignedData;
 	}
-	public void setSignedData(String signedData) {
-		this.signedData = signedData;
+	public void setMultiSignedData(List<String> multiSignedData) {
+		this.multiSignedData = multiSignedData;
 	}
 	public String getCi() {
 		return ci;

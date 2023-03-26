@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.verifyauth;
 
-public class VAResponse {
+public class VerifyAuthResponse {
 	
 	private String receiptID;
 	private String scheme;

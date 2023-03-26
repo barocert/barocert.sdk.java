@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.esign;
 
-public class ESMultiTokens {
+public class MultiESignTokens {
 	
 	private String reqTitle;
 	private String token;

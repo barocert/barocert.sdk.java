@@ -1,14 +1,24 @@
 package com.kakaocert.api.test;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.security.SecureRandom;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.junit.Test;
 
 import com.barocert.BarocertException;
 import com.barocert.KakaocertService;
 import com.barocert.KakaocertServiceImp;
-import com.barocert.kakaocert.cms.CMSRequest;
+import com.barocert.kakaocert.cms.CMSObject;
 import com.barocert.kakaocert.cms.CMSResponse;
 import com.barocert.kakaocert.cms.CMSStateResult;
 import com.barocert.kakaocert.cms.CMSVerifyResult;
+
+import kr.co.linkhub.auth.Base64;
+import javax.crypto.spec.IvParameterSpec;
 
 public class TEST_CMS {
 	
@@ -27,45 +37,86 @@ public class TEST_CMS {
 		kakaocertService = service;
 	}
 	
+	public byte[] base64Decode(String input) {
+        return Base64.decode(input);
+    }
+	
+	public String base64Encode(byte[] input) {
+        return Base64.encode(input);
+    }
+	
+	private final SecureRandom secureRandom = new SecureRandom();
+	
+	protected byte[] GenerateRandomKeyByte()  {
+    	byte[] iv = new byte[16];
+		secureRandom.nextBytes(iv);
+		
+		return iv;
+	}
+	
+
 	// 출금동의 요청
 	@Test
 	public void requestCMS_TEST() {
 		
+		
 		try {
-			// 출금동의 요청 Object
-			CMSRequest request = new CMSRequest();
+			String str = "message to be encrypted";
+			byte[] iv = GenerateRandomKeyByte();
 			
-			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
-			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
-			request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
-			request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
-//			request.setCi(kakaocertService.AES256Encrypt(""));
+			ByteBuffer byteBuffer = null;
 			
-			request.setReqTitle("인증요청 메시지 제공란");
-			request.setExpireIn(1000);
+	        SecretKeySpec keySpec = new SecretKeySpec(base64Decode(testSecretKey), "AES");
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, keySpec,new IvParameterSpec(iv));
+			byte[] encryptedData = cipher.doFinal(str.getBytes(Charset.forName("UTF-8")));
 			
-			request.setRequestCorp(kakaocertService.AES256Encrypt("청구 기관명란"));
-			request.setBankName(kakaocertService.AES256Encrypt("출금은행명란"));
-			request.setBankAccountNum(kakaocertService.AES256Encrypt("9-4324-5117-58"));
-			request.setBankAccountName(kakaocertService.AES256Encrypt("예금주명 입력란"));
-			request.setBankAccountBirthday(kakaocertService.AES256Encrypt("19930112"));
-			request.setBankServiceType(kakaocertService.AES256Encrypt("CMS")); // CMS, FIRM, GIRO
+			byteBuffer = ByteBuffer.allocate(iv.length + encryptedData.length);
+			byteBuffer.put(iv);
+			byteBuffer.put(encryptedData);
 			
-			// AppToApp 인증요청 여부
-	        // true: AppToApp 인증방식, false: Talk Message 인증방식
-			request.setAppUseYN(false);
+			System.out.println(base64Encode(byteBuffer.array()));
 			
-			// AppToApp 방식 이용 시 입력.
-			// request.setReturnURL("https://kakao.barocert.com");
-			
-			CMSResponse result = kakaocertService.requestCMS("023030000003", request);
-			
-			System.out.println(result.getReceiptID());
-			System.out.println(result.getScheme());
-		} catch(BarocertException ke) {
-			System.out.println(ke.getCode());
-			System.out.println(ke.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
+		
+//		try {
+//			// 출금동의 요청 Object
+//			CMSRequest request = new CMSRequest();
+//			
+//			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
+//			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
+//			request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
+//			request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
+////			request.setCi(kakaocertService.AES256Encrypt(""));
+//			
+//			request.setReqTitle("인증요청 메시지 제공란");
+//			request.setExpireIn(1000);
+//			
+//			request.setRequestCorp(kakaocertService.AES256Encrypt("청구 기관명란"));
+//			request.setBankName(kakaocertService.AES256Encrypt("출금은행명란"));
+//			request.setBankAccountNum(kakaocertService.AES256Encrypt("9-4324-5117-58"));
+//			request.setBankAccountName(kakaocertService.AES256Encrypt("예금주명 입력란"));
+//			request.setBankAccountBirthday(kakaocertService.AES256Encrypt("19930112"));
+//			request.setBankServiceType(kakaocertService.AES256Encrypt("CMS")); // CMS, FIRM, GIRO
+//			
+//			// AppToApp 인증요청 여부
+//	        // true: AppToApp 인증방식, false: Talk Message 인증방식
+//			request.setAppUseYN(false);
+//			
+//			// AppToApp 방식 이용 시 입력.
+//			// request.setReturnURL("https://kakao.barocert.com");
+//			
+//			CMSResponse result = kakaocertService.requestCMS("023030000003", request);
+//			
+//			System.out.println(result.getReceiptID());
+//			System.out.println(result.getScheme());
+//		} catch(BarocertException ke) {
+//			System.out.println(ke.getCode());
+//			System.out.println(ke.getMessage());
+//		}
 	}
 	
 	// 출금동의 상태확인
@@ -101,7 +152,7 @@ public class TEST_CMS {
 	@Test
 	public void verifyCMS_TEST() throws BarocertException {
 		try {
-			CMSVerifyResult result = kakaocertService.verifyCMS("023030000003", "0230323095321000000000000000000000000001");
+			CMSVerifyResult result = kakaocertService.cMSVerify("023030000003", "0230323095321000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getState());

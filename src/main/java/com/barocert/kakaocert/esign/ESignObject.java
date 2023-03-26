@@ -1,21 +1,19 @@
-package com.barocert.kakaocert.verifyauth;
+package com.barocert.kakaocert.esign;
 
-public class VARequest {
-
+public class ESignObject {
+	
 	private String clientCode;
 	private String requestID;
 	private String receiverHP;
 	private String receiverName;
 	private String receiverBirthday;
 	private String ci;
-	
 	private String reqTitle;
 	private Integer expireIn;
-	
 	private String token;
+	private String tokenType;
 	private String returnURL;
-
-	private boolean appUseYN;
+	private boolean isAppUseYN;
 
 	public String getClientCode() {
 		return clientCode;
@@ -89,6 +87,14 @@ public class VARequest {
 		this.token = token;
 	}
 
+	public String getTokenType() {
+		return tokenType;
+	}
+
+	public void setTokenType(String tokenType) {
+		this.tokenType = tokenType;
+	}
+
 	public String getReturnURL() {
 		return returnURL;
 	}
@@ -98,11 +104,11 @@ public class VARequest {
 	}
 
 	public boolean isAppUseYN() {
-		return appUseYN;
+		return isAppUseYN;
 	}
 
-	public void setAppUseYN(boolean appUseYN) {
-		this.appUseYN = appUseYN;
+	public void setAppUseYN(boolean isAppUseYN) {
+		this.isAppUseYN = isAppUseYN;
 	}
-	
+
 }

@@ -1,6 +1,6 @@
-package com.barocert.kakaocert.verifyauth;
+package com.barocert.kakaocert.esign;
 
-public class VAStateResult {
+public class ESignStateResult {
 	
 	private String receiptID;
 	private String clientCode;
@@ -11,6 +11,7 @@ public class VAStateResult {
 	private String reqTitle;
 	private String authCategory;
 	private String returnURL;
+	private String tokenType;
 	private String requestDT;
 	private String viewDT;
 	private String completeDT;
@@ -72,6 +73,12 @@ public class VAStateResult {
 	}
 	public void setReturnURL(String returnURL) {
 		this.returnURL = returnURL;
+	}
+	public String getTokenType() {
+		return tokenType;
+	}
+	public void setTokenType(String tokenType) {
+		this.tokenType = tokenType;
 	}
 	public String getRequestDT() {
 		return requestDT;

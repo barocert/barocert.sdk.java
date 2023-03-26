@@ -5,10 +5,10 @@ import org.junit.Test;
 import com.barocert.BarocertException;
 import com.barocert.KakaocertService;
 import com.barocert.KakaocertServiceImp;
-import com.barocert.kakaocert.verifyauth.VARequest;
-import com.barocert.kakaocert.verifyauth.VAResponse;
-import com.barocert.kakaocert.verifyauth.VAVerifyResult;
-import com.barocert.kakaocert.verifyauth.VAStateResult;
+import com.barocert.kakaocert.verifyauth.VerifyAuthObject;
+import com.barocert.kakaocert.verifyauth.VerifyAuthResponse;
+import com.barocert.kakaocert.verifyauth.VerifyAuthResult;
+import com.barocert.kakaocert.verifyauth.VerifyAuthStateResult;
 
 public class TEST_VerifyAuth {
 	
@@ -32,7 +32,7 @@ public class TEST_VerifyAuth {
 	public void requestVerifyAuth_TEST() throws BarocertException {
 		try {
 			// 본인인증 요청 Object
-			VARequest request = new VARequest();
+			VerifyAuthObject request = new VerifyAuthObject();
 			
 			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
 			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
@@ -50,7 +50,7 @@ public class TEST_VerifyAuth {
 			// AppToApp 방식 이용 시 입력.
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			VAResponse result = kakaocertService.requestVerifyAuth("023030000003", request);
+			VerifyAuthResponse result = kakaocertService.verifyAuthRequest("023030000003", request);
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
@@ -64,7 +64,7 @@ public class TEST_VerifyAuth {
 	@Test
 	public void getVerifyAuthState_TEST() throws BarocertException {
 		try {
-			VAStateResult result = kakaocertService.getVerifyAuthState("023030000003", "0230323095837000000000000000000000000001");
+			VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023030000003", "0230323095837000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getClientCode());
@@ -92,7 +92,7 @@ public class TEST_VerifyAuth {
 	@Test
 	public void verifyAuth_TEST() throws BarocertException {
 		try {
-			VAVerifyResult result = kakaocertService.verifyAuth("023030000003", "0230323095837000000000000000000000000001");
+			VerifyAuthResult result = kakaocertService.verifyAuth("023030000003", "0230323095837000000000000000000000000001");
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getState());
