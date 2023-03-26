@@ -19,6 +19,7 @@ public class TEST_CMS {
 	
 	public TEST_CMS() {
 		KakaocertServiceImp service = new KakaocertServiceImp();
+		service.setServiceURL("https://bc-api.linkhub.kr");
 		service.setLinkID(testLinkID);
 		service.setSecretKey(testSecretKey);
 		service.setUseStaticIP(false);
@@ -29,14 +30,16 @@ public class TEST_CMS {
 	// 출금동의 요청
 	@Test
 	public void requestCMS_TEST() {
+		
 		try {
+			// 출금동의 요청 Object
 			CMSRequest request = new CMSRequest();
 			
 			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
 			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
 			request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
 			request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
-			// request.setCi(kakaocertService.AES256Encrypt(""));
+//			request.setCi(kakaocertService.AES256Encrypt(""));
 			
 			request.setReqTitle("인증요청 메시지 제공란");
 			request.setExpireIn(1000);
@@ -48,10 +51,14 @@ public class TEST_CMS {
 			request.setBankAccountBirthday(kakaocertService.AES256Encrypt("19930112"));
 			request.setBankServiceType(kakaocertService.AES256Encrypt("CMS")); // CMS, FIRM, GIRO
 			
+			// AppToApp 인증요청 여부
+	        // true: AppToApp 인증방식, false: Talk Message 인증방식
+			request.setAppUseYN(false);
+			
 			// AppToApp 방식 이용 시 입력.
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			CMSResponse result = kakaocertService.requestCMS("023030000003", request, false);
+			CMSResponse result = kakaocertService.requestCMS("023030000003", request);
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());

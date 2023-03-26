@@ -26,6 +26,7 @@ public class TEST_ESign {
 	
 	public TEST_ESign() {
 		KakaocertServiceImp service = new KakaocertServiceImp();
+		service.setServiceURL("https://bc-api.linkhub.kr");
 		service.setLinkID(testLinkID);
 		service.setSecretKey(testSecretKey);
 		service.setUseStaticIP(false);
@@ -37,7 +38,7 @@ public class TEST_ESign {
 	@Test
 	public void requestESign_TEST() throws BarocertException {
 		try {
-			// 전자서명 요청 정보 Object
+			// 전자서명 요청(단건)  Object
 			ESRequest request = new ESRequest();
 			
 			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
@@ -51,10 +52,12 @@ public class TEST_ESign {
 			request.setToken(kakaocertService.AES256Encrypt("토큰원문 단건 테스트"));
 			request.setTokenType("TEXT"); // TEXT, HASH
 			
+			request.setAppUseYN(false);
+			
 			// AppToApp 방식 이용 시 입력.
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			ESResponse result = kakaocertService.requestESign("023030000003", request, false);
+			ESResponse result = kakaocertService.requestESign("023030000003", request);
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
@@ -68,6 +71,7 @@ public class TEST_ESign {
 	@Test
 	public void requestMultiESign_TEST() throws BarocertException {
 		try {
+			// 전자서명 요청(다건) Object
 			ESMultiRequest request = new ESMultiRequest();
 			
 			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택1
@@ -95,12 +99,14 @@ public class TEST_ESign {
 				request.getTokens().add(token);
 			}
 			
+			request.setAppUseYN(false);
+			
 			request.setTokenType("TEXT"); // TEXT, HASH
 			
 			// AppToApp 방식 이용 시
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			ESMultiResponse result = kakaocertService.requestMultiESign("023030000003", request, false);
+			ESMultiResponse result = kakaocertService.requestMultiESign("023030000003", request);
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());

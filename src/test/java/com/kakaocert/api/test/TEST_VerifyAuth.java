@@ -19,6 +19,7 @@ public class TEST_VerifyAuth {
 	
 	public TEST_VerifyAuth() {
 		KakaocertServiceImp service = new KakaocertServiceImp();
+		service.setServiceURL("https://bc-api.linkhub.kr");
 		service.setLinkID(testLinkID);
 		service.setSecretKey(testSecretKey);
 		service.setUseStaticIP(false);
@@ -30,6 +31,7 @@ public class TEST_VerifyAuth {
 	@Test
 	public void requestVerifyAuth_TEST() throws BarocertException {
 		try {
+			// 본인인증 요청 Object
 			VARequest request = new VARequest();
 			
 			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
@@ -43,10 +45,12 @@ public class TEST_VerifyAuth {
 			
 			request.setToken(kakaocertService.AES256Encrypt("본인인증요청토큰"));
 			
+			request.setAppUseYN(false);
+			
 			// AppToApp 방식 이용 시 입력.
 			// request.setReturnURL("https://kakao.barocert.com");
 			
-			VAResponse result = kakaocertService.requestVerifyAuth("023030000003", request, false);
+			VAResponse result = kakaocertService.requestVerifyAuth("023030000003", request);
 			
 			System.out.println(result.getReceiptID());
 			System.out.println(result.getScheme());
