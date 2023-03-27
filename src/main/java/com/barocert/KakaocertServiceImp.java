@@ -566,8 +566,6 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == eSignObject)
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
         
-        eSignObject.setClientCode(clientCode);
-        
         String postDate = toJsonString(eSignObject);
         
     	return httppost("/KAKAO/ESign/" + clientCode, clientCode, postDate, ESignResponse.class);
@@ -582,8 +580,6 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == eSignMultiObject)
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
     	  
-        eSignMultiObject.setClientCode(clientCode);
-        
         String postDate = toJsonString(eSignMultiObject);
 
         return httppost("/KAKAO/ESignMulti/" + clientCode, clientCode, postDate, ESignMultiResponse.class);
@@ -659,8 +655,6 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == verifyAuthObject)
             throw new BarocertException(-99999999, "본인인증 요청정보가 입력되지 않았습니다.");
         
-        verifyAuthObject.setClientCode(clientCode);
-        
         String postDate = toJsonString(verifyAuthObject);
         
         return httppost("/KAKAO/VerifyAuth/" + clientCode, clientCode, postDate, VerifyAuthResponse.class);
@@ -687,13 +681,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         
-        VAVerifyRequest request = new VAVerifyRequest();
-        request.setClientCode(clientCode);
-		request.setReceiptID(receiptID);
-		
-		String postDate = toJsonString(request);
-		
-        return httppost("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, postDate, VerifyAuthResult.class);
+        return httpget("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, VerifyAuthResult.class);
     }
     
     
@@ -705,8 +693,6 @@ public class KakaocertServiceImp implements KakaocertService {
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
         if (cMSObject == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "출금동의 요청정보가 입력되지 않았습니다.");
-        
-        cMSObject.setClientCode(clientCode);
         
         String postDate = toJsonString(cMSObject);
 
@@ -734,13 +720,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         
-        VAVerifyRequest request = new VAVerifyRequest();
-		request.setClientCode(clientCode);
-		request.setReceiptID(receiptID);
-		
-		String postDate = toJsonString(request);
-
-        return httppost("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, postDate, CMSVerifyResult.class);
+        return httpget("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, CMSVerifyResult.class);
     }
     
 }
