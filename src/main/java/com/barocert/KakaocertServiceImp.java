@@ -403,11 +403,11 @@ public class KakaocertServiceImp implements KakaocertService {
     }
     
     protected byte[] GenerateRandomKeyByte()  {
-    	byte[] iv = new byte[16]; // CBC IV LENGTH
-		secureRandom.nextBytes(iv);
+        byte[] iv = new byte[16]; // CBC IV LENGTH
+        secureRandom.nextBytes(iv);
 		
-		return iv;
-	}
+        return iv;
+    }
     
     @Override
     public String AES256Encrypt(String plainText) throws BarocertException {
