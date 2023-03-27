@@ -433,7 +433,7 @@ public class KakaocertServiceImp implements KakaocertService {
         return base64Encode(byteBuffer.array());
     }
 
-	private static String fromStream(InputStream input) throws BarocertException {
+    private static String fromStream(InputStream input) throws BarocertException {
         InputStreamReader is = null;
         BufferedReader br = null;
         StringBuilder sb = null;
