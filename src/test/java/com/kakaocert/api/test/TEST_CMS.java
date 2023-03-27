@@ -71,7 +71,7 @@ public class TEST_CMS {
 	@Test
 	public void getCMSState_TEST() throws BarocertException {
 		try {
-			CMSStateResult result = kakaocertService.getCMSState("023030000003", "02303270230300000030000000000001");
+			CMSStateResult result = kakaocertService.getCMSState("023030000003", "02303270230300000030000000000010");
 			
 			System.out.println("ReceiptID : " + result.getReceiptID());
 			System.out.println("ClientCode : " + result.getClientCode());
@@ -102,7 +102,7 @@ public class TEST_CMS {
 		try {
 			// 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
 			// 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-			CMSVerifyResult result = kakaocertService.cMSVerify("023030000003", "02303270230300000030000000000001");
+			CMSVerifyResult result = kakaocertService.cMSVerify("023030000003", "02303270230300000030000000000010");
 			
 			System.out.println("ReceiptID : " + result.getReceiptID());
 			System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
