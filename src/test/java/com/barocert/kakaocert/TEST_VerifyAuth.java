@@ -17,7 +17,7 @@ public class TEST_VerifyAuth {
 	
 	private KakaocertService kakaocertService;
 	
-	public TEST_VerifyAuth() {
+    public TEST_VerifyAuth() {
         KakaocertServiceImp service = new KakaocertServiceImp();
         service.setServiceURL("https://bc-api.linkhub.kr");
         service.setLinkID(testLinkID);
@@ -25,11 +25,11 @@ public class TEST_VerifyAuth {
         service.setUseStaticIP(false);
         service.setUseLocalTimeYN(true);
         kakaocertService = service;
-	}
+    }
 	
-	// 본인인증 요청
-	@Test
-	public void verifyAuthRequest_TEST() throws BarocertException {
+    // 본인인증 요청
+    @Test
+    public void verifyAuthRequest_TEST() throws BarocertException {
         try {
             // 본인인증 요청 Object
             VerifyAuthObject request = new VerifyAuthObject();
@@ -63,11 +63,11 @@ public class TEST_VerifyAuth {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
         }
-	}
+    }
 	
-	// 본인인증 상태확인
-	@Test
-	public void getVerifyAuthState_TEST() throws BarocertException {
+    // 본인인증 상태확인
+    @Test
+    public void getVerifyAuthState_TEST() throws BarocertException {
         try {
             VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023030000003", "02303270230300000030000000000029");
 			
@@ -93,9 +93,9 @@ public class TEST_VerifyAuth {
         }
     }
 	
-	// 본인인증 서명검증
-	@Test
-	public void verifyAuth_TEST() throws BarocertException {
+    // 본인인증 서명검증
+    @Test
+    public void verifyAuth_TEST() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.

@@ -24,7 +24,7 @@ public class TEST_ESign {
 	
 	private KakaocertService kakaocertService;
 	
-	public TEST_ESign() {
+    public TEST_ESign() {
         KakaocertServiceImp service = new KakaocertServiceImp();
         service.setServiceURL("https://bc-api.linkhub.kr");
         service.setLinkID(testLinkID);
@@ -32,11 +32,11 @@ public class TEST_ESign {
         service.setUseStaticIP(false);
         service.setUseLocalTimeYN(true);
         kakaocertService = service;
-	}
+    }
 		
-	// 전자서명 요청(단건)
-	@Test
-	public void eSignRequest_TEST() throws BarocertException {
+    // 전자서명 요청(단건)
+    @Test
+    public void eSignRequest_TEST() throws BarocertException {
         try {
             // 전자서명 요청(단건) Object
             ESignObject request = new ESignObject();
@@ -72,9 +72,9 @@ public class TEST_ESign {
         }
     }
 	
-	// 전자서명 요청(다건)
-	@Test
-	public void eSignMultiRequest_TEST() throws BarocertException {
+    // 전자서명 요청(다건)
+    @Test
+    public void eSignMultiRequest_TEST() throws BarocertException {
         try {
             // 전자서명 요청(다건) Object
             ESignMultiObject request = new ESignMultiObject();
@@ -127,9 +127,9 @@ public class TEST_ESign {
         }
     }
 	
-	// 전자서명 상태확인(단건)	
-	@Test
-	public void getESignState_TEST() throws BarocertException {
+    // 전자서명 상태확인(단건)	
+    @Test
+    public void getESignState_TEST() throws BarocertException {
         try {
             ESignStateResult result = kakaocertService.getESignState("023030000003", "02303270230300000030000000000033");
 			
@@ -156,9 +156,9 @@ public class TEST_ESign {
         }
     }
 	
-	// 전자서명 상태확인(다건)	
-	@Test
-	public void getMultiESignState_TEST() throws BarocertException {
+    // 전자서명 상태확인(다건)	
+    @Test
+    public void getMultiESignState_TEST() throws BarocertException {
         try {
             MultiESignStateResult result = kakaocertService.getMultiESignState("023030000003", "02303270230300000030000000000034");
 			
@@ -185,9 +185,9 @@ public class TEST_ESign {
         }
     }
 	
-	// 전자서명 검증(단건)
-	@Test
-	public void eSignVerify_TEST() throws BarocertException {
+    // 전자서명 검증(단건)
+    @Test
+    public void eSignVerify_TEST() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
@@ -203,9 +203,9 @@ public class TEST_ESign {
         }
     }
 	
-	// 전자서명 검증(다건)
-	@Test
-	public void multiESignVerify_TEST() throws BarocertException {
+    // 전자서명 검증(다건)
+    @Test
+    public void multiESignVerify_TEST() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.

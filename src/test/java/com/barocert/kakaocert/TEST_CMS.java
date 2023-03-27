@@ -17,7 +17,7 @@ public class TEST_CMS {
 	
 	private KakaocertService kakaocertService;
 	
-	public TEST_CMS() {
+    public TEST_CMS() {
         KakaocertServiceImp service = new KakaocertServiceImp();
         service.setServiceURL("https://bc-api.linkhub.kr");
         service.setLinkID(testLinkID);
@@ -25,11 +25,11 @@ public class TEST_CMS {
         service.setUseStaticIP(false);
         service.setUseLocalTimeYN(true);
         kakaocertService = service;
-	}
+    }
 	
-	// 출금동의 요청
-	@Test
-	public void cMSRequest_TEST() {
+    // 출금동의 요청
+    @Test
+    public void cMSRequest_TEST() {
         try {
             // 출금동의 요청 Object
             CMSObject request = new CMSObject();
@@ -68,11 +68,11 @@ public class TEST_CMS {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
         }
-	}
+    }
 	
-	// 출금동의 상태확인
-	@Test
-	public void getCMSState_TEST() throws BarocertException {
+    // 출금동의 상태확인
+    @Test
+    public void getCMSState_TEST() throws BarocertException {
         try {
             CMSStateResult result = kakaocertService.getCMSState("023030000003", "02303270230300000030000000000030");
 			
@@ -99,9 +99,9 @@ public class TEST_CMS {
         }
     }
 	
-	// 출금동의 검증
-	@Test
-	public void cMSVerify_TEST() throws BarocertException {
+    // 출금동의 검증
+    @Test
+    public void cMSVerify_TEST() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
