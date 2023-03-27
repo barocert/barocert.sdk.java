@@ -1,4 +1,4 @@
-package com.kakaocert.api.test;
+package com.barocert.kakaocert;
 
 import java.util.ArrayList;
 
