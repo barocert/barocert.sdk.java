@@ -310,7 +310,7 @@ public class KakaocertServiceImp implements KakaocertService {
         try {
             httpURLConnection.setRequestMethod("POST");
         } catch (ProtocolException e1) {
-    		throw new BarocertException(-99999999, "Kakaocert Protocol Exception : ", e1);
+            throw new BarocertException(-99999999, "Kakaocert Protocol Exception : ", e1);
         }
 
         httpURLConnection.setUseCaches(false);
