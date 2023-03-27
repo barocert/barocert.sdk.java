@@ -73,7 +73,7 @@ public class KakaocertServiceImp implements KakaocertService {
 	
     private TokenBuilder tokenBuilder;
 
-	private Gson _gsonParser = new Gson();
+    private Gson _gsonParser = new Gson();
     private final SecureRandom secureRandom = new SecureRandom();
     private Map<String, Token> tokenTable = new HashMap<String, Token>();
 
@@ -310,7 +310,7 @@ public class KakaocertServiceImp implements KakaocertService {
         try {
             httpURLConnection.setRequestMethod("POST");
         } catch (ProtocolException e1) {
-        	throw new BarocertException(-99999999, "Kakaocert Protocol Exception : ", e1);
+    		throw new BarocertException(-99999999, "Kakaocert Protocol Exception : ", e1);
         }
 
         httpURLConnection.setUseCaches(false);
@@ -382,6 +382,7 @@ public class KakaocertServiceImp implements KakaocertService {
             SecretKeySpec signingKey = new SecretKeySpec(key, HMAC_SHA256_ALGORITHM);
             Mac mac = Mac.getInstance(HMAC_SHA256_ALGORITHM);
             mac.init(signingKey);
+            
             return mac.doFinal(input);
         } catch (Exception e) {
             throw new BarocertException(-99999999, "Fail to Calculate HMAC-SHA256, Please check your SecretKey.", e);
@@ -410,59 +411,59 @@ public class KakaocertServiceImp implements KakaocertService {
     
     @Override
 	public String AES256Encrypt(String plainText) throws BarocertException {
-    	ByteBuffer byteBuffer = null;
-    	
-    	try {
-            byte[] iv = GenerateRandomKeyByte();
-
-            SecretKeySpec keySpec = new SecretKeySpec(base64Decode(_secretKey), "AES");
-            
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, keySpec,new IvParameterSpec(iv));
-            
-            byte[] encryptedData = cipher.doFinal(plainText.getBytes(Charset.forName("UTF-8")));
-
-            byteBuffer = ByteBuffer.allocate(iv.length + encryptedData.length);
-            byteBuffer.put(iv);
-            byteBuffer.put(encryptedData);
-        } catch (Exception e) {
-            throw new BarocertException(-99999999, "Kakaocert AES256Encrypt : ", e);
-        }
-        
-        return base64Encode(byteBuffer.array());
+		ByteBuffer byteBuffer = null;
+		
+		try {
+		    byte[] iv = GenerateRandomKeyByte();
+		
+		    SecretKeySpec keySpec = new SecretKeySpec(base64Decode(_secretKey), "AES");
+		    
+		    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		    cipher.init(Cipher.ENCRYPT_MODE, keySpec,new IvParameterSpec(iv));
+		    
+		    byte[] encryptedData = cipher.doFinal(plainText.getBytes(Charset.forName("UTF-8")));
+		
+		    byteBuffer = ByteBuffer.allocate(iv.length + encryptedData.length);
+		    byteBuffer.put(iv);
+		    byteBuffer.put(encryptedData);
+		} catch (Exception e) {
+		    throw new BarocertException(-99999999, "Kakaocert AES256Encrypt : ", e);
+		}
+		
+		return base64Encode(byteBuffer.array());
 	}
 
 	private static String fromStream(InputStream input) throws BarocertException {
-        InputStreamReader is = null;
-        BufferedReader br = null;
-        StringBuilder sb = null;
-
-        try {
-            is = new InputStreamReader(input, Charset.forName("UTF-8"));
-            br = new BufferedReader(is);
-            sb = new StringBuilder();
-
-            String read = br.readLine();
-
-            while (read != null) {
-                sb.append(read);
-                read = br.readLine();
-            }
-
-        } catch (IOException e) {
-            throw new BarocertException(-99999999, "Kakaocert fromStream func Exception", e);
-        } finally {
-            try {
-                if (br != null)
-                    br.close();
-                if (is != null)
-                    is.close();
-            } catch (IOException e) {
-                throw new BarocertException(-99999999, "Kakaocert fromStream func finally close Exception", e);
-            }
-        }
-
-        return sb.toString();
+		InputStreamReader is = null;
+		BufferedReader br = null;
+		StringBuilder sb = null;
+		
+		try {
+		    is = new InputStreamReader(input, Charset.forName("UTF-8"));
+		    br = new BufferedReader(is);
+		    sb = new StringBuilder();
+		
+		    String read = br.readLine();
+		
+		    while (read != null) {
+		        sb.append(read);
+		        read = br.readLine();
+		    }
+		
+		} catch (IOException e) {
+		    throw new BarocertException(-99999999, "Kakaocert fromStream func Exception", e);
+		} finally {
+		    try {
+		        if (br != null)
+		            br.close();
+		        if (is != null)
+		            is.close();
+		    } catch (IOException e) {
+		        throw new BarocertException(-99999999, "Kakaocert fromStream func finally close Exception", e);
+		    }
+		}
+		
+		return sb.toString();
     }
 
     private static String fromGzipStream(InputStream input) throws BarocertException {
@@ -600,12 +601,12 @@ public class KakaocertServiceImp implements KakaocertService {
     @Override
 	public MultiESignStateResult getMultiESignState(String clientCode, String receiptID) throws BarocertException {
     	
-    	if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
-
-        return httpget("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, MultiESignStateResult.class);
+		if (null == clientCode || clientCode.length() == 0)
+		    throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+		if (null == receiptID || receiptID.length() == 0)
+		    throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+		
+		return httpget("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, MultiESignStateResult.class);
 	}
 
     // 전자서명 서명검증(단건)
@@ -626,14 +627,14 @@ public class KakaocertServiceImp implements KakaocertService {
     @Override
 	public MultiESignVerifyResult multiESignVerify(String clientCode, String receiptID) throws BarocertException {
 		
-    	if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
-
+		if (null == clientCode || clientCode.length() == 0)
+		    throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+		if (null == receiptID || receiptID.length() == 0)
+		    throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+		
 		String postDate = toJsonString("");
-        
-        return httppost("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, postDate, MultiESignVerifyResult.class);
+		
+		return httppost("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, postDate, MultiESignVerifyResult.class);
 	}
 
     
