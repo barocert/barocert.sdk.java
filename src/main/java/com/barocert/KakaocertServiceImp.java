@@ -157,7 +157,7 @@ public class KakaocertServiceImp implements KakaocertService {
             if (AuthURL != null) {
                 tokenBuilder.setServiceURL(AuthURL);
             } else {
-        		if (useStaticIP) tokenBuilder.setServiceURL(Auth_Static_URL);
+                if (useStaticIP) tokenBuilder.setServiceURL(Auth_Static_URL);
             }
             
             if (ProxyIP != null && ProxyPort != null) {
@@ -192,8 +192,8 @@ public class KakaocertServiceImp implements KakaocertService {
             } catch (LinkhubException le) {
                 throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception : " + le);
             } catch (Exception e) {
-				throw new BarocertException(-99999999, "Kakaocert Parse Exception : " + e.getMessage());
-			}
+                throw new BarocertException(-99999999, "Kakaocert Parse Exception : " + e.getMessage());
+            }
         }
 
         if (expired) {
@@ -342,9 +342,8 @@ public class KakaocertServiceImp implements KakaocertService {
                 throw new BarocertException(-99999999, "Kakaocert Fail to POST data to Server.", e);
             } finally {
                 try {
-                    if (output != null) {
+                    if (output != null)
                         output.close();
-                    }
                 } catch (IOException e1) {
                     throw new BarocertException(-99999999, "Kakaocert httppost func DataOutputStream close() Exception", e1);
                 }
@@ -382,7 +381,6 @@ public class KakaocertServiceImp implements KakaocertService {
             SecretKeySpec signingKey = new SecretKeySpec(key, HMAC_SHA256_ALGORITHM);
             Mac mac = Mac.getInstance(HMAC_SHA256_ALGORITHM);
             mac.init(signingKey);
-            
             return mac.doFinal(input);
         } catch (Exception e) {
             throw new BarocertException(-99999999, "Fail to Calculate HMAC-SHA256, Please check your SecretKey.", e);
@@ -527,9 +525,8 @@ public class KakaocertServiceImp implements KakaocertService {
 
             } finally {
                 try {
-                    if (errorIs != null) {
+                    if (errorIs != null)
                         errorIs.close();
-                    }
                 } catch (IOException e1) {
                     throw new BarocertException(-99999999, "Kakaocert parseResponse func InputStream close() Exception", e1);
                 }
@@ -542,9 +539,8 @@ public class KakaocertServiceImp implements KakaocertService {
             }
         } finally {
             try {
-                if (input != null) {
+                if (input != null)
                     input.close();
-                }
             } catch (IOException e2) {
                 throw new BarocertException(-99999999, "Kakaocert parseResponse func InputStream close() Exception", e2);
             }
