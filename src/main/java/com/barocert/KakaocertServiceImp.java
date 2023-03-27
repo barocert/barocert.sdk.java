@@ -190,9 +190,9 @@ public class KakaocertServiceImp implements KakaocertService {
                 UTCTime = subFormat.parse(getTokenbuilder().getTime());
                 expired = expiration.before(UTCTime);
             } catch (LinkhubException le) {
-                throw new BarocertException(le);
+                throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception : " + le);
             } catch (Exception e) {
-				throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception : " + e.getMessage());
+				throw new BarocertException(-99999999, "Kakaocert Parse Exception : " + e.getMessage());
 			}
         }
 
