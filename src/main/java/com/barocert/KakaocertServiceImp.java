@@ -594,15 +594,15 @@ public class KakaocertServiceImp implements KakaocertService {
     
     // 전자서명 상태확인(다건)
     @Override
-	public MultiESignStateResult getMultiESignState(String clientCode, String receiptID) throws BarocertException {
+    public MultiESignStateResult getMultiESignState(String clientCode, String receiptID) throws BarocertException {
     	
-		if (null == clientCode || clientCode.length() == 0)
-		    throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-		if (null == receiptID || receiptID.length() == 0)
-		    throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+        if (null == clientCode || clientCode.length() == 0)
+            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (null == receiptID || receiptID.length() == 0)
+            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 		
-		return httpget("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, MultiESignStateResult.class);
-	}
+        return httpget("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, MultiESignStateResult.class);
+    }
 
     // 전자서명 서명검증(단건)
     @Override
@@ -620,16 +620,16 @@ public class KakaocertServiceImp implements KakaocertService {
     
     // 전자서명 서명검증(다건)
     @Override
-	public MultiESignVerifyResult multiESignVerify(String clientCode, String receiptID) throws BarocertException {
+    public MultiESignVerifyResult multiESignVerify(String clientCode, String receiptID) throws BarocertException {
 		
-		if (null == clientCode || clientCode.length() == 0)
-		    throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-		if (null == receiptID || receiptID.length() == 0)
-		    throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+        if (null == clientCode || clientCode.length() == 0)
+            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (null == receiptID || receiptID.length() == 0)
+            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 		
-		String postDate = toJsonString("");
+        String postDate = toJsonString("");
 		
-		return httppost("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, postDate, MultiESignVerifyResult.class);
+        return httppost("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, postDate, MultiESignVerifyResult.class);
 	}
 
     
