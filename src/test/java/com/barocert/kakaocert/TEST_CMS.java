@@ -12,10 +12,10 @@ import com.barocert.kakaocert.cms.CMSVerifyResult;
 
 public class TEST_CMS {
 	
-	private final String testLinkID = "BKAKAO"; // TODO :: 나중에 바꿔야 함.
-	private final String testSecretKey = "egkxYN99ZObjLa3c0nr9/riG+a0VDkZu87LSGR8c37U="; // TODO :: 나중에 바꿔야 함.
+    private final String testLinkID = "BKAKAO"; // TODO :: 나중에 바꿔야 함.
+    private final String testSecretKey = "egkxYN99ZObjLa3c0nr9/riG+a0VDkZu87LSGR8c37U="; // TODO :: 나중에 바꿔야 함.
 	
-	private KakaocertService kakaocertService;
+    private KakaocertService kakaocertService;
 	
     public TEST_CMS() {
         KakaocertServiceImp service = new KakaocertServiceImp();
