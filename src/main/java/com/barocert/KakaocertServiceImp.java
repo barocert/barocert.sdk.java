@@ -65,6 +65,7 @@ public class KakaocertServiceImp implements KakaocertService {
     private String ProxyIP = null;
     private Integer ProxyPort = null;
 
+    private boolean isIPRestrictOnOff;
     private boolean useStaticIP;
     private boolean useLocalTimeYN;
     
@@ -78,8 +79,17 @@ public class KakaocertServiceImp implements KakaocertService {
     private Map<String, Token> tokenTable = new HashMap<String, Token>();
 
     public KakaocertServiceImp() {
+        isIPRestrictOnOff = true;
         useStaticIP = false;
         useLocalTimeYN = true;
+    }
+    
+    public boolean isIPRestrictOnOff() {
+        return isIPRestrictOnOff;
+    }
+    
+    public void setIPRestrictOnOff(boolean isIPRestrictOnOff) {
+        this.isIPRestrictOnOff = isIPRestrictOnOff;
     }
 
     public void setUseStaticIP(boolean useStaticIP) {
@@ -103,7 +113,7 @@ public class KakaocertServiceImp implements KakaocertService {
             return ServiceURL;
         
         if (useStaticIP) 
-        	return ServiceURL_Static;
+            return ServiceURL_Static;
         
         return ServiceURL;
     }
@@ -201,7 +211,12 @@ public class KakaocertServiceImp implements KakaocertService {
                 tokenTable.remove(ClientCode);
 
             try {
-            	token = getTokenbuilder().build("", "*");
+            	
+            	if(isIPRestrictOnOff) {
+                    token = getTokenbuilder().build("", ForwardIP);
+            	} else {
+            		token = getTokenbuilder().build("", "*");
+            	}
 
                 tokenTable.put(ClientCode, token);
             } catch (LinkhubException le) {
@@ -554,7 +569,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     	if (null == clientCode || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == eSignObject)
+        if (null == eSignObject || eSignObject.equals(""))
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
         
         String postDate = toJsonString(eSignObject);
@@ -568,7 +583,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         if (null == clientCode || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == eSignMultiObject)
+        if (null == eSignMultiObject || eSignMultiObject.equals(""))
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
     	  
         String postDate = toJsonString(eSignMultiObject);
@@ -635,7 +650,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         if (null == clientCode || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == verifyAuthObject)
+        if (null == verifyAuthObject || verifyAuthObject.equals(""))
             throw new BarocertException(-99999999, "본인인증 요청정보가 입력되지 않았습니다.");
         
         String postDate = toJsonString(verifyAuthObject);
@@ -676,7 +691,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (cMSObject == null || clientCode.length() == 0)
+        if (cMSObject == null || cMSObject.equals(""))
             throw new BarocertException(-99999999, "출금동의 요청정보가 입력되지 않았습니다.");
         
         String postDate = toJsonString(cMSObject);

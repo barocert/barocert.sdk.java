@@ -29,6 +29,7 @@ public class TEST_ESign {
         service.setServiceURL("https://bc-api.linkhub.kr");
         service.setLinkID(testLinkID);
         service.setSecretKey(testSecretKey);
+        service.setIPRestrictOnOff(true);
         service.setUseStaticIP(false);
         service.setUseLocalTimeYN(true);
         kakaocertService = service;

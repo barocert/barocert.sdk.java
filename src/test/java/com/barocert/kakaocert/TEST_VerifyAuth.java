@@ -22,6 +22,7 @@ public class TEST_VerifyAuth {
         service.setServiceURL("https://bc-api.linkhub.kr");
         service.setLinkID(testLinkID);
         service.setSecretKey(testSecretKey);
+        service.setIPRestrictOnOff(true);
         service.setUseStaticIP(false);
         service.setUseLocalTimeYN(true);
         kakaocertService = service;
@@ -39,7 +40,7 @@ public class TEST_VerifyAuth {
             request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
             request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
             request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
-            // request.setCi(kakaocertService.AES256Encrypt(""));
+//             request.setCi(kakaocertService.AES256Encrypt(""));
 			
             // 인증요청 메시지 제목이 최대길이 40자.
             request.setReqTitle("인증요청 메시지 제목란");
