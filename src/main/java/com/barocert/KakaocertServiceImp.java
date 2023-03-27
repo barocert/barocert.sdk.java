@@ -34,15 +34,12 @@ import com.barocert.kakaocert.cms.CMSStateResult;
 import com.barocert.kakaocert.cms.CMSVerifyResult;
 import com.barocert.kakaocert.esign.ESignMultiObject;
 import com.barocert.kakaocert.esign.ESignMultiResponse;
-import com.barocert.kakaocert.esign.ESMultiVerifyRequest;
 import com.barocert.kakaocert.esign.MultiESignStateResult;
 import com.barocert.kakaocert.esign.MultiESignVerifyResult;
 import com.barocert.kakaocert.esign.ESignObject;
 import com.barocert.kakaocert.esign.ESignResponse;
 import com.barocert.kakaocert.esign.ESignStateResult;
-import com.barocert.kakaocert.esign.ESVerifyRequest;
 import com.barocert.kakaocert.esign.ESignVerifyResult;
-import com.barocert.kakaocert.verifyauth.VAVerifyRequest;
 import com.barocert.kakaocert.verifyauth.VerifyAuthObject;
 import com.barocert.kakaocert.verifyauth.VerifyAuthResponse;
 import com.barocert.kakaocert.verifyauth.VerifyAuthStateResult;
@@ -618,11 +615,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         
-        ESVerifyRequest request = new ESVerifyRequest();
-		request.setClientCode(clientCode);
-		request.setReceiptID(receiptID);
-		
-		String postDate = toJsonString(request);
+		String postDate = toJsonString("");
         
         return httppost("/KAKAO/ESign/" + clientCode + "/" + receiptID, clientCode, postDate, ESignVerifyResult.class);
     }
@@ -636,11 +629,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-        ESMultiVerifyRequest request = new ESMultiVerifyRequest();
-		request.setClientCode(clientCode);
-		request.setReceiptID(receiptID);
-		
-		String postDate = toJsonString(request);
+		String postDate = toJsonString("");
         
         return httppost("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, postDate, MultiESignVerifyResult.class);
 	}
