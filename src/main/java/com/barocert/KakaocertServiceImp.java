@@ -62,8 +62,6 @@ public class KakaocertServiceImp implements KakaocertService {
     private static final String ServiceURL_Static = "https://static-barocert.linkhub.co.kr";
     private String ServiceURL = "https://barocert.linkhub.co.kr";
     
-    public static final int CBC_IV_LENGTH = 16;	
-    
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
     
     private String AuthURL = null;
@@ -407,7 +405,7 @@ public class KakaocertServiceImp implements KakaocertService {
     }
     
     protected byte[] GenerateRandomKeyByte()  {
-    	byte[] iv = new byte[CBC_IV_LENGTH];
+    	byte[] iv = new byte[16]; // CBC IV LENGTH
 		secureRandom.nextBytes(iv);
 		
 		return iv;
