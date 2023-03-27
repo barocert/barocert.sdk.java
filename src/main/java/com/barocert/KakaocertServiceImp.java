@@ -257,9 +257,8 @@ public class KakaocertServiceImp implements KakaocertService {
             throw new BarocertException(-99999999, "Kakaocert API 서버 접속 실패", e);
         }
 
-        if (clientCode != null && clientCode.isEmpty() == false) {
+        if (clientCode != null && clientCode.isEmpty() == false)
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + getSessionToken(clientCode, null));
-        }
 
         httpURLConnection.setRequestProperty("Accept-Encoding", "gzip");
 
@@ -281,7 +280,6 @@ public class KakaocertServiceImp implements KakaocertService {
     protected <T> T httppost(String url, String clientCode, String PostData, Class<T> clazz) throws BarocertException {
         HttpURLConnection httpURLConnection;
         try {
-        	
             URL uri = new URL(getServiceURL() + url);
             
             if (ProxyIP != null && ProxyPort != null) {
@@ -290,7 +288,6 @@ public class KakaocertServiceImp implements KakaocertService {
             } else {
                 httpURLConnection = (HttpURLConnection) uri.openConnection();
             }
-            
         } catch (Exception e) {
             throw new BarocertException(-99999999, "Kakaocert API 서버 접속 실패", e);
         }
@@ -299,9 +296,8 @@ public class KakaocertServiceImp implements KakaocertService {
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         String date = format.format(new Date());
 
-        if (clientCode != null && clientCode.isEmpty() == false) {
+        if (clientCode != null && clientCode.isEmpty() == false)
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + getSessionToken(clientCode, null));
-        }
 
         httpURLConnection.setRequestProperty("x-bc-date".toLowerCase(), date);
         httpURLConnection.setRequestProperty("Content-Type", "application/json; charset=utf8");
