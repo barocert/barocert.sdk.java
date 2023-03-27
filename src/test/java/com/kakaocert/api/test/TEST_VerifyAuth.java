@@ -45,6 +45,8 @@ public class TEST_VerifyAuth {
 			
 			request.setToken(kakaocertService.AES256Encrypt("본인인증요청토큰"));
 			
+			// AppToApp 인증요청 여부
+	        // true: AppToApp 인증방식, false: Talk Message 인증방식
 			request.setAppUseYN(false);
 			
 			// AppToApp 방식 이용 시 입력.
@@ -52,11 +54,11 @@ public class TEST_VerifyAuth {
 			
 			VerifyAuthResponse result = kakaocertService.verifyAuthRequest("023030000003", request);
 			
-			System.out.println(result.getReceiptID());
-			System.out.println(result.getScheme());
-		} catch(BarocertException ke) {
-			System.out.println(ke.getCode());
-			System.out.println(ke.getMessage());
+			System.out.println("ReceiptID : " + result.getReceiptID());
+			System.out.println("Scheme : " + result.getScheme());
+		} catch(BarocertException be) {
+			System.out.println("Code : " + be.getCode());
+			System.out.println("Message : " + be.getMessage());
 		}
 	}
 	
@@ -66,25 +68,25 @@ public class TEST_VerifyAuth {
 		try {
 			VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023030000003", "0230323095837000000000000000000000000001");
 			
-			System.out.println(result.getReceiptID());
-			System.out.println(result.getClientCode());
-			System.out.println(result.getState());
-			System.out.println(result.getExpireIn());
-			System.out.println(result.getCallCenterName());
-			System.out.println(result.getCallCenterNum());
-			System.out.println(result.getReqTitle());
-			System.out.println(result.getAuthCategory());
-			System.out.println(result.getReturnURL());
-			System.out.println(result.getRequestDT());
-			System.out.println(result.getViewDT());
-			System.out.println(result.getCompleteDT());
-			System.out.println(result.getExpireDT());
-			System.out.println(result.getVerifyDT());
-			System.out.println(result.getScheme());
-			System.out.println(result.isAppUseYN());
-		} catch (BarocertException ke) {
-			System.out.println(ke.getCode());
-			System.out.println(ke.getMessage());
+			System.out.println("ReceiptID : " + result.getReceiptID());
+			System.out.println("ClientCode : " + result.getClientCode());
+			System.out.println("State : " + result.getState());
+			System.out.println("ExpireIn : " + result.getExpireIn());
+			System.out.println("CallCenterName : " + result.getCallCenterName());
+			System.out.println("CallCenterNum : " + result.getCallCenterNum());
+			System.out.println("ReqTitle : " + result.getReqTitle());
+			System.out.println("AuthCategory : " + result.getAuthCategory());
+			System.out.println("ReturnURL : " + result.getReturnURL());
+			System.out.println("RequestDT : " + result.getRequestDT());
+			System.out.println("ViewDT : " + result.getViewDT());
+			System.out.println("CompleteDT : " + result.getCompleteDT());
+			System.out.println("ExpireDT : " + result.getExpireDT());
+			System.out.println("VerifyDT : " + result.getVerifyDT());
+			System.out.println("Scheme : " + result.getScheme());
+			System.out.println("isAppUseYN : " + result.isAppUseYN());
+		} catch (BarocertException be) {
+			System.out.println("Code : " + be.getCode());
+			System.out.println("Message : " + be.getMessage());
 		}
 	}
 	
@@ -92,14 +94,16 @@ public class TEST_VerifyAuth {
 	@Test
 	public void verifyAuth_TEST() throws BarocertException {
 		try {
+			// 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
+			// 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
 			VerifyAuthResult result = kakaocertService.verifyAuth("023030000003", "0230323095837000000000000000000000000001");
 			
-			System.out.println(result.getReceiptID());
-			System.out.println(result.getState());
-			System.out.println(result.getToken());
-		} catch (BarocertException ke) {
-			System.out.println(ke.getCode());
-			System.out.println(ke.getMessage());
+			System.out.println("ReceiptID : " + result.getReceiptID());
+			System.out.println("State : " + result.getState());
+			System.out.println("Token : " + result.getToken());
+		} catch (BarocertException be) {
+			System.out.println("Code : " + be.getCode());
+			System.out.println("Message : " + be.getMessage());
 		}
 	}
 	
