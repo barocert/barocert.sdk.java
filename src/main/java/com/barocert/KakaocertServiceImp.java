@@ -410,60 +410,60 @@ public class KakaocertServiceImp implements KakaocertService {
 	}
     
     @Override
-	public String AES256Encrypt(String plainText) throws BarocertException {
-		ByteBuffer byteBuffer = null;
+    public String AES256Encrypt(String plainText) throws BarocertException {
+        ByteBuffer byteBuffer = null;
 		
-		try {
-		    byte[] iv = GenerateRandomKeyByte();
+        try {
+            byte[] iv = GenerateRandomKeyByte();
 		
-		    SecretKeySpec keySpec = new SecretKeySpec(base64Decode(_secretKey), "AES");
+            SecretKeySpec keySpec = new SecretKeySpec(base64Decode(_secretKey), "AES");
 		    
-		    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		    cipher.init(Cipher.ENCRYPT_MODE, keySpec,new IvParameterSpec(iv));
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec,new IvParameterSpec(iv));
 		    
-		    byte[] encryptedData = cipher.doFinal(plainText.getBytes(Charset.forName("UTF-8")));
+            byte[] encryptedData = cipher.doFinal(plainText.getBytes(Charset.forName("UTF-8")));
 		
-		    byteBuffer = ByteBuffer.allocate(iv.length + encryptedData.length);
-		    byteBuffer.put(iv);
-		    byteBuffer.put(encryptedData);
-		} catch (Exception e) {
-		    throw new BarocertException(-99999999, "Kakaocert AES256Encrypt : ", e);
-		}
+            byteBuffer = ByteBuffer.allocate(iv.length + encryptedData.length);
+            byteBuffer.put(iv);
+            byteBuffer.put(encryptedData);
+        } catch (Exception e) {
+            throw new BarocertException(-99999999, "Kakaocert AES256Encrypt : ", e);
+        }
 		
-		return base64Encode(byteBuffer.array());
-	}
+        return base64Encode(byteBuffer.array());
+    }
 
 	private static String fromStream(InputStream input) throws BarocertException {
-		InputStreamReader is = null;
-		BufferedReader br = null;
-		StringBuilder sb = null;
+        InputStreamReader is = null;
+        BufferedReader br = null;
+        StringBuilder sb = null;
 		
-		try {
-		    is = new InputStreamReader(input, Charset.forName("UTF-8"));
-		    br = new BufferedReader(is);
-		    sb = new StringBuilder();
+        try {
+            is = new InputStreamReader(input, Charset.forName("UTF-8"));
+            br = new BufferedReader(is);
+            sb = new StringBuilder();
 		
-		    String read = br.readLine();
+            String read = br.readLine();
 		
-		    while (read != null) {
-		        sb.append(read);
-		        read = br.readLine();
-		    }
+            while (read != null) {
+                sb.append(read);
+                read = br.readLine();
+            }
 		
-		} catch (IOException e) {
-		    throw new BarocertException(-99999999, "Kakaocert fromStream func Exception", e);
-		} finally {
-		    try {
-		        if (br != null)
-		            br.close();
-		        if (is != null)
-		            is.close();
-		    } catch (IOException e) {
-		        throw new BarocertException(-99999999, "Kakaocert fromStream func finally close Exception", e);
-		    }
-		}
+        } catch (IOException e) {
+            throw new BarocertException(-99999999, "Kakaocert fromStream func Exception", e);
+        } finally {
+            try {
+                if (br != null)
+                    br.close();
+                if (is != null)
+                    is.close();
+            } catch (IOException e) {
+                throw new BarocertException(-99999999, "Kakaocert fromStream func finally close Exception", e);
+            }
+        }
 		
-		return sb.toString();
+        return sb.toString();
     }
 
     private static String fromGzipStream(InputStream input) throws BarocertException {
