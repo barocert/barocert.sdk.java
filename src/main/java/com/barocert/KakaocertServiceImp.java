@@ -630,7 +630,7 @@ public class KakaocertServiceImp implements KakaocertService {
         String postDate = toJsonString("");
 		
         return httppost("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, postDate, MultiESignVerifyResult.class);
-	}
+    }
 
     
     // 본인인증 요청
