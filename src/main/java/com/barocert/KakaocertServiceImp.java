@@ -681,7 +681,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         
-        return httpget("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, VerifyAuthResult.class);
+        String postDate = toJsonString("");
+        
+        return httppost("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, postDate, VerifyAuthResult.class);
     }
     
     
@@ -720,7 +722,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (null == receiptID || receiptID.length() == 0)
             throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         
-        return httpget("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, CMSVerifyResult.class);
+        String postDate = toJsonString("");
+        
+        return httppost("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, postDate, CMSVerifyResult.class);
     }
     
 }
