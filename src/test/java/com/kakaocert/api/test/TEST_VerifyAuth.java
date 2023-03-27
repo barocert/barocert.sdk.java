@@ -29,7 +29,7 @@ public class TEST_VerifyAuth {
 	
 	// 본인인증 요청
 	@Test
-	public void requestVerifyAuth_TEST() throws BarocertException {
+	public void verifyAuthRequest_TEST() throws BarocertException {
 		try {
 			// 본인인증 요청 Object
 			VerifyAuthObject request = new VerifyAuthObject();
@@ -41,7 +41,7 @@ public class TEST_VerifyAuth {
 			// request.setCi(kakaocertService.AES256Encrypt(""));
 			
 			request.setReqTitle("인증요청 메시지 제목란");
-			request.setExpireIn(1000);
+			request.setExpireIn(1000); // 요청 마감시간(단위:초)
 			
 			request.setToken(kakaocertService.AES256Encrypt("본인인증요청토큰"));
 			
@@ -66,11 +66,11 @@ public class TEST_VerifyAuth {
 	@Test
 	public void getVerifyAuthState_TEST() throws BarocertException {
 		try {
-			VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023030000003", "0230323095837000000000000000000000000001");
+			VerifyAuthStateResult result = kakaocertService.getVerifyAuthState("023030000003", "02303270230300000030000000000002");
 			
 			System.out.println("ReceiptID : " + result.getReceiptID());
 			System.out.println("ClientCode : " + result.getClientCode());
-			System.out.println("State : " + result.getState());
+			System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
 			System.out.println("ExpireIn : " + result.getExpireIn());
 			System.out.println("CallCenterName : " + result.getCallCenterName());
 			System.out.println("CallCenterNum : " + result.getCallCenterNum());
@@ -96,10 +96,10 @@ public class TEST_VerifyAuth {
 		try {
 			// 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
 			// 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-			VerifyAuthResult result = kakaocertService.verifyAuth("023030000003", "0230323095837000000000000000000000000001");
+			VerifyAuthResult result = kakaocertService.verifyAuth("023030000003", "02303270230300000030000000000002");
 			
 			System.out.println("ReceiptID : " + result.getReceiptID());
-			System.out.println("State : " + result.getState());
+			System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
 			System.out.println("Token : " + result.getToken());
 		} catch (BarocertException be) {
 			System.out.println("Code : " + be.getCode());

@@ -29,7 +29,7 @@ public class TEST_CMS {
 	
 	// 출금동의 요청
 	@Test
-	public void requestCMS_TEST() {
+	public void cMSRequest_TEST() {
 		try {
 			// 출금동의 요청 Object
 			CMSObject request = new CMSObject();
@@ -41,7 +41,7 @@ public class TEST_CMS {
 			// request.setCi(kakaocertService.AES256Encrypt(""));
 			
 			request.setReqTitle("인증요청 메시지 제공란");
-			request.setExpireIn(1000);
+			request.setExpireIn(1000); // 요청 마감시간(단위:초)
 			
 			request.setRequestCorp(kakaocertService.AES256Encrypt("청구 기관명란"));
 			request.setBankName(kakaocertService.AES256Encrypt("출금은행명란"));
@@ -75,7 +75,7 @@ public class TEST_CMS {
 			
 			System.out.println("ReceiptID : " + result.getReceiptID());
 			System.out.println("ClientCode : " + result.getClientCode());
-			System.out.println("State : " + result.getState());
+			System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
 			System.out.println("ExpireIn : " + result.getExpireIn());
 			System.out.println("CallCenterName : " + result.getCallCenterName());
 			System.out.println("CallCenterNum : " + result.getCallCenterNum());
@@ -98,14 +98,14 @@ public class TEST_CMS {
 	
 	// 출금동의 검증
 	@Test
-	public void verifyCMS_TEST() throws BarocertException {
+	public void cMSVerify_TEST() throws BarocertException {
 		try {
 			// 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
 			// 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
 			CMSVerifyResult result = kakaocertService.cMSVerify("023030000003", "02303270230300000030000000000001");
 			
 			System.out.println("ReceiptID : " + result.getReceiptID());
-			System.out.println("State : " + result.getState());
+			System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
 			System.out.println("SignedData : " + result.getSignedData());
 			System.out.println("Ci : " + result.getCi());
 		} catch (BarocertException be) {
