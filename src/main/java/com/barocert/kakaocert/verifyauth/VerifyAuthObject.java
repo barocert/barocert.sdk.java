@@ -7,13 +7,10 @@ public class VerifyAuthObject {
 	private String receiverName;
 	private String receiverBirthday;
 	private String ci;
-	
 	private String reqTitle;
 	private Integer expireIn;
-	
 	private String token;
 	private String returnURL;
-
 	private boolean appUseYN;
 
 	public String getRequestID() {

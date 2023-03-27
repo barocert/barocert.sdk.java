@@ -16,7 +16,7 @@ public class ESignMultiObject {
 	
 	private String tokenType;
 	private String returnURL;
-	private boolean isAppUseYN;
+	private boolean appUseYN;
 	
 	public String getRequestID() {
 		return requestID;
@@ -97,13 +97,13 @@ public class ESignMultiObject {
 	public void setReturnURL(String returnURL) {
 		this.returnURL = returnURL;
 	}
-	
+
 	public boolean isAppUseYN() {
-		return isAppUseYN;
+		return appUseYN;
 	}
-	
-	public void setAppUseYN(boolean isAppUseYN) {
-		this.isAppUseYN = isAppUseYN;
+
+	public void setAppUseYN(boolean appUseYN) {
+		this.appUseYN = appUseYN;
 	}
 	
 }
