@@ -2,7 +2,6 @@ package com.barocert.kakaocert.verifyauth;
 
 public class VerifyAuthObject {
 
-	private String clientCode;
 	private String requestID;
 	private String receiverHP;
 	private String receiverName;
@@ -16,14 +15,6 @@ public class VerifyAuthObject {
 	private String returnURL;
 
 	private boolean appUseYN;
-
-	public String getClientCode() {
-		return clientCode;
-	}
-
-	public void setClientCode(String clientCode) {
-		this.clientCode = clientCode;
-	}
 
 	public String getRequestID() {
 		return requestID;

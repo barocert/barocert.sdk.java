@@ -4,7 +4,6 @@ import java.util.List;
 
 public class ESignMultiObject {
 	
-	private String clientCode;
 	private String requestID;
 	private String receiverHP;
 	private String receiverName;
@@ -19,12 +18,6 @@ public class ESignMultiObject {
 	private String returnURL;
 	private boolean isAppUseYN;
 	
-	public String getClientCode() {
-		return clientCode;
-	}
-	public void setClientCode(String clientCode) {
-		this.clientCode = clientCode;
-	}
 	public String getRequestID() {
 		return requestID;
 	}

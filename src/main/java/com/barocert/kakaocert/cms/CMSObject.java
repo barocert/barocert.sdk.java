@@ -2,7 +2,6 @@ package com.barocert.kakaocert.cms;
 
 public class CMSObject {
 
-	private String clientCode;
 	private String requestID;
 	private String receiverHP;
 	private String receiverName;
@@ -18,14 +17,6 @@ public class CMSObject {
 	private String bankAccountBirthday;
 	private String bankServiceType;
 	private boolean isAppUseYN;
-
-	public String getClientCode() {
-		return clientCode;
-	}
-
-	public void setClientCode(String clientCode) {
-		this.clientCode = clientCode;
-	}
 
 	public String getRequestID() {
 		return requestID;
