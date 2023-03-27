@@ -449,7 +449,6 @@ public class KakaocertServiceImp implements KakaocertService {
                 sb.append(read);
                 read = br.readLine();
             }
-		
         } catch (IOException e) {
             throw new BarocertException(-99999999, "Kakaocert fromStream func Exception", e);
         } finally {
