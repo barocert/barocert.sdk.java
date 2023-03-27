@@ -34,14 +34,17 @@ public class TEST_CMS {
 			// 출금동의 요청 Object
 			CMSObject request = new CMSObject();
 			
-			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
+            // 수신자 정보
+            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
 			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
 			request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
 			request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
 			// request.setCi(kakaocertService.AES256Encrypt(""));
 			
+			// 인증요청 메시지 제목이 최대길이 40자.
 			request.setReqTitle("인증요청 메시지 제공란");
-			request.setExpireIn(1000); // 요청 마감시간(단위:초)
+			// 인증요청 만료시간: 최대 1000(초)까지 입력 가능
+			request.setExpireIn(1000);
 			
 			request.setRequestCorp(kakaocertService.AES256Encrypt("청구 기관명란"));
 			request.setBankName(kakaocertService.AES256Encrypt("출금은행명란"));

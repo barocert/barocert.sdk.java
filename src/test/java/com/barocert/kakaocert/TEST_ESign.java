@@ -41,14 +41,17 @@ public class TEST_ESign {
 			// 전자서명 요청(단건) Object
 			ESignObject request = new ESignObject();
 			
-			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택일
+            // 수신자 정보
+            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
 			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
 			request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
 			request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
 			// request.setCi(kakaocertService.AES256Encrypt(kakaocertService.AES256Encrypt(""));
 			
+			// 인증요청 메시지 제목이 최대길이 40자.
 			request.setReqTitle("전자서명단건테스트");
-			request.setExpireIn(1000); // 요청 마감시간(단위:초)
+			// 인증요청 만료시간: 최대 1000(초)까지 입력 가능
+			request.setExpireIn(1000);
 			request.setToken(kakaocertService.AES256Encrypt("토큰원문 단건 테스트"));
 			request.setTokenType("TEXT"); // TEXT, HASH
 			
@@ -76,29 +79,32 @@ public class TEST_ESign {
 			// 전자서명 요청(다건) Object
 			ESignMultiObject request = new ESignMultiObject();
 			
-			// 수신자 정보(휴대폰번호, 성명, 생년월일)와 Ci 값 중 택1
+			// 수신자 정보
+            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
 			request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
 			request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
 			request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
 			// request.setCi(kakaocertService.AES256Encrypt(""));
 			
+			// 인증요청 메시지 제목이 최대길이 40자.
 			request.setReqTitle("인증요청 구분제목 테스트");
-			request.setExpireIn(1000); // 요청 마감시간(단위:초)
+			// 인증요청 만료시간: 최대 1000(초)까지 입력 가능
+			request.setExpireIn(1000);
 			
 			request.setTokens(new ArrayList<MultiESignTokens>());
 			
-			// 원문길이는 2800자 까지 입력가능.
+			// 원문길이 2800자 까지 입력가능.
 			String num = "1";
 			StringBuilder sb = new StringBuilder();
 			for(int j=0; j < 2800; j++) {
-				sb.append(num);
+				sb.append(num); // 최대길이 2800자 테스트
 			}
 			
 			// 인증요청 메시지 제목, 토큰원문은 최대 20개.
 			for(int i = 0; i < 20; i++) {
 				MultiESignTokens token = new MultiESignTokens();
 				token.setReqTitle("서명요청 제목 다건 테스트 " + i);
-				token.setToken(kakaocertService.AES256Encrypt(sb.toString())); // 원문길이는 2800자 까지.
+				token.setToken(kakaocertService.AES256Encrypt(sb.toString())); // 원문길이 2800자 까지 입력가능.
 				request.getTokens().add(token);
 			}
 			
