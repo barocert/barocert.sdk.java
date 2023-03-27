@@ -416,15 +416,17 @@ public class KakaocertServiceImp implements KakaocertService {
             byte[] iv = GenerateRandomKeyByte();
 
             SecretKeySpec keySpec = new SecretKeySpec(base64Decode(_secretKey), "AES");
+            
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, keySpec,new IvParameterSpec(iv));
+            
             byte[] encryptedData = cipher.doFinal(plainText.getBytes(Charset.forName("UTF-8")));
 
             byteBuffer = ByteBuffer.allocate(iv.length + encryptedData.length);
             byteBuffer.put(iv);
             byteBuffer.put(encryptedData);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new BarocertException(-99999999, "Kakaocert AES256Encrypt : ", e);
         }
         
         return base64Encode(byteBuffer.array());
