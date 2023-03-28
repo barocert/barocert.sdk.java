@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.cms;
 
-public class CMSStateResult {
+public class ResponseStateCMS {
 	
 	private String receiptID;
 	private String clientCode;

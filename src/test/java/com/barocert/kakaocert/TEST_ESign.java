@@ -7,14 +7,14 @@ import org.junit.Test;
 import com.barocert.BarocertException;
 import com.barocert.KakaocertService;
 import com.barocert.KakaocertServiceImp;
-import com.barocert.kakaocert.esign.ESignMultiObject;
-import com.barocert.kakaocert.esign.ESignMultiResponse;
-import com.barocert.kakaocert.esign.MultiESignStateResult;
-import com.barocert.kakaocert.esign.MultiESignVerifyResult;
+import com.barocert.kakaocert.esign.MultiESignObject;
+import com.barocert.kakaocert.esign.ResponseMultiESign;
+import com.barocert.kakaocert.esign.ResponseStateMultiESign;
+import com.barocert.kakaocert.esign.ResponseVerifyMultiESign;
 import com.barocert.kakaocert.esign.ESignObject;
-import com.barocert.kakaocert.esign.ESignResponse;
-import com.barocert.kakaocert.esign.ESignStateResult;
-import com.barocert.kakaocert.esign.ESignVerifyResult;
+import com.barocert.kakaocert.esign.ResponseESign;
+import com.barocert.kakaocert.esign.ResponseStateESign;
+import com.barocert.kakaocert.esign.ResponseVerifyESign;
 import com.barocert.kakaocert.esign.MultiESignTokens;
 
 public class TEST_ESign {
@@ -35,9 +35,9 @@ public class TEST_ESign {
         kakaocertService = service;
     }
 		
-    // 전자서명 요청(단건)
+    // 전자서명 서명요청(단건)
     @Test
-    public void eSignRequest_TEST() throws BarocertException {
+    public void TEST_RequestESign() throws BarocertException {
         try {
             // 전자서명 요청(단건) Object
             ESignObject request = new ESignObject();
@@ -63,7 +63,7 @@ public class TEST_ESign {
             // AppToApp 방식 이용 시 입력.
             // request.setReturnURL("https://kakao.barocert.com");
 			
-            ESignResponse result = kakaocertService.eSignRequest("023030000003", request);
+            ResponseESign result = kakaocertService.requestESign("023030000003", request);
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -72,13 +72,60 @@ public class TEST_ESign {
             System.out.println("Message : " + be.getMessage());
         }
     }
-	
-    // 전자서명 요청(다건)
+    
+    // 전자서명 상태확인(단건)	
     @Test
-    public void eSignMultiRequest_TEST() throws BarocertException {
+    public void TEST_RequestStateESign() throws BarocertException {
+        try {
+            ResponseStateESign result = kakaocertService.requestStateESign("023030000003", "02303280230300000030000000000007");
+			
+            System.out.println("ReceiptID : " + result.getReceiptID());
+            System.out.println("ClientCode : " + result.getClientCode());
+            System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
+            System.out.println("ExpireIn : " + result.getExpireIn());
+            System.out.println("CallCenterName : " + result.getCallCenterName());
+            System.out.println("CallCenterNum : " + result.getCallCenterNum());
+            System.out.println("ReqTitle : " + result.getReqTitle());
+            System.out.println("AuthCategory : " + result.getAuthCategory());
+            System.out.println("ReturnURL : " + result.getReturnURL());
+            System.out.println("TokenType : " + result.getTokenType());
+            System.out.println("RequestDT : " + result.getRequestDT());
+            System.out.println("ViewDT : " + result.getViewDT());
+            System.out.println("CompleteDT : " + result.getCompleteDT());
+            System.out.println("ExpireDT : " + result.getExpireDT());
+            System.out.println("VerifyDT : " + result.getVerifyDT());
+            System.out.println("Scheme : " + result.getScheme());
+            System.out.println("isAppUseYN : " + result.isAppUseYN());
+        } catch(BarocertException be) {
+            System.out.println("Code : " + be.getCode());
+            System.out.println("Message : " + be.getMessage());
+        }
+    }
+
+    // 전자서명 서명검증(단건)
+    @Test
+    public void TEST_RequestVerifyESign() throws BarocertException {
+        try {
+            // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
+            // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
+            ResponseVerifyESign result = kakaocertService.requestVerifyESign("023030000003", "02303280230300000030000000000007");
+			
+            System.out.println("ReceiptID : " + result.getReceiptID());
+            System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
+            System.out.println("SignedData : " + result.getSignedData());
+            System.out.println("Ci : " + result.getCi());
+        } catch(BarocertException be) {
+            System.out.println("Code : " + be.getCode());
+            System.out.println("Message : " + be.getMessage());
+        }
+    }
+	
+    // 전자서명 서명요청(다건)
+    @Test
+    public void TEST_RequestMultiESign() throws BarocertException {
         try {
             // 전자서명 요청(다건) Object
-            ESignMultiObject request = new ESignMultiObject();
+            MultiESignObject request = new MultiESignObject();
 			
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
@@ -118,39 +165,10 @@ public class TEST_ESign {
             // AppToApp 방식 이용 시
             // request.setReturnURL("https://kakao.barocert.com");
 			
-            ESignMultiResponse result = kakaocertService.eSignMultiRequest("023030000003", request);
+            ResponseMultiESign result = kakaocertService.requestMultiESign("023030000003", request);
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
-        } catch(BarocertException be) {
-            System.out.println("Code : " + be.getCode());
-            System.out.println("Message : " + be.getMessage());
-        }
-    }
-	
-    // 전자서명 상태확인(단건)	
-    @Test
-    public void getESignState_TEST() throws BarocertException {
-        try {
-            ESignStateResult result = kakaocertService.getESignState("023030000003", "02303270230300000030000000000033");
-			
-            System.out.println("ReceiptID : " + result.getReceiptID());
-            System.out.println("ClientCode : " + result.getClientCode());
-            System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("ExpireIn : " + result.getExpireIn());
-            System.out.println("CallCenterName : " + result.getCallCenterName());
-            System.out.println("CallCenterNum : " + result.getCallCenterNum());
-            System.out.println("ReqTitle : " + result.getReqTitle());
-            System.out.println("AuthCategory : " + result.getAuthCategory());
-            System.out.println("ReturnURL : " + result.getReturnURL());
-            System.out.println("TokenType : " + result.getTokenType());
-            System.out.println("RequestDT : " + result.getRequestDT());
-            System.out.println("ViewDT : " + result.getViewDT());
-            System.out.println("CompleteDT : " + result.getCompleteDT());
-            System.out.println("ExpireDT : " + result.getExpireDT());
-            System.out.println("VerifyDT : " + result.getVerifyDT());
-            System.out.println("Scheme : " + result.getScheme());
-            System.out.println("isAppUseYN : " + result.isAppUseYN());
         } catch(BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
@@ -159,9 +177,9 @@ public class TEST_ESign {
 	
     // 전자서명 상태확인(다건)	
     @Test
-    public void getMultiESignState_TEST() throws BarocertException {
+    public void TEST_RequestStateMultiESign() throws BarocertException {
         try {
-            MultiESignStateResult result = kakaocertService.getMultiESignState("023030000003", "02303270230300000030000000000034");
+            ResponseStateMultiESign result = kakaocertService.requestStateMultiESign("023030000003", "02303280230300000030000000000009");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -186,31 +204,13 @@ public class TEST_ESign {
         }
     }
 	
-    // 전자서명 검증(단건)
+    // 전자서명 서명검증(다건)
     @Test
-    public void eSignVerify_TEST() throws BarocertException {
+    public void TEST_RequestVerifyMultiESign() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ESignVerifyResult result = kakaocertService.eSignVerify("023030000003", "02303270230300000030000000000033");
-			
-            System.out.println("ReceiptID : " + result.getReceiptID());
-            System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("SignedData : " + result.getSignedData());
-            System.out.println("Ci : " + result.getCi());
-        } catch(BarocertException be) {
-            System.out.println("Code : " + be.getCode());
-            System.out.println("Message : " + be.getMessage());
-        }
-    }
-	
-    // 전자서명 검증(다건)
-    @Test
-    public void multiESignVerify_TEST() throws BarocertException {
-        try {
-            // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
-            // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            MultiESignVerifyResult result = kakaocertService.multiESignVerify("023030000003", "02303270230300000030000000000034");
+            ResponseVerifyMultiESign result = kakaocertService.requestVerifyMultiESign("023030000003", "02303280230300000030000000000009");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)

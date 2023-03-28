@@ -1,6 +1,6 @@
-package com.barocert.kakaocert.verifyauth;
+package com.barocert.kakaocert.cms;
 
-public class VerifyAuthResponse {
+public class ResponseCMS {
 	
 	private String receiptID;
 	private String scheme;
@@ -8,17 +8,14 @@ public class VerifyAuthResponse {
 	public String getReceiptID() {
 		return receiptID;
 	}
-	
 	public void setReceiptID(String receiptID) {
 		this.receiptID = receiptID;
 	}
-	
 	public String getScheme() {
 		return scheme;
 	}
-	
 	public void setScheme(String scheme) {
 		this.scheme = scheme;
 	}
-
+	
 }

@@ -1,10 +1,14 @@
-package com.barocert.kakaocert.cms;
+package com.barocert.kakaocert.esign;
 
-public class CMSVerifyResult {
+import java.util.List;
+
+public class ResponseVerifyMultiESign {
 	
 	private String receiptID;
 	private String state;
-	private String signedData;
+	
+	private List<String> multiSignedData;
+	
 	private String ci;
 	
 	public String getReceiptID() {
@@ -23,12 +27,12 @@ public class CMSVerifyResult {
 		this.state = state;
 	}
 	
-	public String getSignedData() {
-		return signedData;
+	public List<String> getMultiSignedData() {
+		return multiSignedData;
 	}
 	
-	public void setSignedData(String signedData) {
-		this.signedData = signedData;
+	public void setMultiSignedData(List<String> multiSignedData) {
+		this.multiSignedData = multiSignedData;
 	}
 	
 	public String getCi() {

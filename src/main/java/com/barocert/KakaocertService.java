@@ -1,21 +1,21 @@
 package com.barocert;
 
 import com.barocert.kakaocert.cms.CMSObject;
-import com.barocert.kakaocert.cms.CMSResponse;
-import com.barocert.kakaocert.cms.CMSStateResult;
-import com.barocert.kakaocert.cms.CMSVerifyResult;
-import com.barocert.kakaocert.esign.ESignMultiResponse;
-import com.barocert.kakaocert.esign.ESignMultiObject;
-import com.barocert.kakaocert.esign.MultiESignStateResult;
-import com.barocert.kakaocert.esign.MultiESignVerifyResult;
+import com.barocert.kakaocert.cms.ResponseCMS;
+import com.barocert.kakaocert.cms.ResponseStateCMS;
+import com.barocert.kakaocert.cms.ResponseVerifyCMS;
+import com.barocert.kakaocert.esign.ResponseMultiESign;
+import com.barocert.kakaocert.esign.MultiESignObject;
+import com.barocert.kakaocert.esign.ResponseStateMultiESign;
+import com.barocert.kakaocert.esign.ResponseVerifyMultiESign;
 import com.barocert.kakaocert.esign.ESignObject;
-import com.barocert.kakaocert.esign.ESignResponse;
-import com.barocert.kakaocert.esign.ESignStateResult;
-import com.barocert.kakaocert.esign.ESignVerifyResult;
-import com.barocert.kakaocert.verifyauth.VerifyAuthObject;
-import com.barocert.kakaocert.verifyauth.VerifyAuthResponse;
-import com.barocert.kakaocert.verifyauth.VerifyAuthStateResult;
-import com.barocert.kakaocert.verifyauth.VerifyAuthResult;
+import com.barocert.kakaocert.esign.ResponseESign;
+import com.barocert.kakaocert.esign.ResponseStateESign;
+import com.barocert.kakaocert.esign.ResponseVerifyESign;
+import com.barocert.kakaocert.verifyauth.AuthObject;
+import com.barocert.kakaocert.verifyauth.ResponseAuth;
+import com.barocert.kakaocert.verifyauth.ResponseStateAuth;
+import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
 
 public interface KakaocertService {
 	
@@ -29,7 +29,7 @@ public interface KakaocertService {
 	 * @return VerifyAuthResponse
 	 * @throws BarocertException
 	 */
-	public VerifyAuthResponse verifyAuthRequest(String clientCode, VerifyAuthObject verifyAuthObject) throws BarocertException;
+	public ResponseAuth requestAuth(String clientCode, AuthObject authObject) throws BarocertException;
 	
 	/**
 	 * 본인인증 상태확인
@@ -41,7 +41,7 @@ public interface KakaocertService {
 	 * @return VerifyAuthStateResult
 	 * @throws BarocertException
 	 */
-	public VerifyAuthStateResult getVerifyAuthState(String clientCode, String receiptID) throws BarocertException;
+	public ResponseStateAuth requestStateAuth(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 본인인증 서명검증
@@ -53,7 +53,7 @@ public interface KakaocertService {
 	 * @return VerifyAuthResult
 	 * @throws BarocertException
 	 */
-	public VerifyAuthResult verifyAuth(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyAuth requestVerifyAuth(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 요청(단건) 
@@ -65,7 +65,7 @@ public interface KakaocertService {
 	 * @return ESignResponse
 	 * @throws BarocertException
 	 */
-	public ESignResponse eSignRequest(String clientCode, ESignObject eSignObject) throws BarocertException;
+	public ResponseESign requestESign(String clientCode, ESignObject eSignObject) throws BarocertException;
 	
 	/**
 	 * 전자서명 상태확인(단건)
@@ -77,7 +77,7 @@ public interface KakaocertService {
 	 * @return ESignStateResult
 	 * @throws BarocertException
 	 */
-	public ESignStateResult getESignState(String clientCode, String receiptID) throws BarocertException;
+	public ResponseStateESign requestStateESign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 서명검증(단건)
@@ -89,7 +89,7 @@ public interface KakaocertService {
 	 * @return ESignVerifyResult
 	 * @throws BarocertException
 	 */
-	public ESignVerifyResult eSignVerify(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyESign requestVerifyESign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 요청(다건)
@@ -101,7 +101,7 @@ public interface KakaocertService {
 	 * @return ESignMultiResponse
 	 * @throws BarocertException
 	 */
-	public ESignMultiResponse eSignMultiRequest(String clientCode, ESignMultiObject eSignMultiObject) throws BarocertException;
+	public ResponseMultiESign requestMultiESign(String clientCode, MultiESignObject multiESignObject) throws BarocertException;
 	
 	/**
 	 * 전자서명 상태확인(다건)
@@ -113,7 +113,7 @@ public interface KakaocertService {
 	 * @return MultiESignStateResult
 	 * @throws BarocertException
 	 */
-	public MultiESignStateResult getMultiESignState(String clientCode, String receiptID) throws BarocertException;
+	public ResponseStateMultiESign requestStateMultiESign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 서명검증(다건)
@@ -125,7 +125,7 @@ public interface KakaocertService {
 	 * @return MultiESignVerifyResult
 	 * @throws BarocertException
 	 */
-	public MultiESignVerifyResult multiESignVerify(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyMultiESign requestVerifyMultiESign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 출금동의 요청
@@ -137,7 +137,7 @@ public interface KakaocertService {
 	 * @return CMSResponse
 	 * @throws BarocertException
 	 */
-	public CMSResponse cMSRequest(String clientCode, CMSObject cMSObject) throws BarocertException;
+	public ResponseCMS requestCMS(String clientCode, CMSObject cMSObject) throws BarocertException;
 	
 	/**
 	 * 출금동의 상태확인
@@ -149,7 +149,7 @@ public interface KakaocertService {
 	 * @return CMSStateResult
 	 * @throws BarocertException
 	 */
-	public CMSStateResult getCMSState(String clientCode, String receiptID) throws BarocertException;
+	public ResponseStateCMS requestStateCMS(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 출금동의 서명검증
@@ -161,10 +161,10 @@ public interface KakaocertService {
 	 * @return CMSVerifyResult
 	 * @throws BarocertException
 	 */
-	public CMSVerifyResult cMSVerify(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyCMS requestVerifyCMS(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
-	 * AES256 CBC 암호화
+	 * AES256 암호화
 	 * 
 	 * @param plainText
 	 * @return String

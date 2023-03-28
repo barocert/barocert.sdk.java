@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.esign;
 
-public class ESignResponse {
+public class ResponseESign {
 	
 	private String receiptID;
 	private String scheme;
