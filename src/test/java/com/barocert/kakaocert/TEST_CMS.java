@@ -56,7 +56,7 @@ public class TEST_CMS {
 			
             // AppToApp 인증요청 여부
             // true: AppToApp 인증방식, false: Talk Message 인증방식
-//            request.setAppUseYN(false);
+            request.setAppUseYN(false);
 			
             // AppToApp 방식 이용 시 입력.
             // request.setReturnURL("https://kakao.barocert.com");
