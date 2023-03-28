@@ -775,7 +775,7 @@ public class KakaocertServiceImp implements KakaocertService {
     @Override
     public CMSVerifyResult cMSVerify(String clientCode, String receiptID) throws BarocertException {
     	
-    	String Target = "KakaoCert SDK CMSVerify";
+    	String Target = "KakaoCert SDK cMSVerify";
     	
         if (null == clientCode || clientCode.length() == 0)
             throw new BarocertException(-99999999, Target +": 이용기관코드가 입력되지 않았습니다.");
