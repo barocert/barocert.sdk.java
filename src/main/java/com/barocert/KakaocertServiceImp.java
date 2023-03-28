@@ -336,7 +336,6 @@ public class KakaocertServiceImp implements KakaocertService {
 
             String signTarget = "POST\n";
             signTarget += url + "\n";
-            signTarget += APIVersion + "\n";
             signTarget += sha256Base64(btPostData) + "\n";
             signTarget += date + "\n";
 
@@ -570,10 +569,18 @@ public class KakaocertServiceImp implements KakaocertService {
     @Override
     public ESignResponse eSignRequest(String clientCode, ESignObject eSignObject) throws BarocertException {
 
-    	if (null == clientCode || clientCode.length() == 0)
+    	if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == eSignObject)
+        if (eSignObject == null)
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
+        if (eSignObject.getReqTitle() == null)
+        	throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (eSignObject.getExpireIn() == null)
+        	throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
+        if (eSignObject.getToken() == null)
+        	throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
+        if (eSignObject.getTokenType() == null)
+        	throw new BarocertException(-99999999, "서명대상 유형코드가 입력되지 않았습니다.");
         
         String postDate = toJsonString(eSignObject);
         
@@ -584,11 +591,19 @@ public class KakaocertServiceImp implements KakaocertService {
     @Override
     public ESignMultiResponse eSignMultiRequest(String clientCode, ESignMultiObject eSignMultiObject) throws BarocertException {
 
-        if (null == clientCode || clientCode.length() == 0)
+        if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == eSignMultiObject)
+        if (eSignMultiObject == null)
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
-    	  
+        if (eSignMultiObject.getReqTitle() == null)
+        	throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (eSignMultiObject.getExpireIn() == null)
+        	throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
+        if (eSignMultiObject.getTokens() == null)
+        	throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
+        if (eSignMultiObject.getTokenType() == null)
+        	throw new BarocertException(-99999999, "서명대상 유형코드가 입력되지 않았습니다.");
+
         String postDate = toJsonString(eSignMultiObject);
 
         return httppost("/KAKAO/ESignMulti/" + clientCode, clientCode, postDate, ESignMultiResponse.class);
@@ -694,8 +709,24 @@ public class KakaocertServiceImp implements KakaocertService {
 
         if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (cMSObject == null || clientCode.length() == 0)
+        if (cMSObject == null)
             throw new BarocertException(-99999999, "출금동의 요청정보가 입력되지 않았습니다.");
+        if (cMSObject.getReqTitle() == null)
+            throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (cMSObject.getExpireIn() == null)
+        	throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
+        if (cMSObject.getRequestCorp() == null)
+        	throw new BarocertException(-99999999, "청구기관명이 입력되지 않았습니다.");
+        if (cMSObject.getBankName() == null)
+        	throw new BarocertException(-99999999, "은행명이 입력되지 않았습니다.");
+        if (cMSObject.getBankAccountNum() == null)
+        	throw new BarocertException(-99999999, "예금주 생년월일이 입력되지 않았습니다.");
+        if (cMSObject.getBankAccountName() == null)
+        	throw new BarocertException(-99999999, "계좌번호가 입력되지 않았습니다.");
+        if (cMSObject.getBankAccountBirthday() == null)
+        	throw new BarocertException(-99999999, "예금주명이 입력되지 않았습니다.");
+        if (cMSObject.getBankServiceType() == null)
+        	throw new BarocertException(-99999999, "출금동의 서비스 유형코드가 입력되지 않았습니다.");
         
         String postDate = toJsonString(cMSObject);
 
