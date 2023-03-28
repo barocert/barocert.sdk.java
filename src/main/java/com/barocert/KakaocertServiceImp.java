@@ -59,6 +59,7 @@ public class KakaocertServiceImp implements KakaocertService {
     private static final String ServiceURL_Static = "https://static-barocert.linkhub.co.kr";
     private String ServiceURL = "https://barocert.linkhub.co.kr";
     
+    private static final String APIVersion = "2.0";
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
     
     private String AuthURL = null;
@@ -79,7 +80,7 @@ public class KakaocertServiceImp implements KakaocertService {
     private Map<String, Token> tokenTable = new HashMap<String, Token>();
 
     public KakaocertServiceImp() {
-        isIPRestrictOnOff = true;
+    	isIPRestrictOnOff = true;
         useStaticIP = false;
         useLocalTimeYN = true;
     }
@@ -113,7 +114,7 @@ public class KakaocertServiceImp implements KakaocertService {
             return ServiceURL;
         
         if (useStaticIP) 
-            return ServiceURL_Static;
+        	return ServiceURL_Static;
         
         return ServiceURL;
     }
@@ -211,7 +212,6 @@ public class KakaocertServiceImp implements KakaocertService {
                 tokenTable.remove(ClientCode);
 
             try {
-            	
             	if(isIPRestrictOnOff) {
                     token = getTokenbuilder().build("", ForwardIP);
             	} else {
@@ -276,6 +276,7 @@ public class KakaocertServiceImp implements KakaocertService {
             httpURLConnection.setRequestProperty("Authorization", "Bearer " + getSessionToken(clientCode, null));
 
         httpURLConnection.setRequestProperty("Accept-Encoding", "gzip");
+        httpURLConnection.setRequestProperty("x-bc-version".toLowerCase(), APIVersion);
 
         String Result = parseResponse(httpURLConnection);
 
@@ -335,11 +336,13 @@ public class KakaocertServiceImp implements KakaocertService {
 
             String signTarget = "POST\n";
             signTarget += url + "\n";
+            signTarget += APIVersion + "\n";
             signTarget += sha256Base64(btPostData) + "\n";
             signTarget += date + "\n";
 
             String Signature = base64Encode(HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
 
+            httpURLConnection.setRequestProperty("x-bc-version".toLowerCase(), APIVersion);
             httpURLConnection.setRequestProperty("x-bc-auth", " " + Signature);
             httpURLConnection.setRequestProperty("x-bc-encryptionmode", "CBC");
 
@@ -569,7 +572,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     	if (null == clientCode || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == eSignObject || eSignObject.equals(""))
+        if (null == eSignObject)
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
         
         String postDate = toJsonString(eSignObject);
@@ -583,7 +586,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         if (null == clientCode || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == eSignMultiObject || eSignMultiObject.equals(""))
+        if (null == eSignMultiObject)
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
     	  
         String postDate = toJsonString(eSignMultiObject);
@@ -650,7 +653,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         if (null == clientCode || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == verifyAuthObject || verifyAuthObject.equals(""))
+        if (null == verifyAuthObject)
             throw new BarocertException(-99999999, "본인인증 요청정보가 입력되지 않았습니다.");
         
         String postDate = toJsonString(verifyAuthObject);
@@ -691,7 +694,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (cMSObject == null || cMSObject.equals(""))
+        if (cMSObject == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "출금동의 요청정보가 입력되지 않았습니다.");
         
         String postDate = toJsonString(cMSObject);

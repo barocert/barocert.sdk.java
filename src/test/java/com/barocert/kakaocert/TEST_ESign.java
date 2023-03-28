@@ -108,12 +108,12 @@ public class TEST_ESign {
                 token.setToken(kakaocertService.AES256Encrypt(sb.toString())); // 원문길이 2800자 까지 입력가능.
                 request.getTokens().add(token);
             }
+            
+            request.setTokenType("TEXT"); // TEXT, HASH
 			
             // AppToApp 인증요청 여부
             // true: AppToApp 인증방식, false: Talk Message 인증방식
             request.setAppUseYN(false);
-			
-            request.setTokenType("TEXT"); // TEXT, HASH
 			
             // AppToApp 방식 이용 시
             // request.setReturnURL("https://kakao.barocert.com");
