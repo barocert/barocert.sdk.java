@@ -568,19 +568,21 @@ public class KakaocertServiceImp implements KakaocertService {
     // 전자서명 요청(단건)
     @Override
     public ESignResponse eSignRequest(String clientCode, ESignObject eSignObject) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK eSignRequest";
 
-    	if (clientCode == null || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (clientCode == null || clientCode.length() == 0)
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (eSignObject == null)
-            throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 전자서명 요청정보가 입력되지 않았습니다.");
         if (eSignObject.getReqTitle() == null)
-        	throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 인증요청 메시지 제목이 입력되지 않았습니다.");
         if (eSignObject.getExpireIn() == null)
-        	throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 유효 만료일시가 입력되지 않았습니다.");
         if (eSignObject.getToken() == null)
-        	throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 토큰 원문이 입력되지 않았습니다.");
         if (eSignObject.getTokenType() == null)
-        	throw new BarocertException(-99999999, "서명대상 유형코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 서명대상 유형코드가 입력되지 않았습니다.");
         
         String postDate = toJsonString(eSignObject);
         
@@ -590,19 +592,21 @@ public class KakaocertServiceImp implements KakaocertService {
     // 전자서명 요청(다건)
     @Override
     public ESignMultiResponse eSignMultiRequest(String clientCode, ESignMultiObject eSignMultiObject) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK eSignMultiRequest";
 
         if (clientCode == null || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (eSignMultiObject == null)
-            throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 전자서명 요청정보가 입력되지 않았습니다.");
         if (eSignMultiObject.getReqTitle() == null)
-        	throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 인증요청 메시지 제목이 입력되지 않았습니다.");
         if (eSignMultiObject.getExpireIn() == null)
-        	throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 유효 만료일시가 입력되지 않았습니다.");
         if (eSignMultiObject.getTokens() == null)
-        	throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 토큰 원문이 입력되지 않았습니다.");
         if (eSignMultiObject.getTokenType() == null)
-        	throw new BarocertException(-99999999, "서명대상 유형코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 서명대상 유형코드가 입력되지 않았습니다.");
 
         String postDate = toJsonString(eSignMultiObject);
 
@@ -612,11 +616,13 @@ public class KakaocertServiceImp implements KakaocertService {
     // 전자서명 상태확인(단건)
     @Override
     public ESignStateResult getESignState(String clientCode, String receiptID) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK getESignState";
 
         if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 접수아이디가 입력되지 않았습니다.");
 
         return httpget("/KAKAO/ESign/" + clientCode + "/" + receiptID, clientCode, ESignStateResult.class);
     }
@@ -625,10 +631,12 @@ public class KakaocertServiceImp implements KakaocertService {
     @Override
     public MultiESignStateResult getMultiESignState(String clientCode, String receiptID) throws BarocertException {
     	
+    	String Target = "KakaoCert SDK getMultiESignState";
+    	
         if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 접수아이디가 입력되지 않았습니다.");
 		
         return httpget("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, MultiESignStateResult.class);
     }
@@ -636,11 +644,13 @@ public class KakaocertServiceImp implements KakaocertService {
     // 전자서명 서명검증(단건)
     @Override
     public ESignVerifyResult eSignVerify(String clientCode, String receiptID) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK eSignVerify";
 
         if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 접수아이디가 입력되지 않았습니다.");
         
 		String postDate = toJsonString("");
         
@@ -650,26 +660,35 @@ public class KakaocertServiceImp implements KakaocertService {
     // 전자서명 서명검증(다건)
     @Override
     public MultiESignVerifyResult multiESignVerify(String clientCode, String receiptID) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK multiESignVerify";
 		
         if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 접수아이디가 입력되지 않았습니다.");
 		
         String postDate = toJsonString("");
 		
         return httppost("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, postDate, MultiESignVerifyResult.class);
     }
-
     
     // 본인인증 요청
     @Override
     public VerifyAuthResponse verifyAuthRequest(String clientCode, VerifyAuthObject verifyAuthObject) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK verifyAuthRequest";
 
-        if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (null == verifyAuthObject)
-            throw new BarocertException(-99999999, "본인인증 요청정보가 입력되지 않았습니다.");
+        if (clientCode == null || clientCode.length() == 0)
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
+        if (verifyAuthObject == null)
+            throw new BarocertException(-99999999, Target + ": 본인인증 요청정보가 입력되지 않았습니다.");
+        if (verifyAuthObject.getReqTitle() == null)
+            throw new BarocertException(-99999999, Target + ": 인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (verifyAuthObject.getExpireIn() == null)
+            throw new BarocertException(-99999999, Target + ": 유효 만료일시가 입력되지 않았습니다.");
+        if (verifyAuthObject.getToken() == null)
+            throw new BarocertException(-99999999, Target + ": 토큰 원문이 입력되지 않았습니다.");
         
         String postDate = toJsonString(verifyAuthObject);
         
@@ -679,11 +698,13 @@ public class KakaocertServiceImp implements KakaocertService {
     // 본인인증 상태확인
     @Override
     public VerifyAuthStateResult getVerifyAuthState(String clientCode, String receiptID) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK getVerifyAuthState";
 
     	if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 접수아이디가 입력되지 않았습니다.");
         
         return httpget("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, VerifyAuthStateResult.class);
     }
@@ -692,41 +713,44 @@ public class KakaocertServiceImp implements KakaocertService {
     @Override
     public VerifyAuthResult verifyAuth(String clientCode, String receiptID) throws BarocertException {
     	
+    	String Target = "KakaoCert SDK verifyAuth";
+    	
         if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 접수아이디가 입력되지 않았습니다.");
         
         String postDate = toJsonString("");
         
         return httppost("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, postDate, VerifyAuthResult.class);
     }
     
-    
     // 출금동의 요청
     @Override
     public CMSResponse cMSRequest(String clientCode, CMSObject cMSObject) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK cMSRequest";
 
         if (clientCode == null || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (cMSObject == null)
-            throw new BarocertException(-99999999, "출금동의 요청정보가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 출금동의 요청정보가 입력되지 않았습니다.");
         if (cMSObject.getReqTitle() == null)
-            throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 인증요청 메시지 제목이 입력되지 않았습니다.");
         if (cMSObject.getExpireIn() == null)
-        	throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 유효 만료일시가 입력되지 않았습니다.");
         if (cMSObject.getRequestCorp() == null)
-        	throw new BarocertException(-99999999, "청구기관명이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 청구기관명이 입력되지 않았습니다.");
         if (cMSObject.getBankName() == null)
-        	throw new BarocertException(-99999999, "은행명이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 은행명이 입력되지 않았습니다.");
         if (cMSObject.getBankAccountNum() == null)
-        	throw new BarocertException(-99999999, "예금주 생년월일이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 예금주 생년월일이 입력되지 않았습니다.");
         if (cMSObject.getBankAccountName() == null)
-        	throw new BarocertException(-99999999, "계좌번호가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 계좌번호가 입력되지 않았습니다.");
         if (cMSObject.getBankAccountBirthday() == null)
-        	throw new BarocertException(-99999999, "예금주명이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 예금주명이 입력되지 않았습니다.");
         if (cMSObject.getBankServiceType() == null)
-        	throw new BarocertException(-99999999, "출금동의 서비스 유형코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 출금동의 서비스 유형코드가 입력되지 않았습니다.");
         
         String postDate = toJsonString(cMSObject);
 
@@ -736,11 +760,13 @@ public class KakaocertServiceImp implements KakaocertService {
     // 출금동의 상태확인
     @Override
     public CMSStateResult getCMSState(String clientCode, String receiptID) throws BarocertException {
+    	
+    	String Target = "KakaoCert SDK getCMSState";
 
         if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 이용기관코드가 입력되지 않았습니다.");
         if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + ": 접수아이디가 입력되지 않았습니다.");
 
         return httpget("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, CMSStateResult.class);
     }
@@ -749,10 +775,12 @@ public class KakaocertServiceImp implements KakaocertService {
     @Override
     public CMSVerifyResult cMSVerify(String clientCode, String receiptID) throws BarocertException {
     	
+    	String Target = "KakaoCert SDK CMSVerify";
+    	
         if (null == clientCode || clientCode.length() == 0)
-            throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target +": 이용기관코드가 입력되지 않았습니다.");
         if (null == receiptID || receiptID.length() == 0)
-            throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target +": 접수아이디가 입력되지 않았습니다.");
         
         String postDate = toJsonString("");
         
