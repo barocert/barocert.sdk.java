@@ -80,9 +80,9 @@ public class KakaocertServiceImp implements KakaocertService {
     private Map<String, Token> tokenTable = new HashMap<String, Token>();
 
     public KakaocertServiceImp() {
-    	isIPRestrictOnOff = true;
-        useStaticIP = false;
-        useLocalTimeYN = true;
+    	isIPRestrictOnOff = true; // 인증통큰 발급 IP 제한 - 기본값(true)
+        useStaticIP = false; // API 서비스고정 IP - 기본값(false)
+        useLocalTimeYN = true; // 로컬시스템 시간 사용여부 - 기본값(true)
     }
     
     public boolean isIPRestrictOnOff() {
@@ -156,24 +156,27 @@ public class KakaocertServiceImp implements KakaocertService {
     }
 
     private TokenBuilder getTokenbuilder() {
-        if (this.tokenBuilder == null) {
+        if (this.tokenBuilder == null) { // token 이 없다면.
             tokenBuilder = TokenBuilder
-            		.newInstance(getLinkID(), getSecretKey()).ServiceID(ServiceID).addScope("partner")
-            		.useLocalTimeYN(useLocalTimeYN)
-            		.addScope("401")
-            		.addScope("402")
-            		.addScope("403")
-            		.addScope("404");
+            		.newInstance(getLinkID(), getSecretKey()) // LinkID, SecretKey 
+            		.useLocalTimeYN(useLocalTimeYN) // 로컬시스템 시간 사용여부.
+            		.ServiceID(ServiceID) // 서비스아이디.
+            		.addScope("partner")  // partner
+            		.addScope("401")  // ESign
+            		.addScope("402")  // ESign
+            		.addScope("403")  // VerifyAuth
+            		.addScope("404"); // CMS
 
-            if (AuthURL != null) {
-                tokenBuilder.setServiceURL(AuthURL);
+            if (AuthURL != null) { // AuthURL(프록시URL) 이 있다면,
+                tokenBuilder.setServiceURL(AuthURL); // ServiceURL 은 AuthURL(프록시URL) 로 설정.
             } else {
+            	// AuthURL 이 null 이고, useStaticIP 가 true 이면, ServiceURL 이 Auth_Static_URL 적용.
                 if (useStaticIP) tokenBuilder.setServiceURL(Auth_Static_URL);
             }
             
-            if (ProxyIP != null && ProxyPort != null) {
-                tokenBuilder.setProxyIP(ProxyIP);
-                tokenBuilder.setProxyPort(ProxyPort);
+            if (ProxyIP != null && ProxyPort != null) { // ProxyIP 와 ProxyPort 가 없다면,
+                tokenBuilder.setProxyIP(ProxyIP);     // 입력한 ProxyIP 셋팅.
+                tokenBuilder.setProxyPort(ProxyPort); // 입력한 ProxyPort 셋팅.
             }
         }
 
@@ -183,12 +186,12 @@ public class KakaocertServiceImp implements KakaocertService {
     private String getSessionToken(String ClientCode, String ForwardIP) throws BarocertException {
         Token token = null;
         Date UTCTime = null;
-
-        if (tokenTable.containsKey(ClientCode))
+        
+        if (tokenTable.containsKey(ClientCode)) // tokenTable에 Key가 있다면,
             token = tokenTable.get(ClientCode);
 
         boolean expired = true;
-
+        
         if (token != null) {
         	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             format.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -206,21 +209,21 @@ public class KakaocertServiceImp implements KakaocertService {
                 throw new BarocertException(-99999999, "Kakaocert Parse Exception : " + e.getMessage());
             }
         }
-
+        
         if (expired) {
             if (tokenTable.containsKey(ClientCode))
                 tokenTable.remove(ClientCode);
-
+            
             try {
-            	if(isIPRestrictOnOff) {
-                    token = getTokenbuilder().build("", ForwardIP);
+            	if(isIPRestrictOnOff) { // 인증토큰 발급 IP 제한.
+                    token = getTokenbuilder().build(null, ForwardIP);
             	} else {
-            		token = getTokenbuilder().build("", "*");
+            		token = getTokenbuilder().build(null, "*");
             	}
 
                 tokenTable.put(ClientCode, token);
             } catch (LinkhubException le) {
-                throw new BarocertException(le);
+                throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception : " + le);
             }
         }
         
@@ -450,7 +453,7 @@ public class KakaocertServiceImp implements KakaocertService {
         StringBuilder sb = null;
 		
         try {
-            is = new InputStreamReader(input, Charset.forName("UTF-8"));
+            is = new InputStreamReader(input, Charset.forName("UTF-8")); // UTF-8 디코딩.
             br = new BufferedReader(is);
             sb = new StringBuilder();
 		
@@ -483,8 +486,8 @@ public class KakaocertServiceImp implements KakaocertService {
         StringBuilder sb = null;
 
         try {
-            zipReader = new GZIPInputStream(input);
-            is = new InputStreamReader(zipReader, "UTF-8");
+            zipReader = new GZIPInputStream(input); // GZIP 포멧으로 압출풀기.
+            is = new InputStreamReader(zipReader, "UTF-8"); // UTF-8 디코딩.
             br = new BufferedReader(is);
             sb = new StringBuilder();
 
@@ -513,7 +516,6 @@ public class KakaocertServiceImp implements KakaocertService {
     }
 
     private String parseResponse(HttpURLConnection httpURLConnection) throws BarocertException {
-
         String result = "";
         InputStream input = null;
         BarocertException exception = null;
@@ -522,7 +524,7 @@ public class KakaocertServiceImp implements KakaocertService {
             input = httpURLConnection.getInputStream();
 
             if (null != httpURLConnection.getContentEncoding() && httpURLConnection.getContentEncoding().equals("gzip")) {
-                result = fromGzipStream(input);
+                result = fromGzipStream(input); // GZiP 압축해제.
             } else {
                 result = fromStream(input);
             }
