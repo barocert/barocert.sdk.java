@@ -396,7 +396,7 @@ public class KakaocertServiceImp implements KakaocertService {
             mac.init(signingKey);
             return mac.doFinal(input);
         } catch (Exception e) {
-            throw new BarocertException(-99999999, "Fail to Calculate HMAC-SHA256, Please check your SecretKey.", e);
+            throw new BarocertException(-99999999, "Kakaocert Fail to Calculate HMAC-SHA256, Please check your SecretKey.", e);
         }
     }
 
