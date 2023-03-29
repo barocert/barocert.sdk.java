@@ -35,8 +35,8 @@ public class TEST_VerifyAuth {
             // 본인인증 요청 Object
             AuthObject request = new AuthObject();
 			
-            // 수신자 정보
-            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
+            // 수신자 정보.
+            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.
             request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
             request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
             request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
@@ -70,7 +70,7 @@ public class TEST_VerifyAuth {
     @Test
     public void TEST_RequestStateAuth() throws BarocertException {
         try {
-            ResponseStateAuth result = kakaocertService.requestStateAuth("023030000003", "02303280230300000030000000000010");
+            ResponseStateAuth result = kakaocertService.requestStateAuth("023030000003", "02303290230300000030000000000003");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -100,7 +100,7 @@ public class TEST_VerifyAuth {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ResponseVerifyAuth result = kakaocertService.requestVerifyAuth("023030000003", "02303280230300000030000000000010");
+            ResponseVerifyAuth result = kakaocertService.requestVerifyAuth("023030000003", "02303290230300000030000000000003");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
