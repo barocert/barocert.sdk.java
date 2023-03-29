@@ -204,9 +204,9 @@ public class KakaocertServiceImp implements KakaocertService {
                 UTCTime = subFormat.parse(getTokenbuilder().getTime());
                 expired = expiration.before(UTCTime);
             } catch (LinkhubException le) {
-                throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception : " + le);
+                throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception", le);
             } catch (Exception e) {
-                throw new BarocertException(-99999999, "Kakaocert Parse Exception : " + e.getMessage());
+                throw new BarocertException(-99999999, "Kakaocert Parse Exception", e);
             }
         }
         
@@ -215,7 +215,7 @@ public class KakaocertServiceImp implements KakaocertService {
                 tokenTable.remove(ClientCode);
             
             try {
-            	if(isIPRestrictOnOff) { // 인증토큰 발급 IP 제한.
+            	if(isIPRestrictOnOff) { // 인증토큰 발급 IP 제한. 기본값(true)
                     token = getTokenbuilder().build(null, ForwardIP);
             	} else {
             		token = getTokenbuilder().build(null, "*");
@@ -223,7 +223,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
                 tokenTable.put(ClientCode, token);
             } catch (LinkhubException le) {
-                throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception : " + le);
+                throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception", le);
             }
         }
         
@@ -265,9 +265,10 @@ public class KakaocertServiceImp implements KakaocertService {
         try {
             URL uri = new URL(getServiceURL() + url);
             
-            if (ProxyIP != null && ProxyPort != null) {
-                Proxy prx = new Proxy(Type.HTTP, new InetSocketAddress(ProxyIP, ProxyPort));
-                httpURLConnection = (HttpURLConnection) uri.openConnection(prx);
+            if (ProxyIP != null && ProxyPort != null) { // 프록시 정보가 있다면,
+            	// 프록시 객체를 통한 연결설정.
+                Proxy prx = new Proxy(Type.HTTP, new InetSocketAddress(ProxyIP, ProxyPort)); // 프록시서버 및 포트 설정
+                httpURLConnection = (HttpURLConnection) uri.openConnection(prx); // URL Connection
             } else {
                 httpURLConnection = (HttpURLConnection) uri.openConnection();
             }
@@ -325,7 +326,7 @@ public class KakaocertServiceImp implements KakaocertService {
         try {
             httpURLConnection.setRequestMethod("POST");
         } catch (ProtocolException e1) {
-            throw new BarocertException(-99999999, "Kakaocert Protocol Exception : ", e1);
+            throw new BarocertException(-99999999, "Kakaocert Protocol Exception", e1);
         }
 
         httpURLConnection.setUseCaches(false);
@@ -441,7 +442,7 @@ public class KakaocertServiceImp implements KakaocertService {
             byteBuffer.put(iv);
             byteBuffer.put(encryptedData);
         } catch (Exception e) {
-            throw new BarocertException(-99999999, "Kakaocert AES256Encrypt : ", e);
+            throw new BarocertException(-99999999, "Kakaocert AES256Encrypt", e);
         }
 		
         return base64Encode(byteBuffer.array());
@@ -525,7 +526,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
             if (null != httpURLConnection.getContentEncoding() && httpURLConnection.getContentEncoding().equals("gzip")) {
                 result = fromGzipStream(input); // GZiP 압축해제.
-            } else {
+            } else { 
                 result = fromStream(input);
             }
         } catch (IOException e) {
