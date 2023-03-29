@@ -65,7 +65,6 @@ public class KakaocertServiceImp implements KakaocertService {
     private String AuthURL = null;
     private String ProxyIP = null;
     private Integer ProxyPort = null;
-    private String ForwardIP = null;
 
     private boolean isIPRestrictOnOff;
     private boolean useStaticIP;
@@ -343,7 +342,7 @@ public class KakaocertServiceImp implements KakaocertService {
             String Signature = base64Encode(HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
 
             httpURLConnection.setRequestProperty("x-bc-version".toLowerCase(), APIVersion);
-            httpURLConnection.setRequestProperty("x-bc-auth", " " + Signature);
+            httpURLConnection.setRequestProperty("x-bc-auth", Signature);
             httpURLConnection.setRequestProperty("x-bc-encryptionmode", "CBC");
 
             DataOutputStream output = null;
