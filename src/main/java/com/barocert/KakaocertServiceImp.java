@@ -300,6 +300,7 @@ public class KakaocertServiceImp implements KakaocertService {
         try {
             URL uri = new URL(getServiceURL() + url);
             
+            // 프록시 설정
             if (ProxyIP != null && ProxyPort != null) {
                 Proxy prx = new Proxy(Type.HTTP, new InetSocketAddress(ProxyIP, ProxyPort));
                 httpURLConnection = (HttpURLConnection) uri.openConnection(prx);
@@ -310,6 +311,7 @@ public class KakaocertServiceImp implements KakaocertService {
             throw new BarocertException(-99999999, "Kakaocert API 서버 접속 실패", e);
         }
 
+        
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         String date = format.format(new Date());
@@ -579,11 +581,11 @@ public class KakaocertServiceImp implements KakaocertService {
         if (authObject == null)
             throw new BarocertException(-99999999, Target + " : 본인인증 서명요청 정보가 입력되지 않았습니다.");
     	if(authObject.getReceiverHP() == null || authObject.getReceiverHP().length() == 0)
-    		throw new BarocertException(-99999999, Target + " : 수신자 휴대폰 번호가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + " : 수신자 휴대폰 번호가 입력되지 않았습니다.");
     	if(authObject.getReceiverName() == null || authObject.getReceiverName().length() == 0)
-    		throw new BarocertException(-99999999, Target + " : 수신자 성명이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + " : 수신자 성명이 입력되지 않았습니다.");
     	if(authObject.getReceiverBirthday() == null || authObject.getReceiverBirthday().length() == 0)
-    		throw new BarocertException(-99999999, Target + " : 생년월일이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + " : 생년월일이 입력되지 않았습니다.");
         if (authObject.getReqTitle() == null || authObject.getReqTitle().length() == 0)
             throw new BarocertException(-99999999, Target + " : 인증요청 메시지 제목이 입력되지 않았습니다.");
         if (authObject.getExpireIn() == null)
@@ -640,9 +642,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (eSignObject == null)
             throw new BarocertException(-99999999, Target + " : 전자서명 요청정보가 입력되지 않았습니다.");
     	if (eSignObject.getReceiverHP() == null || eSignObject.getReceiverHP().length() == 0)
-    		throw new BarocertException(-99999999, Target + " : 수신자 휴대폰 번호가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + " : 수신자 휴대폰 번호가 입력되지 않았습니다.");
     	if (eSignObject.getReceiverName() == null || eSignObject.getReceiverName().length() == 0)
-    		throw new BarocertException(-99999999, Target + " : 수신자 성명이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + " : 수신자 성명이 입력되지 않았습니다.");
     	if (eSignObject.getReceiverBirthday() == null || eSignObject.getReceiverBirthday().length() == 0)
     		throw new BarocertException(-99999999, Target + " : 생년월일이 입력되지 않았습니다.");
         if (eSignObject.getReqTitle() == null || eSignObject.getReqTitle().length() == 0)
@@ -686,7 +688,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (receiptID == null || receiptID.length() == 0)
             throw new BarocertException(-99999999, Target + " : 접수아이디가 입력되지 않았습니다.");
         
-		String postDate = toJsonString("");
+        String postDate = toJsonString("");
         
         return httppost("/KAKAO/ESign/" + clientCode + "/" + receiptID, clientCode, postDate, ResponseVerifyESign.class);
     }
@@ -703,11 +705,11 @@ public class KakaocertServiceImp implements KakaocertService {
         if (multiESignObject == null)
             throw new BarocertException(-99999999, Target + " : 전자서명 요청정보가 입력되지 않았습니다.");
     	if (multiESignObject.getReceiverHP() == null || multiESignObject.getReceiverHP().length() == 0)
-    		throw new BarocertException(-99999999, Target + " : 수신자 휴대폰 번호가 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + " : 수신자 휴대폰 번호가 입력되지 않았습니다.");
     	if (multiESignObject.getReceiverName() == null || multiESignObject.getReceiverName().length() == 0)
-    		throw new BarocertException(-99999999, Target + " : 수신자 성명이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + " : 수신자 성명이 입력되지 않았습니다.");
     	if (multiESignObject.getReceiverBirthday() == null || multiESignObject.getReceiverBirthday().length() == 0)
-    		throw new BarocertException(-99999999, Target + " : 생년월일이 입력되지 않았습니다.");
+            throw new BarocertException(-99999999, Target + " : 생년월일이 입력되지 않았습니다.");
         if (multiESignObject.getReqTitle() == null || multiESignObject.getReqTitle().length() == 0)
             throw new BarocertException(-99999999, Target + " : 인증요청 메시지 제목이 입력되지 않았습니다.");
         if (multiESignObject.getExpireIn() == null)
