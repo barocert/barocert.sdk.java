@@ -5,10 +5,10 @@ import org.junit.Test;
 import com.barocert.BarocertException;
 import com.barocert.KakaocertService;
 import com.barocert.KakaocertServiceImp;
-import com.barocert.kakaocert.verifyauth.AuthObject;
-import com.barocert.kakaocert.verifyauth.ResponseAuth;
+import com.barocert.kakaocert.verifyauth.RequestVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
-import com.barocert.kakaocert.verifyauth.ResponseStateAuth;
+import com.barocert.kakaocert.verifyauth.ResponseStateVerify;
+import com.barocert.kakaocert.verifyauth.ResponseVerify;
 
 public class TEST_VerifyAuth {
 	
@@ -33,7 +33,7 @@ public class TEST_VerifyAuth {
     public void TEST_RequestAuth() throws BarocertException {
         try {
             // 본인인증 요청 Object
-            AuthObject request = new AuthObject();
+            RequestVerify request = new RequestVerify();
 			
             // 수신자 정보.
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.
@@ -56,7 +56,7 @@ public class TEST_VerifyAuth {
             // AppToApp 방식 이용 시 입력.
             // request.setReturnURL("https://kakao.barocert.com");
 			
-            ResponseAuth result = kakaocertService.requestAuth("023030000081", request);
+            ResponseVerify result = kakaocertService.requestVerify("023030000081", request);
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -70,7 +70,7 @@ public class TEST_VerifyAuth {
     @Test
     public void TEST_RequestStateAuth() throws BarocertException {
         try {
-            ResponseStateAuth result = kakaocertService.requestStateAuth("023030000081", "02303300230300000810000000000004");
+            ResponseStateVerify result = kakaocertService.requestStateVerify("023030000081", "02303300230300000810000000000004");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());

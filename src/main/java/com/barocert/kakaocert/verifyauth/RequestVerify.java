@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.verifyauth;
 
-public class AuthObject {
+public class RequestVerify {
 
 	private String requestID;
 	private String receiverHP;

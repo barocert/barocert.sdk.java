@@ -7,11 +7,11 @@ import org.junit.Test;
 import com.barocert.BarocertException;
 import com.barocert.KakaocertService;
 import com.barocert.KakaocertServiceImp;
-import com.barocert.kakaocert.esign.MultiESignObject;
+import com.barocert.kakaocert.esign.RequestMultiESign;
 import com.barocert.kakaocert.esign.ResponseMultiESign;
 import com.barocert.kakaocert.esign.ResponseStateMultiESign;
 import com.barocert.kakaocert.esign.ResponseVerifyMultiESign;
-import com.barocert.kakaocert.esign.ESignObject;
+import com.barocert.kakaocert.esign.RequestESign;
 import com.barocert.kakaocert.esign.ResponseESign;
 import com.barocert.kakaocert.esign.ResponseStateESign;
 import com.barocert.kakaocert.esign.ResponseVerifyESign;
@@ -40,7 +40,7 @@ public class TEST_ESign {
     public void TEST_RequestESign() throws BarocertException {
         try {
             // 전자서명 요청(단건) Object
-            ESignObject request = new ESignObject();
+            RequestESign request = new RequestESign();
 			
             // 수신자 정보.
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.
@@ -76,7 +76,7 @@ public class TEST_ESign {
     @Test
     public void TEST_RequestStateESign() throws BarocertException {
         try {
-            ResponseStateESign result = kakaocertService.requestStateESign("023030000081", "02303300230300000810000000000005");
+            ResponseStateESign result = kakaocertService.requestStateESign("023030000081", "02303300230300000810000000000013");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -107,7 +107,7 @@ public class TEST_ESign {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ResponseVerifyESign result = kakaocertService.requestVerifyESign("023030000081", "02303300230300000810000000000005");
+            ResponseVerifyESign result = kakaocertService.requestVerifyESign("023030000081", "02303300230300000810000000000013");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
@@ -124,7 +124,7 @@ public class TEST_ESign {
     public void TEST_RequestMultiESign() throws BarocertException {
         try {
             // 전자서명 요청(다건) Object
-            MultiESignObject request = new MultiESignObject();
+            RequestMultiESign request = new RequestMultiESign();
 			
             // 수신자 정보.
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.

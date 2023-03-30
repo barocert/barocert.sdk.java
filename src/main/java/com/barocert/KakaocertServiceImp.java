@@ -32,17 +32,17 @@ import com.barocert.kakaocert.cms.CMSObject;
 import com.barocert.kakaocert.cms.ResponseCMS;
 import com.barocert.kakaocert.cms.ResponseStateCMS;
 import com.barocert.kakaocert.cms.ResponseVerifyCMS;
-import com.barocert.kakaocert.esign.MultiESignObject;
+import com.barocert.kakaocert.esign.RequestMultiESign;
 import com.barocert.kakaocert.esign.ResponseMultiESign;
 import com.barocert.kakaocert.esign.ResponseStateMultiESign;
 import com.barocert.kakaocert.esign.ResponseVerifyMultiESign;
-import com.barocert.kakaocert.esign.ESignObject;
+import com.barocert.kakaocert.esign.RequestESign;
 import com.barocert.kakaocert.esign.ResponseESign;
 import com.barocert.kakaocert.esign.ResponseStateESign;
 import com.barocert.kakaocert.esign.ResponseVerifyESign;
-import com.barocert.kakaocert.verifyauth.AuthObject;
-import com.barocert.kakaocert.verifyauth.ResponseAuth;
-import com.barocert.kakaocert.verifyauth.ResponseStateAuth;
+import com.barocert.kakaocert.verifyauth.RequestVerify;
+import com.barocert.kakaocert.verifyauth.ResponseStateVerify;
+import com.barocert.kakaocert.verifyauth.ResponseVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
 import com.google.gson.Gson;
 
@@ -59,7 +59,7 @@ public class KakaocertServiceImp implements KakaocertService {
     private static final String ServiceURL_Static = "https://static-barocert.linkhub.co.kr";
     private String ServiceURL = "https://barocert.linkhub.co.kr";
     
-    private static final String APIVersion = "2.0";
+    private static final String APIVersion = "2.0"; // sha256
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
     
     private String AuthURL = null;
@@ -184,50 +184,50 @@ public class KakaocertServiceImp implements KakaocertService {
     }
 
     private String getSessionToken(String ClientCode, String ForwardIP) throws BarocertException {
-        Token token = null;
-        Date UTCTime = null;
-        
-        if (tokenTable.containsKey(ClientCode)) // tokenTable에 Key가 있다면,
-            token = tokenTable.get(ClientCode);
-        
-        boolean expired = true;
-        
-        if (token != null) { // 토큰이 있다면, 토큰 유효성체크.
-        	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+    	 Token token = null;
+         Date UTCTime = null;
+         
+         if (tokenTable.containsKey(ClientCode)) // tokenTable에 Key가 있다면,
+             token = tokenTable.get(ClientCode);
+         
+         boolean expired = true;
+         
+         if (token != null) { // 토큰이 있다면, 토큰 유효성체크.
+             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+             format.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-            SimpleDateFormat subFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            subFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+             SimpleDateFormat subFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+             subFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-            try { // 토큰기간 검증.
-                Date expiration = format.parse(token.getExpiration()); // 토큰 만료기간.
-                UTCTime = subFormat.parse(getTokenbuilder().getTime()); // APIServerTime.
-                expired = expiration.before(UTCTime); // 토큰 만료기간과 APIServerTime 과의 비교.
-            } catch (LinkhubException le) {
-                throw new BarocertException(-99999999, "Kakaocert SessionToken Exception", le);
-            } catch (Exception e) {
-                throw new BarocertException(-99999999, "Kakaocert Parse Exception", e);
-            }
-        }
-        
-        if (expired) {
-            if (tokenTable.containsKey(ClientCode))
-                tokenTable.remove(ClientCode);
-            
-            try {
-            	if(isIPRestrictOnOff) { // 인증토큰 발급 IP 제한. 기본값(true)
+             try { // 토큰기간 검증.
+                 Date expiration = format.parse(token.getExpiration()); // 토큰 만료기간.
+                 UTCTime = subFormat.parse(getTokenbuilder().getTime()); // APIServerTime.
+                 expired = expiration.before(UTCTime); // 토큰 만료기간과 APIServerTime 과의 비교.
+             } catch (LinkhubException le) {
+                 throw new BarocertException(-99999999, "Kakaocert SessionToken Exception", le);
+             } catch (Exception e) {
+                 throw new BarocertException(-99999999, "Kakaocert Parse Exception", e);
+             }
+         }
+         
+         if (expired) {
+             if (tokenTable.containsKey(ClientCode))
+                 tokenTable.remove(ClientCode);
+             
+             try {
+             	if(isIPRestrictOnOff) { // 인증토큰 발급 IP 제한. 기본값(true)
                     token = getTokenbuilder().build(null, ForwardIP);
-            	} else {
-            		token = getTokenbuilder().build(null, "*");
-            	}
+             	} else {
+                    token = getTokenbuilder().build(null, "*");
+             	}
 
-                tokenTable.put(ClientCode, token);
-            } catch (LinkhubException le) {
-                throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception", le);
-            }
-        }
-        
-        return token.getSession_token();
+                 tokenTable.put(ClientCode, token);
+             } catch (LinkhubException le) {
+                 throw new BarocertException(-99999999, "Kakaocert GetSessionToken Exception", le);
+             }
+         }
+         
+         return token.getSession_token();
     }
 
     /**
@@ -311,7 +311,6 @@ public class KakaocertServiceImp implements KakaocertService {
             throw new BarocertException(-99999999, "Kakaocert API 서버 접속 실패", e);
         }
 
-        
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         String date = format.format(new Date());
@@ -337,9 +336,9 @@ public class KakaocertServiceImp implements KakaocertService {
             httpURLConnection.setRequestProperty("Content-Length", String.valueOf(btPostData.length));
 
             String signTarget = "POST\n";
-            signTarget += url + "\n";
-            signTarget += sha256Base64(btPostData) + "\n";
-            signTarget += date + "\n";
+                   signTarget += url + "\n";
+                   signTarget += sha256Base64(btPostData) + "\n";
+                   signTarget += date + "\n";
 
             String Signature = base64Encode(HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
 
@@ -370,14 +369,14 @@ public class KakaocertServiceImp implements KakaocertService {
         return fromJsonString(Result, clazz);
     }
 
-
-    private static String sha256Base64(byte[] input) {
+    private static String sha256Base64(byte[] input) throws BarocertException {
         MessageDigest md;
         byte[] btResult = null;
         try {
             md = MessageDigest.getInstance("SHA-256");
             btResult = md.digest(input);
         } catch (NoSuchAlgorithmException e) {
+        	throw new BarocertException(-99999999, "Kakaocert sha256 base64 Exception", e);
         }
 
         return Base64.encode(btResult);
@@ -391,11 +390,16 @@ public class KakaocertServiceImp implements KakaocertService {
         return Base64.encode(input);
     }
     
+    // SHA256 HMAC 암호화
     private static byte[] HMacSha256(byte[] key, byte[] input) throws BarocertException {
         try {
+        	// SecretKeySpec 객체를 사용한 키 생성.
             SecretKeySpec signingKey = new SecretKeySpec(key, HMAC_SHA256_ALGORITHM);
+            // 지정된 MAC 알고리즘을 구현하는 MAC 객체를 생성.
             Mac mac = Mac.getInstance(HMAC_SHA256_ALGORITHM);
+            // 키를 사용하여 MAC 객체를 초기화.
             mac.init(signingKey);
+            // 암호화 하려는 데이터의 바이트 배열을 처리.
             return mac.doFinal(input);
         } catch (Exception e) {
             throw new BarocertException(-99999999, "Kakaocert Fail to Calculate HMAC-SHA256, Please check your SecretKey.", e);
@@ -417,6 +421,7 @@ public class KakaocertServiceImp implements KakaocertService {
     
     protected byte[] GenerateRandomKeyByte()  {
         byte[] iv = new byte[16]; // CBC IV LENGTH
+        // secureRandom를 취득, nextBytes를 호출해 난수 바이트를 생성.
         secureRandom.nextBytes(iv);
 		
         return iv;
@@ -426,26 +431,33 @@ public class KakaocertServiceImp implements KakaocertService {
     public String AES256Encrypt(String plainText) throws BarocertException {
         ByteBuffer byteBuffer = null;
         
+        // 필수 값 체크.
         if (plainText == null || plainText.length() == 0)
         	throw new BarocertException(-99999999, "KaKaoCert. There is nothing to encrypt.");
 		
         try {
+        	// 벡터생성.
             byte[] iv = GenerateRandomKeyByte();
 		
+            // SecretKeySpec 객체를 이욜해서 KEY 생성.
             SecretKeySpec keySpec = new SecretKeySpec(base64Decode(_secretKey), "AES");
 		    
+            // Cipher 초기화.
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, keySpec,new IvParameterSpec(iv));
 		    
+            // Byte배열평문을 암호화, 복호화 된 Byte 배열로 반환.
             byte[] encryptedData = cipher.doFinal(plainText.getBytes(Charset.forName("UTF-8")));
 		
+            // 벡터길이와 암호문 길이만큼 할당.
             byteBuffer = ByteBuffer.allocate(iv.length + encryptedData.length);
-            byteBuffer.put(iv);
-            byteBuffer.put(encryptedData);
+            byteBuffer.put(iv); // 벡터 추가.
+            byteBuffer.put(encryptedData); // 암호문 추가.
         } catch (Exception e) {
             throw new BarocertException(-99999999, "KaKaoCert AES256 Encrypt Exception", e);
         }
 		
+        // 버퍼에 저장된 데이터를 배열로 받고, Base64 Encode.
         return base64Encode(byteBuffer.array());
     }
 
@@ -513,7 +525,7 @@ public class KakaocertServiceImp implements KakaocertService {
                 throw new BarocertException(-99999999, "Kakaocert fromGzipStream func finally close Exception", e);
             }
         }
-
+        
         return sb.toString();
     }
 
@@ -527,7 +539,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
             if (null != httpURLConnection.getContentEncoding() && httpURLConnection.getContentEncoding().equals("gzip")) {
                 result = fromGzipStream(input); // GZiP 압축해제.
-            } else { 
+            } else {
                 result = fromStream(input);
             }
         } catch (IOException e) {
@@ -539,7 +551,7 @@ public class KakaocertServiceImp implements KakaocertService {
                 result = fromStream(errorIs);
                 error = fromJsonString(result, ErrorResponse.class);
             } catch (Exception ignored) {
-
+                throw new BarocertException(-99999999, "Kakaocert parseResponse func InputStream Exception", ignored);
             } finally {
                 try {
                     if (errorIs != null)
@@ -571,36 +583,36 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 본인인증 서명요청
     @Override
-    public ResponseAuth requestAuth(String clientCode, AuthObject authObject) throws BarocertException {
+    public ResponseVerify requestVerify(String clientCode, RequestVerify requestVerify) throws BarocertException {
     	
     	String Target = "KakaoCert requestAuth";
 
     	// 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, Target + " : 이용기관코드가 입력되지 않았습니다.");
-        if (authObject == null)
+        if (requestVerify == null)
             throw new BarocertException(-99999999, Target + " : 본인인증 서명요청 정보가 입력되지 않았습니다.");
-    	if(authObject.getReceiverHP() == null || authObject.getReceiverHP().length() == 0)
+    	if(requestVerify.getReceiverHP() == null || requestVerify.getReceiverHP().length() == 0)
             throw new BarocertException(-99999999, Target + " : 수신자 휴대폰 번호가 입력되지 않았습니다.");
-    	if(authObject.getReceiverName() == null || authObject.getReceiverName().length() == 0)
+    	if(requestVerify.getReceiverName() == null || requestVerify.getReceiverName().length() == 0)
             throw new BarocertException(-99999999, Target + " : 수신자 성명이 입력되지 않았습니다.");
-    	if(authObject.getReceiverBirthday() == null || authObject.getReceiverBirthday().length() == 0)
+    	if(requestVerify.getReceiverBirthday() == null || requestVerify.getReceiverBirthday().length() == 0)
             throw new BarocertException(-99999999, Target + " : 생년월일이 입력되지 않았습니다.");
-        if (authObject.getReqTitle() == null || authObject.getReqTitle().length() == 0)
+        if (requestVerify.getReqTitle() == null || requestVerify.getReqTitle().length() == 0)
             throw new BarocertException(-99999999, Target + " : 인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (authObject.getExpireIn() == null)
+        if (requestVerify.getExpireIn() == null)
             throw new BarocertException(-99999999, Target + " : 유효 만료일시가 입력되지 않았습니다.");
-        if (authObject.getToken() == null || authObject.getToken().length() == 0)
+        if (requestVerify.getToken() == null || requestVerify.getToken().length() == 0)
             throw new BarocertException(-99999999, Target + " : 토큰 원문이 입력되지 않았습니다.");
         
-        String postDate = toJsonString(authObject);
+        String postDate = toJsonString(requestVerify);
         
-        return httppost("/KAKAO/VerifyAuth/" + clientCode, clientCode, postDate, ResponseAuth.class);
+        return httppost("/KAKAO/VerifyAuth/" + clientCode, clientCode, postDate, ResponseVerify.class);
     }
     
     // 본인인증 상태확인
     @Override
-    public ResponseStateAuth requestStateAuth(String clientCode, String receiptID) throws BarocertException {
+    public ResponseStateVerify requestStateVerify(String clientCode, String receiptID) throws BarocertException {
     	
     	String Target = "KakaoCert requestStateAuth";
 
@@ -610,7 +622,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (receiptID == null || receiptID.length() == 0)
             throw new BarocertException(-99999999, Target + " : 접수아이디가 입력되지 않았습니다.");
         
-        return httpget("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, ResponseStateAuth.class);
+        return httpget("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, ResponseStateVerify.class);
     }
     
     // 본인인증 서명검증
@@ -632,7 +644,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 전자서명 서명요청(단건)
     @Override
-    public ResponseESign requestESign(String clientCode, ESignObject eSignObject) throws BarocertException {
+    public ResponseESign requestESign(String clientCode, RequestESign eSignObject) throws BarocertException {
     	
     	String Target = "KakaoCert requestESign";
 
@@ -649,8 +661,8 @@ public class KakaocertServiceImp implements KakaocertService {
     		throw new BarocertException(-99999999, Target + " : 생년월일이 입력되지 않았습니다.");
         if (eSignObject.getReqTitle() == null || eSignObject.getReqTitle().length() == 0)
             throw new BarocertException(-99999999, Target + " : 인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (eSignObject.getExpireIn() == null)
-            throw new BarocertException(-99999999, Target + " : 유효 만료일시가 입력되지 않았습니다.");
+//        if (eSignObject.getExpireIn() == null)
+//            throw new BarocertException(-99999999, Target + " : 유효 만료일시가 입력되지 않았습니다.");
         if (eSignObject.getToken() == null || eSignObject.getToken().length() == 0)
             throw new BarocertException(-99999999, Target + " : 토큰 원문이 입력되지 않았습니다.");
         if (eSignObject.getTokenType() == null || eSignObject.getTokenType().length() == 0)
@@ -695,7 +707,7 @@ public class KakaocertServiceImp implements KakaocertService {
     
     // 전자서명 서명요청(다건)
     @Override
-    public ResponseMultiESign requestMultiESign(String clientCode, MultiESignObject multiESignObject) throws BarocertException {
+    public ResponseMultiESign requestMultiESign(String clientCode, RequestMultiESign multiESignObject) throws BarocertException {
     	
     	String Target = "KakaoCert requestMultiESign";
 
