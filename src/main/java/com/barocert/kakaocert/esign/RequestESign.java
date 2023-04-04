@@ -8,7 +8,7 @@ public class RequestESign {
 	private String receiverBirthday;
 	private String ci;
 	private String reqTitle;
-	private Integer expireIn;
+	private int expireIn;
 	private String token;
 	private String tokenType;
 	private String returnURL;
@@ -62,11 +62,11 @@ public class RequestESign {
 		this.reqTitle = reqTitle;
 	}
 
-	public Integer getExpireIn() {
+	public int getExpireIn() {
 		return expireIn;
 	}
 
-	public void setExpireIn(Integer expireIn) {
+	public void setExpireIn(int expireIn) {
 		this.expireIn = expireIn;
 	}
 
@@ -94,7 +94,7 @@ public class RequestESign {
 		this.returnURL = returnURL;
 	}
 
-	public boolean isAppUseYN() {
+	public boolean getAppUseYN() {
 		return appUseYN;
 	}
 

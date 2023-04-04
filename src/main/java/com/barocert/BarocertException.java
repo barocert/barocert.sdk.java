@@ -2,6 +2,7 @@ package com.barocert;
 
 import kr.co.linkhub.auth.LinkhubException;
 
+
 public class BarocertException extends Exception {
 	
 	private static final long serialVersionUID = 1L;

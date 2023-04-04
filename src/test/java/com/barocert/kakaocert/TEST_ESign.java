@@ -5,32 +5,29 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import com.barocert.BarocertException;
-import com.barocert.KakaocertService;
-import com.barocert.KakaocertServiceImp;
-import com.barocert.kakaocert.esign.RequestMultiESign;
-import com.barocert.kakaocert.esign.ResponseMultiESign;
-import com.barocert.kakaocert.esign.ResponseStateMultiESign;
-import com.barocert.kakaocert.esign.ResponseVerifyMultiESign;
-import com.barocert.kakaocert.esign.RequestESign;
-import com.barocert.kakaocert.esign.ResponseESign;
-import com.barocert.kakaocert.esign.ResponseStateESign;
-import com.barocert.kakaocert.esign.ResponseVerifyESign;
 import com.barocert.kakaocert.esign.MultiESignTokens;
+import com.barocert.kakaocert.esign.RequestESign;
+import com.barocert.kakaocert.esign.RequestMultiESign;
+import com.barocert.kakaocert.esign.ResponseESign;
+import com.barocert.kakaocert.esign.ResponseMultiESign;
+import com.barocert.kakaocert.esign.ResponseStateESign;
+import com.barocert.kakaocert.esign.ResponseStateMultiESign;
+import com.barocert.kakaocert.esign.ResponseVerifyESign;
+import com.barocert.kakaocert.esign.ResponseVerifyMultiESign;
 
 public class TEST_ESign {
 
-    private final String testLinkID = "BAROCERT"; // TODO :: 나중에 바꿔야 함.
-    private final String testSecretKey = "WmgaCSf2RJ7hOupOwMAbrLiGQckY+QuHmrOXKA95IIs="; // TODO :: 나중에 바꿔야 함.
+    private final String testLinkID = "LINKHUB_BC";
+    private final String testSecretKey = "npCAl0sHPpJqlvMbrcBmNagrxkQ74w9Sl0A+M++kMCE=";
 	
     private KakaocertService kakaocertService;
 	
     public TEST_ESign() {
         KakaocertServiceImp service = new KakaocertServiceImp();
-        service.setServiceURL("https://bc-api.linkhub.kr");
         service.setLinkID(testLinkID);
         service.setSecretKey(testSecretKey);
         service.setIPRestrictOnOff(true);
-        service.setUseStaticIP(false);
+        service.setUseStaticIP(true);
         service.setUseLocalTimeYN(true);
         kakaocertService = service;
     }
@@ -44,15 +41,15 @@ public class TEST_ESign {
 			
             // 수신자 정보.
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.
-            request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
-            request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
-            request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
-            // request.setCi(kakaocertService.AES256Encrypt(kakaocertService.AES256Encrypt(""));
+            request.setReceiverHP(kakaocertService.encryptGCM("01054437896"));
+            request.setReceiverName(kakaocertService.encryptGCM("최상혁"));
+            request.setReceiverBirthday(kakaocertService.encryptGCM("19880301"));
+            // request.setCi(kakaocertService.AES256encryptGCMrypt(kakaocertService.encryptGCM(""));
             
             request.setReqTitle("인증요청 메시지 제공란"); // 인증요청 메시지 제목이 최대길이 40자.
             request.setExpireIn(1000); // 인증요청 만료시간 : 최대 1000(초)까지 입력 가능.
 
-            request.setToken(kakaocertService.AES256Encrypt("토큰원문 단건 테스트")); // 원문 2800자 까지 입력가능.
+            request.setToken(kakaocertService.encryptGCM("토큰원문 단건 테스트")); // 원문 2800자 까지 입력가능.
             request.setTokenType("TEXT"); // TEXT, HASH
 			
             // AppToApp 인증요청 여부.
@@ -62,7 +59,7 @@ public class TEST_ESign {
             // AppToApp 방식 이용 시 입력.
             // request.setReturnURL("https://kakao.barocert.com");
 			
-            ResponseESign result = kakaocertService.requestESign("023030000081", request);
+            ResponseESign result = kakaocertService.requestESign("023030000004", request);
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -76,7 +73,7 @@ public class TEST_ESign {
     @Test
     public void TEST_RequestStateESign() throws BarocertException {
         try {
-            ResponseStateESign result = kakaocertService.requestStateESign("023030000081", "02303300230300000810000000000013");
+            ResponseStateESign result = kakaocertService.requestStateESign("023030000004", "02304040230300000040000000000004");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -107,7 +104,7 @@ public class TEST_ESign {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ResponseVerifyESign result = kakaocertService.requestVerifyESign("023030000081", "02303300230300000810000000000013");
+            ResponseVerifyESign result = kakaocertService.requestVerifyESign("023030000004", "02304040230300000040000000000004");
 			
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState());	// 대기(0),완료(1),만료(2),거절(3),실패(4)
@@ -128,10 +125,10 @@ public class TEST_ESign {
 			
             // 수신자 정보.
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.
-            request.setReceiverHP(kakaocertService.AES256Encrypt("01087674117"));
-            request.setReceiverName(kakaocertService.AES256Encrypt("이승환"));
-            request.setReceiverBirthday(kakaocertService.AES256Encrypt("19930112"));
-            // request.setCi(kakaocertService.AES256Encrypt(""));
+            request.setReceiverHP(kakaocertService.encryptGCM("01087674117"));
+            request.setReceiverName(kakaocertService.encryptGCM("이승환"));
+            request.setReceiverBirthday(kakaocertService.encryptGCM("19930112"));
+            // request.setCi(kakaocertService.AES256encryptGCMrypt(""));
 			
             request.setReqTitle("인증요청 구분제목 테스트"); // 인증요청 메시지 제목이 최대길이 40자.
             request.setExpireIn(1000); // 인증요청 만료시간: 최대 1000(초)까지 입력 가능.
@@ -153,7 +150,7 @@ public class TEST_ESign {
             for(int i = 0; i < 20; i++) { // 토큰원문은 최대 20개 까지 입력가능.
                 MultiESignTokens token = new MultiESignTokens();
                 token.setReqTitle("서명요청 제목 다건 테스트 " + i); // 인증요청 메시지 제목.
-                token.setToken(kakaocertService.AES256Encrypt(sb.toString())); // 원문 2800자 까지 입력가능.
+                token.setToken(kakaocertService.encryptGCM(sb.toString())); // 원문 2800자 까지 입력가능.
                 request.getTokens().add(token);
             }
             
@@ -226,4 +223,11 @@ public class TEST_ESign {
         }
     }
 	
+    @Test
+    public void testName() throws Exception {
+        String property = System.getProperty("java.version");
+        System.out.println(property);
+    }
+    
+    
 }
