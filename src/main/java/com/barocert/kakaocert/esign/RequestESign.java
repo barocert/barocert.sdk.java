@@ -1,105 +1,105 @@
 package com.barocert.kakaocert.esign;
 
 public class RequestESign {
-	
-	private String requestID;
-	private String receiverHP;
-	private String receiverName;
-	private String receiverBirthday;
-	private String ci;
-	private String reqTitle;
-	private int expireIn;
-	private String token;
-	private String tokenType;
-	private String returnURL;
-	private boolean appUseYN;
 
-	public String getRequestID() {
-		return requestID;
-	}
+    private String requestID;
+    private String receiverHP;
+    private String receiverName;
+    private String receiverBirthday;
+    private String ci;
+    private String reqTitle;
+    private int expireIn;
+    private String token;
+    private String tokenType;
+    private String returnURL;
+    private boolean appUseYN;
 
-	public void setRequestID(String requestID) {
-		this.requestID = requestID;
-	}
+    public String getRequestID() {
+        return requestID;
+    }
 
-	public String getReceiverHP() {
-		return receiverHP;
-	}
+    public void setRequestID(String requestID) {
+        this.requestID = requestID;
+    }
 
-	public void setReceiverHP(String receiverHP) {
-		this.receiverHP = receiverHP;
-	}
+    public String getReceiverHP() {
+        return receiverHP;
+    }
 
-	public String getReceiverName() {
-		return receiverName;
-	}
+    public void setReceiverHP(String receiverHP) {
+        this.receiverHP = receiverHP;
+    }
 
-	public void setReceiverName(String receiverName) {
-		this.receiverName = receiverName;
-	}
+    public String getReceiverName() {
+        return receiverName;
+    }
 
-	public String getReceiverBirthday() {
-		return receiverBirthday;
-	}
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
 
-	public void setReceiverBirthday(String receiverBirthday) {
-		this.receiverBirthday = receiverBirthday;
-	}
+    public String getReceiverBirthday() {
+        return receiverBirthday;
+    }
 
-	public String getCi() {
-		return ci;
-	}
+    public void setReceiverBirthday(String receiverBirthday) {
+        this.receiverBirthday = receiverBirthday;
+    }
 
-	public void setCi(String ci) {
-		this.ci = ci;
-	}
+    public String getCi() {
+        return ci;
+    }
 
-	public String getReqTitle() {
-		return reqTitle;
-	}
+    public void setCi(String ci) {
+        this.ci = ci;
+    }
 
-	public void setReqTitle(String reqTitle) {
-		this.reqTitle = reqTitle;
-	}
+    public String getReqTitle() {
+        return reqTitle;
+    }
 
-	public int getExpireIn() {
-		return expireIn;
-	}
+    public void setReqTitle(String reqTitle) {
+        this.reqTitle = reqTitle;
+    }
 
-	public void setExpireIn(int expireIn) {
-		this.expireIn = expireIn;
-	}
+    public int getExpireIn() {
+        return expireIn;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public void setExpireIn(int expireIn) {
+        this.expireIn = expireIn;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public String getTokenType() {
-		return tokenType;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	public void setTokenType(String tokenType) {
-		this.tokenType = tokenType;
-	}
+    public String getTokenType() {
+        return tokenType;
+    }
 
-	public String getReturnURL() {
-		return returnURL;
-	}
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
 
-	public void setReturnURL(String returnURL) {
-		this.returnURL = returnURL;
-	}
+    public String getReturnURL() {
+        return returnURL;
+    }
 
-	public boolean getAppUseYN() {
-		return appUseYN;
-	}
+    public void setReturnURL(String returnURL) {
+        this.returnURL = returnURL;
+    }
 
-	public void setAppUseYN(boolean appUseYN) {
-		this.appUseYN = appUseYN;
-	}
+    public boolean getAppUseYN() {
+        return appUseYN;
+    }
+
+    public void setAppUseYN(boolean appUseYN) {
+        this.appUseYN = appUseYN;
+    }
 
 }

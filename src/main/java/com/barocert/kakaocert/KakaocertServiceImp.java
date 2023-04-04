@@ -32,7 +32,7 @@ import org.bouncycastle.crypto.params.AEADParameters;
 import org.bouncycastle.crypto.params.KeyParameter;
 
 import com.barocert.BarocertException;
-import com.barocert.kakaocert.cms.CMSObject;
+import com.barocert.kakaocert.cms.RequestCMS;
 import com.barocert.kakaocert.cms.ResponseCMS;
 import com.barocert.kakaocert.cms.ResponseStateCMS;
 import com.barocert.kakaocert.cms.ResponseVerifyCMS;
@@ -96,10 +96,10 @@ public class KakaocertServiceImp implements KakaocertService {
                     .useLocalTimeYN(useLocalTimeYN) // 로컬시스템 시간 사용여부.
                     .ServiceID(SERVICE_ID)          // 서비스아이디.
                     .addScope("partner")            // partner
-                    .addScope("401")                // ESign
-                    .addScope("402")                // ESign
-                    .addScope("403")                // VerifyAuth
-                    .addScope("404");               // CMS
+                    .addScope("401")                // 전자서명(단건)
+                    .addScope("402")                // 전자서명(복수)
+                    .addScope("403")                // 본인인증
+                    .addScope("404");               // 출금동의
 
             // AuthURL 이 null 이고, useStaticIP 가 true 이면, ServiceURL 이 Auth_Static_URL 적용.
             if (useStaticIP)
@@ -698,37 +698,37 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 출금동의 서명요청
     @Override
-    public ResponseCMS requestCMS(String clientCode, CMSObject cMSObject) throws BarocertException {
+    public ResponseCMS requestCMS(String clientCode, RequestCMS requestCMS) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (cMSObject == null)
+        if (requestCMS == null)
             throw new BarocertException(-99999999, "출금동의 서명요청 정보가 입력되지 않았습니다.");
-        if (cMSObject.getReceiverHP() == null || cMSObject.getReceiverHP().length() == 0)
+        if (requestCMS.getReceiverHP() == null || requestCMS.getReceiverHP().length() == 0)
             throw new BarocertException(-99999999, "수신자 휴대폰 번호가 입력되지 않았습니다.");
-        if (cMSObject.getReceiverName() == null || cMSObject.getReceiverName().length() == 0)
+        if (requestCMS.getReceiverName() == null || requestCMS.getReceiverName().length() == 0)
             throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (cMSObject.getBankAccountBirthday() == null || cMSObject.getBankAccountBirthday().length() == 0)
+        if (requestCMS.getBankAccountBirthday() == null || requestCMS.getBankAccountBirthday().length() == 0)
             throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
-        if (cMSObject.getReqTitle() == null || cMSObject.getReqTitle().length() == 0)
+        if (requestCMS.getReqTitle() == null || requestCMS.getReqTitle().length() == 0)
             throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (cMSObject.getExpireIn() == null)
+        if (requestCMS.getExpireIn() == null)
             throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
-        if (cMSObject.getRequestCorp() == null || cMSObject.getRequestCorp().length() == 0)
+        if (requestCMS.getRequestCorp() == null || requestCMS.getRequestCorp().length() == 0)
             throw new BarocertException(-99999999, "청구기관명이 입력되지 않았습니다.");
-        if (cMSObject.getBankName() == null || cMSObject.getBankName().length() == 0)
+        if (requestCMS.getBankName() == null || requestCMS.getBankName().length() == 0)
             throw new BarocertException(-99999999, "은행명이 입력되지 않았습니다.");
-        if (cMSObject.getBankAccountNum() == null || cMSObject.getBankAccountNum().length() == 0)
+        if (requestCMS.getBankAccountNum() == null || requestCMS.getBankAccountNum().length() == 0)
             throw new BarocertException(-99999999, "예금주 생년월일이 입력되지 않았습니다.");
-        if (cMSObject.getBankAccountName() == null || cMSObject.getBankAccountName().length() == 0)
+        if (requestCMS.getBankAccountName() == null || requestCMS.getBankAccountName().length() == 0)
             throw new BarocertException(-99999999, "계좌번호가 입력되지 않았습니다.");
-        if (cMSObject.getBankAccountBirthday() == null || cMSObject.getBankAccountBirthday().length() == 0)
+        if (requestCMS.getBankAccountBirthday() == null || requestCMS.getBankAccountBirthday().length() == 0)
             throw new BarocertException(-99999999, "예금주명이 입력되지 않았습니다.");
-        if (cMSObject.getBankServiceType() == null || cMSObject.getBankServiceType().length() == 0)
+        if (requestCMS.getBankServiceType() == null || requestCMS.getBankServiceType().length() == 0)
             throw new BarocertException(-99999999, "출금동의 서비스 유형코드가 입력되지 않았습니다.");
 
-        String postDate = toJsonString(cMSObject);
+        String postDate = toJsonString(requestCMS);
 
         return httppost("/KAKAO/CMS/" + clientCode, clientCode, postDate, ResponseCMS.class);
     }

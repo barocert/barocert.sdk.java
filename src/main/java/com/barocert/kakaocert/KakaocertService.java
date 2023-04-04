@@ -1,7 +1,7 @@
 package com.barocert.kakaocert;
 
 import com.barocert.BarocertException;
-import com.barocert.kakaocert.cms.CMSObject;
+import com.barocert.kakaocert.cms.RequestCMS;
 import com.barocert.kakaocert.cms.ResponseCMS;
 import com.barocert.kakaocert.cms.ResponseStateCMS;
 import com.barocert.kakaocert.cms.ResponseVerifyCMS;
@@ -133,12 +133,12 @@ public interface KakaocertService {
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드
-	 * @param cMSObject
+	 * @param requestCMS
 	 * 			출금동의 요청정보
 	 * @return ResponseCMS
 	 * @throws BarocertException
 	 */
-	public ResponseCMS requestCMS(String clientCode, CMSObject cMSObject) throws BarocertException;
+	public ResponseCMS requestCMS(String clientCode, RequestCMS requestCMS) throws BarocertException;
 	
 	/**
 	 * 출금동의 상태확인
