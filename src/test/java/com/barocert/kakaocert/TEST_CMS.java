@@ -42,7 +42,7 @@ public class TEST_CMS {
             request.setReqTitle("인증요청 메시지 제공란"); // 인증요청 메시지 제목이 최대길이 40자.
             request.setExpireIn(1000); // 인증요청 만료시간 : 최대 1000(초)까지 입력 가능.
 
-            request.setRequestCorp(kakaocertService.encryptGCM("청구 기관명란"));
+            request.setRequestCorp(kakaocertService.encryptGCM("청구기관명란"));
             request.setBankName(kakaocertService.encryptGCM("출금은행명란"));
             request.setBankAccountNum(kakaocertService.encryptGCM("9-4324-5117-58"));
             request.setBankAccountName(kakaocertService.encryptGCM("예금주명 입력란"));
@@ -70,7 +70,7 @@ public class TEST_CMS {
     @Test
     public void TEST_RequestStateCMS() throws BarocertException {
         try {
-            ResponseStateCMS result = kakaocertService.requestStateCMS("023030000004", "02303300230300000810000000000003");
+            ResponseStateCMS result = kakaocertService.stateCMS("023030000004", "02304050230300000040000000000001");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -101,7 +101,7 @@ public class TEST_CMS {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ResponseVerifyCMS result = kakaocertService.requestVerifyCMS("023030000004", "02303300230300000810000000000003");
+            ResponseVerifyCMS result = kakaocertService.verifyCMS("023030000004", "02304050230300000040000000000001");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

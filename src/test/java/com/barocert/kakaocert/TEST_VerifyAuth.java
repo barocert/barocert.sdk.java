@@ -3,7 +3,7 @@ package com.barocert.kakaocert;
 import org.junit.Test;
 
 import com.barocert.BarocertException;
-import com.barocert.kakaocert.verifyauth.RequestVerify;
+import com.barocert.kakaocert.verifyauth.RequestVerifyAuth;
 import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
 import com.barocert.kakaocert.verifyauth.ResponseStateVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerify;
@@ -30,7 +30,7 @@ public class TEST_VerifyAuth {
     public void TEST_RequestAuth() throws BarocertException {
         try {
             // 본인인증 요청 Object
-            RequestVerify request = new RequestVerify();
+            RequestVerifyAuth request = new RequestVerifyAuth();
 
             // 수신자 정보.
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.
@@ -53,7 +53,7 @@ public class TEST_VerifyAuth {
             // AppToApp 방식 이용 시 입력.
             // request.setReturnURL("https://kakao.barocert.com");
 
-            ResponseVerify result = kakaocertService.requestVerify("023030000004", request);
+            ResponseVerify result = kakaocertService.requestVerifyAuth("023030000004", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -67,7 +67,7 @@ public class TEST_VerifyAuth {
     @Test
     public void TEST_RequestStateAuth() throws BarocertException {
         try {
-            ResponseStateVerify result = kakaocertService.requestStateVerify("023030000004", "02303300230300000810000000000004");
+            ResponseStateVerify result = kakaocertService.stateVerifyAuth("023030000004", "02303300230300000810000000000004");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -97,7 +97,7 @@ public class TEST_VerifyAuth {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ResponseVerifyAuth result = kakaocertService.requestVerifyAuth("023030000004", "02303300230300000810000000000004");
+            ResponseVerifyAuth result = kakaocertService.verifyVerifyAuth("023030000004", "02303300230300000810000000000004");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

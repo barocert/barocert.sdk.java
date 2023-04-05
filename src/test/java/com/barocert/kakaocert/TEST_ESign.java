@@ -73,7 +73,7 @@ public class TEST_ESign {
     @Test
     public void TEST_RequestStateESign() throws BarocertException {
         try {
-            ResponseStateESign result = kakaocertService.requestStateESign("023030000004", "02304040230300000040000000000004");
+            ResponseStateESign result = kakaocertService.stateESign("023030000004", "02304040230300000040000000000004");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -104,7 +104,7 @@ public class TEST_ESign {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ResponseVerifyESign result = kakaocertService.requestVerifyESign("023030000004", "02304040230300000040000000000004");
+            ResponseVerifyESign result = kakaocertService.verifyESign("023030000004", "02304040230300000040000000000004");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
@@ -176,7 +176,7 @@ public class TEST_ESign {
     @Test
     public void TEST_RequestStateMultiESign() throws BarocertException {
         try {
-            ResponseStateMultiESign result = kakaocertService.requestStateMultiESign("023030000081", "02303300230300000810000000000010");
+            ResponseStateMultiESign result = kakaocertService.stateMultiESign("023030000081", "02303300230300000810000000000010");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -207,7 +207,7 @@ public class TEST_ESign {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
             // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ResponseVerifyMultiESign result = kakaocertService.requestVerifyMultiESign("023030000081", "02303300230300000810000000000010");
+            ResponseVerifyMultiESign result = kakaocertService.verifyMultiESign("023030000081", "02303300230300000810000000000010");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

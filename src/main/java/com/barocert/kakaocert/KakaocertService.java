@@ -13,7 +13,7 @@ import com.barocert.kakaocert.esign.RequestESign;
 import com.barocert.kakaocert.esign.ResponseESign;
 import com.barocert.kakaocert.esign.ResponseStateESign;
 import com.barocert.kakaocert.esign.ResponseVerifyESign;
-import com.barocert.kakaocert.verifyauth.RequestVerify;
+import com.barocert.kakaocert.verifyauth.RequestVerifyAuth;
 import com.barocert.kakaocert.verifyauth.ResponseStateVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
@@ -25,12 +25,12 @@ public interface KakaocertService {
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드
-	 * @param requestVerify
+	 * @param requestVerifyAuth
 	 * 			본인인증 요청정보
 	 * @return ResponseVerify
 	 * @throws BarocertException
 	 */
-	public ResponseVerify requestVerify(String clientCode, RequestVerify requestVerify) throws BarocertException;
+	public ResponseVerify requestVerifyAuth(String clientCode, RequestVerifyAuth requestVerifyAuth) throws BarocertException;
 	
 	/**
 	 * 본인인증 상태확인
@@ -42,7 +42,7 @@ public interface KakaocertService {
 	 * @return ResponseStateVerify
 	 * @throws BarocertException
 	 */
-	public ResponseStateVerify requestStateVerify(String clientCode, String receiptID) throws BarocertException;
+	public ResponseStateVerify stateVerifyAuth(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 본인인증 서명검증
@@ -54,7 +54,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifyAuth
 	 * @throws BarocertException
 	 */
-	public ResponseVerifyAuth requestVerifyAuth(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyAuth verifyVerifyAuth(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 요청(단건) 
@@ -78,7 +78,7 @@ public interface KakaocertService {
 	 * @return ResponseStateESign
 	 * @throws BarocertException
 	 */
-	public ResponseStateESign requestStateESign(String clientCode, String receiptID) throws BarocertException;
+	public ResponseStateESign stateESign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 서명검증(단건)
@@ -90,7 +90,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifyESign
 	 * @throws BarocertException
 	 */
-	public ResponseVerifyESign requestVerifyESign(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyESign verifyESign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 요청(복수)
@@ -114,7 +114,7 @@ public interface KakaocertService {
 	 * @return ResponseStateMultiESign
 	 * @throws BarocertException
 	 */
-	public ResponseStateMultiESign requestStateMultiESign(String clientCode, String receiptID) throws BarocertException;
+	public ResponseStateMultiESign stateMultiESign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 서명검증(복수)
@@ -126,7 +126,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifyMultiESign
 	 * @throws BarocertException
 	 */
-	public ResponseVerifyMultiESign requestVerifyMultiESign(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyMultiESign verifyMultiESign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 출금동의 요청
@@ -150,7 +150,7 @@ public interface KakaocertService {
 	 * @return ResponseStateCMS
 	 * @throws BarocertException
 	 */
-	public ResponseStateCMS requestStateCMS(String clientCode, String receiptID) throws BarocertException;
+	public ResponseStateCMS stateCMS(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 출금동의 서명검증
@@ -162,7 +162,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifyCMS
 	 * @throws BarocertException
 	 */
-	public ResponseVerifyCMS requestVerifyCMS(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyCMS verifyCMS(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
      * AES256/GCM/NoPadding 암호화

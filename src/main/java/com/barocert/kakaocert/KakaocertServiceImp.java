@@ -44,7 +44,7 @@ import com.barocert.kakaocert.esign.ResponseStateESign;
 import com.barocert.kakaocert.esign.ResponseStateMultiESign;
 import com.barocert.kakaocert.esign.ResponseVerifyESign;
 import com.barocert.kakaocert.esign.ResponseVerifyMultiESign;
-import com.barocert.kakaocert.verifyauth.RequestVerify;
+import com.barocert.kakaocert.verifyauth.RequestVerifyAuth;
 import com.barocert.kakaocert.verifyauth.ResponseStateVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
@@ -501,9 +501,7 @@ public class KakaocertServiceImp implements KakaocertService {
             byteBuffer.put(iv); // 벡터 추가.
             byteBuffer.put(ciphertextBytes); // 암호문 추가.
 
-        }catch(
-        Exception e)
-        {
+        }catch(Exception e){
             throw new BarocertException(-99999999, "KaKaoCert AES256 Encrypt Exception", e);
         }
 
@@ -524,34 +522,34 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 본인인증 서명요청
     @Override
-    public ResponseVerify requestVerify(String clientCode, RequestVerify requestVerify) throws BarocertException {
+    public ResponseVerify requestVerifyAuth(String clientCode, RequestVerifyAuth requestVerifyAuth) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (requestVerify == null)
+        if (requestVerifyAuth == null)
             throw new BarocertException(-99999999, "본인인증 서명요청 정보가 입력되지 않았습니다.");
-        if (requestVerify.getReceiverHP() == null || requestVerify.getReceiverHP().length() == 0)
+        if (requestVerifyAuth.getReceiverHP() == null || requestVerifyAuth.getReceiverHP().length() == 0)
             throw new BarocertException(-99999999, "수신자 휴대폰 번호가 입력되지 않았습니다.");
-        if (requestVerify.getReceiverName() == null || requestVerify.getReceiverName().length() == 0)
+        if (requestVerifyAuth.getReceiverName() == null || requestVerifyAuth.getReceiverName().length() == 0)
             throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (requestVerify.getReceiverBirthday() == null || requestVerify.getReceiverBirthday().length() == 0)
+        if (requestVerifyAuth.getReceiverBirthday() == null || requestVerifyAuth.getReceiverBirthday().length() == 0)
             throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
-        if (requestVerify.getReqTitle() == null || requestVerify.getReqTitle().length() == 0)
+        if (requestVerifyAuth.getReqTitle() == null || requestVerifyAuth.getReqTitle().length() == 0)
             throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (requestVerify.getExpireIn() == null)
+        if (requestVerifyAuth.getExpireIn() == null)
             throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
-        if (requestVerify.getToken() == null || requestVerify.getToken().length() == 0)
+        if (requestVerifyAuth.getToken() == null || requestVerifyAuth.getToken().length() == 0)
             throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
 
-        String postDate = toJsonString(requestVerify);
+        String postDate = toJsonString(requestVerifyAuth);
 
         return httppost("/KAKAO/VerifyAuth/" + clientCode, clientCode, postDate, ResponseVerify.class);
     }
 
     // 본인인증 상태확인
     @Override
-    public ResponseStateVerify requestStateVerify(String clientCode, String receiptID) throws BarocertException {
+    public ResponseStateVerify stateVerifyAuth(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
@@ -564,7 +562,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 본인인증 서명검증
     @Override
-    public ResponseVerifyAuth requestVerifyAuth(String clientCode, String receiptID) throws BarocertException {
+    public ResponseVerifyAuth verifyVerifyAuth(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
@@ -607,7 +605,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 전자서명 상태확인(단건)
     @Override
-    public ResponseStateESign requestStateESign(String clientCode, String receiptID) throws BarocertException {
+    public ResponseStateESign stateESign(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
@@ -620,7 +618,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 전자서명 서명검증(단건)
     @Override
-    public ResponseVerifyESign requestVerifyESign(String clientCode, String receiptID) throws BarocertException {
+    public ResponseVerifyESign verifyESign(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
@@ -667,7 +665,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 전자서명 상태확인(복수)
     @Override
-    public ResponseStateMultiESign requestStateMultiESign(String clientCode, String receiptID)
+    public ResponseStateMultiESign stateMultiESign(String clientCode, String receiptID)
             throws BarocertException {
 
         // 필수 값 체크.
@@ -681,7 +679,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 전자서명 서명검증(복수)
     @Override
-    public ResponseVerifyMultiESign requestVerifyMultiESign(String clientCode, String receiptID)
+    public ResponseVerifyMultiESign verifyMultiESign(String clientCode, String receiptID)
             throws BarocertException {
 
         // 필수 값 체크.
@@ -735,7 +733,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 출금동의 상태확인
     @Override
-    public ResponseStateCMS requestStateCMS(String clientCode, String receiptID) throws BarocertException {
+    public ResponseStateCMS stateCMS(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
@@ -748,7 +746,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 출금동의 서명검증
     @Override
-    public ResponseVerifyCMS requestVerifyCMS(String clientCode, String receiptID) throws BarocertException {
+    public ResponseVerifyCMS verifyCMS(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
