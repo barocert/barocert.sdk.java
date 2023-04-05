@@ -3,8 +3,7 @@ package com.barocert.kakaocert.verifyauth;
 public class ResponseVerifyAuth {
 
     private String receiptID;
-    private String state;
-    private String token;
+    private String scheme;
 
     public String getReceiptID() {
         return receiptID;
@@ -14,20 +13,12 @@ public class ResponseVerifyAuth {
         this.receiptID = receiptID;
     }
 
-    public String getState() {
-        return state;
+    public String getScheme() {
+        return scheme;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
+    public void setScheme(String scheme) {
+        this.scheme = scheme;
     }
 
 }

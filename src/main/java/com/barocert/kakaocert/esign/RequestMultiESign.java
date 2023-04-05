@@ -1,5 +1,6 @@
 package com.barocert.kakaocert.esign;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RequestMultiESign {
@@ -12,7 +13,7 @@ public class RequestMultiESign {
     private String reqTitle;
     private Integer expireIn;
 
-    private List<MultiESignTokens> tokens;
+    private List<MultiESignTokens> tokens = new ArrayList<MultiESignTokens>();
 
     private String tokenType;
     private String returnURL;
@@ -77,9 +78,9 @@ public class RequestMultiESign {
     public List<MultiESignTokens> getTokens() {
         return tokens;
     }
-
-    public void setTokens(List<MultiESignTokens> token) {
-        this.tokens = token;
+    
+    public void addToken(MultiESignTokens token) {
+        this.tokens.add(token);
     }
 
     public String getTokenType() {

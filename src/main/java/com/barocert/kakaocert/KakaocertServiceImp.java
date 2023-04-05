@@ -46,8 +46,8 @@ import com.barocert.kakaocert.esign.ResponseVerifyESign;
 import com.barocert.kakaocert.esign.ResponseVerifyMultiESign;
 import com.barocert.kakaocert.verifyauth.RequestVerifyAuth;
 import com.barocert.kakaocert.verifyauth.ResponseStateVerify;
-import com.barocert.kakaocert.verifyauth.ResponseVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
+import com.barocert.kakaocert.verifyauth.ResponseVerifyVerifyAuth;
 import com.google.gson.Gson;
 
 import kr.co.linkhub.auth.Base64;
@@ -522,7 +522,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 본인인증 서명요청
     @Override
-    public ResponseVerify requestVerifyAuth(String clientCode, RequestVerifyAuth requestVerifyAuth) throws BarocertException {
+    public ResponseVerifyAuth requestVerifyAuth(String clientCode, RequestVerifyAuth requestVerifyAuth) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
@@ -544,7 +544,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         String postDate = toJsonString(requestVerifyAuth);
 
-        return httppost("/KAKAO/VerifyAuth/" + clientCode, clientCode, postDate, ResponseVerify.class);
+        return httppost("/KAKAO/VerifyAuth/" + clientCode, clientCode, postDate, ResponseVerifyAuth.class);
     }
 
     // 본인인증 상태확인
@@ -562,7 +562,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 본인인증 서명검증
     @Override
-    public ResponseVerifyAuth verifyVerifyAuth(String clientCode, String receiptID) throws BarocertException {
+    public ResponseVerifyVerifyAuth verifyVerifyAuth(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
@@ -573,7 +573,7 @@ public class KakaocertServiceImp implements KakaocertService {
         String postDate = toJsonString("");
 
         return httppost("/KAKAO/VerifyAuth/" + clientCode + "/" + receiptID, clientCode, postDate,
-                ResponseVerifyAuth.class);
+                ResponseVerifyVerifyAuth.class);
     }
 
     // 전자서명 서명요청(단건)

@@ -148,7 +148,7 @@ public class ResponseStateCMS {
         this.scheme = scheme;
     }
 
-    public boolean isAppUseYN() {
+    public boolean getAppUseYN() {
         return appUseYN;
     }
 

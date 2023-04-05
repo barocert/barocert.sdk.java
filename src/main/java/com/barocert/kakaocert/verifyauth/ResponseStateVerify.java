@@ -139,7 +139,7 @@ public class ResponseStateVerify {
         this.scheme = scheme;
     }
 
-    public boolean isAppUseYN() {
+    public boolean getAppUseYN() {
         return appUseYN;
     }
 

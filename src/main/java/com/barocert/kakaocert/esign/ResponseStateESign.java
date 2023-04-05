@@ -148,7 +148,7 @@ public class ResponseStateESign {
         this.scheme = scheme;
     }
 
-    public boolean isAppUseYN() {
+    public boolean getAppUseYN() {
         return appUseYN;
     }
 

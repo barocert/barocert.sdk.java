@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import com.barocert.BarocertException;
 import com.barocert.kakaocert.verifyauth.RequestVerifyAuth;
-import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
+import com.barocert.kakaocert.verifyauth.ResponseVerifyVerifyAuth;
 import com.barocert.kakaocert.verifyauth.ResponseStateVerify;
-import com.barocert.kakaocert.verifyauth.ResponseVerify;
+import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
 
 public class TEST_VerifyAuth {
 
@@ -29,31 +29,31 @@ public class TEST_VerifyAuth {
     @Test
     public void TEST_RequestAuth() throws BarocertException {
         try {
-            // 본인인증 요청 Object
+            // 본인인증 요청 정보 객체
             RequestVerifyAuth request = new RequestVerifyAuth();
 
-            // 수신자 정보.
-            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.
+            // 수신자 정보
+            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
             request.setReceiverHP(kakaocertService.encryptGCM("01054437896"));
             request.setReceiverName(kakaocertService.encryptGCM("최상혁"));
             request.setReceiverBirthday(kakaocertService.encryptGCM("19880301"));
             // request.setCi(kakaocertService.encryptGCM(""));
 
-            // 인증요청 메시지 제목이 최대길이 40자.
+            // 인증요청 메시지 제목 - 최대 40자
             request.setReqTitle("인증요청 메시지 제목란");
-            // 인증요청 만료시간: 최대 1000(초)까지 입력 가능
+            // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
-
+            // 서명 원문 - 최대 2,800자 까지 입력가능
             request.setToken(kakaocertService.encryptGCM("본인인증요청토큰"));
 
             // AppToApp 인증요청 여부
-            // true: AppToApp 인증방식, false: Talk Message 인증방식
+            // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);
 
-            // AppToApp 방식 이용 시 입력.
-            // request.setReturnURL("https://kakao.barocert.com");
+            // App to App 방식 이용시, 호출할 URL
+            // verifyAuthRequest.setReturnURL("https://kakaocert.com");
 
-            ResponseVerify result = kakaocertService.requestVerifyAuth("023030000004", request);
+            ResponseVerifyAuth result = kakaocertService.requestVerifyAuth("023030000004", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -84,7 +84,7 @@ public class TEST_VerifyAuth {
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("VerifyDT : " + result.getVerifyDT());
             System.out.println("Scheme : " + result.getScheme());
-            System.out.println("isAppUseYN : " + result.isAppUseYN());
+            System.out.println("AppUseYN : " + result.getAppUseYN());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
@@ -95,13 +95,12 @@ public class TEST_VerifyAuth {
     @Test
     public void TEST_RequestVerifyAuth() throws BarocertException {
         try {
-            // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
-            // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
-            ResponseVerifyAuth result = kakaocertService.verifyVerifyAuth("023030000004", "02303300230300000810000000000004");
+            // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
+            ResponseVerifyVerifyAuth result = kakaocertService.verifyVerifyAuth("023030000004", "02303300230300000810000000000004");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("Token : " + result.getToken());
+            System.out.println("SignedData : " + result.getSignedData());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());

@@ -29,32 +29,42 @@ public class TEST_CMS {
     @Test
     public void TEST_RequestCMS() {
         try {
-            // 출금동의 요청 Object
+            // 출금동의 요청 객체
             RequestCMS request = new RequestCMS();
 
-            // 수신자 정보.
-            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일.
+            // 수신자 정보
+            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
             request.setReceiverHP(kakaocertService.encryptGCM("01054437896"));
             request.setReceiverName(kakaocertService.encryptGCM("최상혁"));
             request.setReceiverBirthday(kakaocertService.encryptGCM("19880301"));
-            // request.setCi(kakaocertService.encryptGCM(""));
+            // cmsRequest.setCi(kakaocertService.encryptGCM("");
 
-            request.setReqTitle("인증요청 메시지 제공란"); // 인증요청 메시지 제목이 최대길이 40자.
-            request.setExpireIn(1000); // 인증요청 만료시간 : 최대 1000(초)까지 입력 가능.
+            // 인증요청 메시지 제목 - 최대 40자
+            request.setReqTitle("인증요청 메시지 제공란");
 
+            // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
+            request.setExpireIn(1000);
+
+            // 청구기관명 - 최대 100자
             request.setRequestCorp(kakaocertService.encryptGCM("청구기관명란"));
+            // 출금은행명 - 최대 100자
             request.setBankName(kakaocertService.encryptGCM("출금은행명란"));
+            // 출금계좌번호 - 최대 32자
             request.setBankAccountNum(kakaocertService.encryptGCM("9-4324-5117-58"));
+            // 출금계좌 예금주명 - 최대 100자
             request.setBankAccountName(kakaocertService.encryptGCM("예금주명 입력란"));
+            // 출금계좌 예금주 생년월일 - 8자
             request.setBankAccountBirthday(kakaocertService.encryptGCM("19930112"));
+            // 출금유형
+            // CMS - 출금동의용, FIRM - 펌뱅킹, GIRO - 지로용
             request.setBankServiceType(kakaocertService.encryptGCM("CMS")); // CMS, FIRM, GIRO
 
-            // AppToApp 인증요청 여부.
-            // true: AppToApp 인증방식, false: Talk Message 인증방식.
+            // AppToApp 인증요청 여부
+            // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);
 
-            // AppToApp 방식 이용 시 입력.
-            // request.setReturnURL("https://kakao.barocert.com");
+            // App to App 방식 이용시, 에러시 호출할 URL
+            // request.setReturnURL("https://kakaocert.com");
 
             ResponseCMS result = kakaocertService.requestCMS("023030000004", request);
 
@@ -88,7 +98,7 @@ public class TEST_CMS {
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("VerifyDT : " + result.getVerifyDT());
             System.out.println("Scheme : " + result.getScheme());
-            System.out.println("isAppUseYN : " + result.isAppUseYN());
+            System.out.println("AppUseYN : " + result.getAppUseYN());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
@@ -99,8 +109,7 @@ public class TEST_CMS {
     @Test
     public void TEST_RequestVerifyCMS() throws BarocertException {
         try {
-            // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
-            // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
+            // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
             ResponseVerifyCMS result = kakaocertService.verifyCMS("023030000004", "02304050230300000040000000000001");
 
             System.out.println("ReceiptID : " + result.getReceiptID());

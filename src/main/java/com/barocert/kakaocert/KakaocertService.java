@@ -15,8 +15,8 @@ import com.barocert.kakaocert.esign.ResponseStateESign;
 import com.barocert.kakaocert.esign.ResponseVerifyESign;
 import com.barocert.kakaocert.verifyauth.RequestVerifyAuth;
 import com.barocert.kakaocert.verifyauth.ResponseStateVerify;
-import com.barocert.kakaocert.verifyauth.ResponseVerify;
 import com.barocert.kakaocert.verifyauth.ResponseVerifyAuth;
+import com.barocert.kakaocert.verifyauth.ResponseVerifyVerifyAuth;
 
 public interface KakaocertService {
 	
@@ -30,7 +30,7 @@ public interface KakaocertService {
 	 * @return ResponseVerify
 	 * @throws BarocertException
 	 */
-	public ResponseVerify requestVerifyAuth(String clientCode, RequestVerifyAuth requestVerifyAuth) throws BarocertException;
+	public ResponseVerifyAuth requestVerifyAuth(String clientCode, RequestVerifyAuth requestVerifyAuth) throws BarocertException;
 	
 	/**
 	 * 본인인증 상태확인
@@ -54,7 +54,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifyAuth
 	 * @throws BarocertException
 	 */
-	public ResponseVerifyAuth verifyVerifyAuth(String clientCode, String receiptID) throws BarocertException;
+	public ResponseVerifyVerifyAuth verifyVerifyAuth(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 요청(단건) 
