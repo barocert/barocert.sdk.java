@@ -51,7 +51,7 @@ public class TEST_VerifyAuth {
             request.setAppUseYN(false);
 
             // App to App 방식 이용시, 호출할 URL
-            // verifyAuthRequest.setReturnURL("https://kakaocert.com");
+            // verifyAuthRequest.setReturnURL("https://www.kakaocert.com");
 
             ResponseVerifyAuth result = kakaocertService.requestVerifyAuth("023030000004", request);
 

@@ -1,7 +1,5 @@
 package com.barocert.kakaocert;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import com.barocert.BarocertException;
@@ -61,7 +59,7 @@ public class TEST_ESign {
             request.setAppUseYN(false);
 
             // App to App 방식 이용시, 호출할 URL
-            // eSignRequest.setReturnURL("https://kakaocert.com");
+            // eSignRequest.setReturnURL("https://www.kakaocert.com");
 
             ResponseESign result = kakaocertService.requestESign("023030000004", request);
 
@@ -165,7 +163,7 @@ public class TEST_ESign {
             request.setAppUseYN(false);
 
             // App to App 방식 이용시, 에러시 호출할 URL
-            // request.setReturnURL("https://kakaocert.com");
+            // request.setReturnURL("https://www.kakaocert.com");
 
             ResponseMultiESign result = kakaocertService.requestMultiESign("023030000004", request);
 

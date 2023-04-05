@@ -64,7 +64,7 @@ public class TEST_CMS {
             request.setAppUseYN(false);
 
             // App to App 방식 이용시, 에러시 호출할 URL
-            // request.setReturnURL("https://kakaocert.com");
+            // request.setReturnURL("https://www.kakaocert.com");
 
             ResponseCMS result = kakaocertService.requestCMS("023030000004", request);
 
