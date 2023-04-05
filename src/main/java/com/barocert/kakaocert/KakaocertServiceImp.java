@@ -482,7 +482,7 @@ public class KakaocertServiceImp implements KakaocertService {
         {
 
             byte[] keyBytes = base64Decode(_SECRETKEY);
-            byte[] iv = generateGCMIV();
+            byte[] iv = generateGCMiV();
 
             GCMBlockCipher cipher = new GCMBlockCipher(new AESEngine());
             AEADParameters parameters = new AEADParameters(new KeyParameter(keyBytes), GCM_TAG_LENGTH * 8, iv, null);
@@ -510,7 +510,7 @@ public class KakaocertServiceImp implements KakaocertService {
         return base64Encode(byteBuffer.array());
     }
     
-    private byte[] generateGCMIV() {
+    private byte[] generateGCMiV() {
         SecureRandom random;
         try {
             random = SecureRandom.getInstance("SHA1PRNG");
@@ -634,38 +634,38 @@ public class KakaocertServiceImp implements KakaocertService {
                 ResponseVerifyESign.class);
     }
 
-    // 전자서명 서명요청(다건)
+    // 전자서명 서명요청(복수)
     @Override
-    public ResponseMultiESign requestMultiESign(String clientCode, RequestMultiESign multiESignObject)
+    public ResponseMultiESign requestMultiESign(String clientCode, RequestMultiESign requestMultiESign)
             throws BarocertException {
 
         // 필수 값 체크.
         if (clientCode == null || clientCode.length() == 0)
             throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
-        if (multiESignObject == null)
+        if (requestMultiESign == null)
             throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
-        if (multiESignObject.getReceiverHP() == null || multiESignObject.getReceiverHP().length() == 0)
+        if (requestMultiESign.getReceiverHP() == null || requestMultiESign.getReceiverHP().length() == 0)
             throw new BarocertException(-99999999, "수신자 휴대폰 번호가 입력되지 않았습니다.");
-        if (multiESignObject.getReceiverName() == null || multiESignObject.getReceiverName().length() == 0)
+        if (requestMultiESign.getReceiverName() == null || requestMultiESign.getReceiverName().length() == 0)
             throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (multiESignObject.getReceiverBirthday() == null || multiESignObject.getReceiverBirthday().length() == 0)
+        if (requestMultiESign.getReceiverBirthday() == null || requestMultiESign.getReceiverBirthday().length() == 0)
             throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
-        if (multiESignObject.getReqTitle() == null || multiESignObject.getReqTitle().length() == 0)
+        if (requestMultiESign.getReqTitle() == null || requestMultiESign.getReqTitle().length() == 0)
             throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (multiESignObject.getExpireIn() == null)
+        if (requestMultiESign.getExpireIn() == null)
             throw new BarocertException(-99999999, "유효 만료일시가 입력되지 않았습니다.");
-        if (multiESignObject.getTokens() == null || multiESignObject.getTokens().isEmpty()
-                || multiESignObject.getTokens().size() == 0)
+        if (requestMultiESign.getTokens() == null || requestMultiESign.getTokens().isEmpty()
+                || requestMultiESign.getTokens().size() == 0)
             throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
-        if (multiESignObject.getTokenType() == null || multiESignObject.getTokenType().length() == 0)
+        if (requestMultiESign.getTokenType() == null || requestMultiESign.getTokenType().length() == 0)
             throw new BarocertException(-99999999, "서명대상 유형코드가 입력되지 않았습니다.");
 
-        String postDate = toJsonString(multiESignObject);
+        String postDate = toJsonString(requestMultiESign);
 
         return httppost("/KAKAO/ESignMulti/" + clientCode, clientCode, postDate, ResponseMultiESign.class);
     }
 
-    // 전자서명 상태확인(다건)
+    // 전자서명 상태확인(복수)
     @Override
     public ResponseStateMultiESign requestStateMultiESign(String clientCode, String receiptID)
             throws BarocertException {
@@ -679,7 +679,7 @@ public class KakaocertServiceImp implements KakaocertService {
         return httpget("/KAKAO/ESignMulti/" + clientCode + "/" + receiptID, clientCode, ResponseStateMultiESign.class);
     }
 
-    // 전자서명 서명검증(다건)
+    // 전자서명 서명검증(복수)
     @Override
     public ResponseVerifyMultiESign requestVerifyMultiESign(String clientCode, String receiptID)
             throws BarocertException {
