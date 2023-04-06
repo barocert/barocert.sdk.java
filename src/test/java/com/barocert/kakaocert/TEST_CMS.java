@@ -5,7 +5,7 @@ import org.junit.Test;
 import com.barocert.BarocertException;
 import com.barocert.kakaocert.cms.RequestCMS;
 import com.barocert.kakaocert.cms.ResponseCMS;
-import com.barocert.kakaocert.cms.ResponseStateCMS;
+import com.barocert.kakaocert.cms.ResponseCMSStatus;
 import com.barocert.kakaocert.cms.ResponseVerifyCMS;
 
 public class TEST_CMS {
@@ -66,7 +66,7 @@ public class TEST_CMS {
             // App to App 방식 이용시, 에러시 호출할 URL
             // request.setReturnURL("https://www.kakaocert.com");
 
-            ResponseCMS result = kakaocertService.requestCMS("023030000004", request);
+            ResponseCMS result = kakaocertService.requestCMS("023030000086", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -78,9 +78,9 @@ public class TEST_CMS {
 
     // 출금동의 상태확인
     @Test
-    public void TEST_RequestStateCMS() throws BarocertException {
+    public void TEST_GetCMSStatus() throws BarocertException {
         try {
-            ResponseStateCMS result = kakaocertService.stateCMS("023030000004", "02304050230300000040000000000001");
+            ResponseCMSStatus result = kakaocertService.getCMSStatus("023030000004", "02304050230300000040000000000001");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -107,7 +107,7 @@ public class TEST_CMS {
 
     // 출금동의 검증
     @Test
-    public void TEST_RequestVerifyCMS() throws BarocertException {
+    public void TEST_VerifyCMS() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
             ResponseVerifyCMS result = kakaocertService.verifyCMS("023030000004", "02304050230300000040000000000001");
