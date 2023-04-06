@@ -192,7 +192,7 @@ public class KakaocertServiceImp implements KakaocertService {
      * @return
      * @throws BarocertException
      */
-    protected <T> T httpget(String url, String clientCode, Class<T> clazz) throws BarocertException {
+    protected <T> T httpGet(String url, Class<T> clazz) throws BarocertException {
         HttpURLConnection httpURLConnection;
         try {
             URL uri = new URL(getServiceURL() + url);
@@ -227,7 +227,7 @@ public class KakaocertServiceImp implements KakaocertService {
      * @return
      * @throws BarocertException
      */
-    protected <T> T httppost(String url, String clientCode, String PostData, Class<T> clazz) throws BarocertException {
+    protected <T> T httpPost(String url, String PostData, Class<T> clazz) throws BarocertException {
         HttpURLConnection httpURLConnection;
         try {
             URL uri = new URL(getServiceURL() + url);
@@ -536,9 +536,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (requestIdentity.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestIdentity.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
 
-        String postDate = toJsonString(requestIdentity);
+        String postData = toJsonString(requestIdentity);
 
-        return httppost("/KAKAO/Identity/" + clientCode, clientCode, postDate, ResponseIdentity.class);
+        return httpPost("/KAKAO/Identity/" + clientCode, postData, ResponseIdentity.class);
     }
 
     // 본인인증 상태확인
@@ -553,7 +553,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        return httpget("/KAKAO/Identity/" + clientCode + "/" + receiptID, clientCode, ResponseIdentityStatus.class);
+        return httpGet("/KAKAO/Identity/" + clientCode + "/" + receiptID, ResponseIdentityStatus.class);
     }
 
     // 본인인증 서명검증
@@ -568,10 +568,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        String postDate = toJsonString("");
+        String postData = toJsonString("");
 
-        return httppost("/KAKAO/Identity/" + clientCode + "/" + receiptID, clientCode, postDate,
-                ResponseVerifyIdentity.class);
+        return httpPost("/KAKAO/Identity/" + clientCode + "/" + receiptID, postData, ResponseVerifyIdentity.class);
     }
 
     // 전자서명 서명요청(단건)
@@ -592,7 +591,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         String postData = toJsonString(requestSign);
 
-        return httppost("/KAKAO/Sign/" + clientCode, clientCode, postData, ResponseSign.class);
+        return httpPost("/KAKAO/Sign/" + clientCode, postData, ResponseSign.class);
     }
 
     // 전자서명 상태확인(단건)
@@ -607,7 +606,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        return httpget("/KAKAO/Sign/" + clientCode + "/" + receiptID, clientCode, ResponseSignStatus.class);
+        return httpGet("/KAKAO/Sign/" + clientCode + "/" + receiptID, ResponseSignStatus.class);
     }
 
     // 전자서명 서명검증(단건)
@@ -622,10 +621,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        String postDate = toJsonString("");
+        String postData = toJsonString("");
 
-        return httppost("/KAKAO/Sign/" + clientCode + "/" + receiptID, clientCode, postDate,
-                ResponseVerifySign.class);
+        return httpPost("/KAKAO/Sign/" + clientCode + "/" + receiptID, postData, ResponseVerifySign.class);
     }
 
     // 전자서명 서명요청(복수)
@@ -647,9 +645,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (isNullorEmptyToken(requestMultiSign.getTokens())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestMultiSign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
 
-        String postDate = toJsonString(requestMultiSign);
+        String postData = toJsonString(requestMultiSign);
 
-        return httppost("/KAKAO/MultiSign/" + clientCode, clientCode, postDate, ResponseMultiSign.class);
+        return httpPost("/KAKAO/MultiSign/" + clientCode, postData, ResponseMultiSign.class);
     }
 
     // 전자서명 상태확인(복수)
@@ -665,7 +663,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        return httpget("/KAKAO/MultiSign/" + clientCode + "/" + receiptID, clientCode, ResponseMultiSignStatus.class);
+        return httpGet("/KAKAO/MultiSign/" + clientCode + "/" + receiptID, ResponseMultiSignStatus.class);
     }
 
     // 전자서명 서명검증(복수)
@@ -681,10 +679,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        String postDate = toJsonString("");
+        String postData = toJsonString("");
 
-        return httppost("/KAKAO/MultiSign/" + clientCode + "/" + receiptID, clientCode, postDate,
-                ResponseVerifyMultiSign.class);
+        return httpPost("/KAKAO/MultiSign/" + clientCode + "/" + receiptID, postData, ResponseVerifyMultiSign.class);
     }
 
     // 출금동의 서명요청
@@ -708,9 +705,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (isNullOrEmpty(requestCMS.getBankAccountBirthday()))throw new BarocertException(-99999999, "예금주 생년월일이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestCMS.getBankServiceType())) throw new BarocertException(-99999999, "출금 유형이 입력되지 않았습니다.");
 
-        String postDate = toJsonString(requestCMS);
+        String postData = toJsonString(requestCMS);
 
-        return httppost("/KAKAO/CMS/" + clientCode, clientCode, postDate, ResponseCMS.class);
+        return httpPost("/KAKAO/CMS/" + clientCode, postData, ResponseCMS.class);
     }
 
     // 출금동의 상태확인
@@ -725,7 +722,7 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        return httpget("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, ResponseCMSStatus.class);
+        return httpGet("/KAKAO/CMS/" + clientCode + "/" + receiptID, ResponseCMSStatus.class);
     }
 
     // 출금동의 서명검증
@@ -740,9 +737,9 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        String postDate = toJsonString("");
+        String postData = toJsonString("");
 
-        return httppost("/KAKAO/CMS/" + clientCode + "/" + receiptID, clientCode, postDate, ResponseVerifyCMS.class);
+        return httpPost("/KAKAO/CMS/" + clientCode + "/" + receiptID, postData, ResponseVerifyCMS.class);
     }
     
     private boolean isNullOrEmpty(String string) {
