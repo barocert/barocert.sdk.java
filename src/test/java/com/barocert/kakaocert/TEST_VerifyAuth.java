@@ -34,17 +34,17 @@ public class TEST_VerifyAuth {
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
-            request.setReceiverHP(kakaocertService.encryptGCM("01054437896"));
-            request.setReceiverName(kakaocertService.encryptGCM("최상혁"));
-            request.setReceiverBirthday(kakaocertService.encryptGCM("19880301"));
-            // request.setCi(kakaocertService.encryptGCM(""));
+            request.setReceiverHP(kakaocertService.encrypt("01054437896"));
+            request.setReceiverName(kakaocertService.encrypt("최상혁"));
+            request.setReceiverBirthday(kakaocertService.encrypt("19880301"));
+            // request.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
             request.setReqTitle("인증요청 메시지 제목란");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
             // 서명 원문 - 최대 2,800자 까지 입력가능
-            request.setToken(kakaocertService.encryptGCM("본인인증요청토큰"));
+            request.setToken(kakaocertService.encrypt("본인인증요청토큰"));
 
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식

@@ -39,17 +39,17 @@ public class TEST_Sign {
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
-            request.setReceiverHP(kakaocertService.encryptGCM("01054437896"));
-            request.setReceiverName(kakaocertService.encryptGCM("최상혁"));
-            request.setReceiverBirthday(kakaocertService.encryptGCM("19880301"));
-            // request.setCi(kakaocertService.encryptGCM(""));
+            request.setReceiverHP(kakaocertService.encrypt("01054437896"));
+            request.setReceiverName(kakaocertService.encrypt("최상혁"));
+            request.setReceiverBirthday(kakaocertService.encrypt("19880301"));
+            // request.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
             request.setReqTitle("전자서명단건테스트");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            request.setToken(kakaocertService.encryptGCM("전자서명단건테스트데이터"));
+            request.setToken(kakaocertService.encrypt("전자서명단건테스트데이터"));
             // 서명 원문 유형
             // TEXT - 일반 텍스트, HASH - HASH 데이터
             request.setTokenType("TEXT");
@@ -127,10 +127,10 @@ public class TEST_Sign {
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
-            request.setReceiverHP(kakaocertService.encryptGCM("01054437896"));
-            request.setReceiverName(kakaocertService.encryptGCM("최상혁"));
-            request.setReceiverBirthday(kakaocertService.encryptGCM("19880301"));
-            // multiSignRequest.setCi(kakaocertService.encryptGCM(""));
+            request.setReceiverHP(kakaocertService.encrypt("01054437896"));
+            request.setReceiverName(kakaocertService.encrypt("최상혁"));
+            request.setReceiverBirthday(kakaocertService.encrypt("19880301"));
+            // multiSignRequest.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
             request.setReqTitle("전자서명복수테스트");
@@ -143,7 +143,7 @@ public class TEST_Sign {
             // 인증요청 메시지 제목 - 최대 40자
             token.setReqTitle("전자서명복수문서테스트1");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token.setToken(kakaocertService.encryptGCM("전자서명복수테스트데이터1"));
+            token.setToken(kakaocertService.encrypt("전자서명복수테스트데이터1"));
             request.addToken(token);
 
             // 개별 요청 정보 객체
@@ -151,7 +151,7 @@ public class TEST_Sign {
             // 인증요청 메시지 제목 - 최대 40자
             token2.setReqTitle("전자서명복수문서테스트2");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token2.setToken(kakaocertService.encryptGCM("전자서명복수테스트데이터2"));
+            token2.setToken(kakaocertService.encrypt("전자서명복수테스트데이터2"));
             request.addToken(token2);
 
             // 서명 원문 유형

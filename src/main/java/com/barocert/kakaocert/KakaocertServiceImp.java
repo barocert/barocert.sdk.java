@@ -11,11 +11,9 @@ import java.net.ProtocolException;
 import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,11 +24,6 @@ import java.util.zip.GZIPInputStream;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.bouncycastle.crypto.engines.AESEngine;
-import org.bouncycastle.crypto.modes.GCMBlockCipher;
-import org.bouncycastle.crypto.params.AEADParameters;
-import org.bouncycastle.crypto.params.KeyParameter;
 
 import com.barocert.BarocertException;
 import com.barocert.kakaocert.cms.RequestCMS;
@@ -45,11 +38,12 @@ import com.barocert.kakaocert.sign.MultiSignTokens;
 import com.barocert.kakaocert.sign.RequestMultiSign;
 import com.barocert.kakaocert.sign.RequestSign;
 import com.barocert.kakaocert.sign.ResponseMultiSign;
-import com.barocert.kakaocert.sign.ResponseSign;
 import com.barocert.kakaocert.sign.ResponseMultiSignStatus;
+import com.barocert.kakaocert.sign.ResponseSign;
 import com.barocert.kakaocert.sign.ResponseSignStatus;
 import com.barocert.kakaocert.sign.ResponseVerifyMultiSign;
 import com.barocert.kakaocert.sign.ResponseVerifySign;
+import com.barocert.shield.EncryptorBuilder;
 import com.google.gson.Gson;
 
 import kr.co.linkhub.auth.Base64;
@@ -66,9 +60,6 @@ public class KakaocertServiceImp implements KakaocertService {
     private static final String SERVICEURL = "https://barocert.linkhub.co.kr";
     private static final String APIVERSION = "2.0"; // sha256
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
-    
-    private static final int GCM_TAG_LENGTH = 16;
-    private static final int GCM_IV_LENGTH = 12;
 
     private static final TimeZone TIMEZONE = TimeZone.getTimeZone("UTC");
     private String proxyIP;
@@ -81,6 +72,8 @@ public class KakaocertServiceImp implements KakaocertService {
     private String _linkID;
     private String _SECRETKEY;
     private TokenBuilder tokenBuilder;
+    
+    private EncryptorBuilder encryptor;
 
     private Gson _gsonParser = new Gson();
     private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
@@ -277,7 +270,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
             httpURLConnection.setRequestProperty("x-bc-version".toLowerCase(), APIVERSION);
             httpURLConnection.setRequestProperty("x-bc-auth", Signature);
-            httpURLConnection.setRequestProperty("x-bc-encryptionmode", "GCM");
+            httpURLConnection.setRequestProperty("x-bc-encryptionmode", encryptor.getMode());
 
             DataOutputStream output = null;
 
@@ -471,54 +464,13 @@ public class KakaocertServiceImp implements KakaocertService {
         return result;
     }
     
-    
-    public String encryptGCM(String plainText)  throws BarocertException {
-        ByteBuffer byteBuffer = null;
 
-        if (plainText == null || plainText.trim().isEmpty())
-            throw new BarocertException(-99999999, "KaKaoCert. There is nothing to encrypt.");
-
-        try
-        {
-
-            byte[] keyBytes = base64Decode(_SECRETKEY);
-            byte[] iv = generateGCMiV();
-
-            GCMBlockCipher cipher = new GCMBlockCipher(new AESEngine());
-            AEADParameters parameters = new AEADParameters(new KeyParameter(keyBytes), GCM_TAG_LENGTH * 8, iv, null);
-            cipher.init(true, parameters);
-
-            byte[] plaintextBytes = plainText.getBytes(Charset.forName("UTF-8"));
-            byte[] ciphertextBytes = new byte[cipher.getOutputSize(plaintextBytes.length)];
-            int ciphertextLength = cipher.processBytes(plaintextBytes, 0, plaintextBytes.length, ciphertextBytes, 0);
-
-            try {
-                cipher.doFinal(ciphertextBytes, ciphertextLength);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            byteBuffer = ByteBuffer.allocate(iv.length + ciphertextBytes.length);
-            byteBuffer.put(iv); // 벡터 추가.
-            byteBuffer.put(ciphertextBytes); // 암호문 추가.
-
-        }catch(Exception e){
-            throw new BarocertException(-99999999, "KaKaoCert AES256 Encrypt Exception", e);
-        }
-
-        return base64Encode(byteBuffer.array());
+    @Override
+    public String encrypt(String plainText) throws BarocertException {
+        if(encryptor == null) this.encryptor = EncryptorBuilder.newInstance(_SECRETKEY);
+        return encryptor.enc(plainText);
     }
-    
-    private byte[] generateGCMiV() {
-        SecureRandom random;
-        try {
-            random = SecureRandom.getInstance("SHA1PRNG");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        byte[] iv = new byte[GCM_IV_LENGTH];
-        random.nextBytes(iv);
-        return iv;
-    }
+
 
     // 본인인증 서명요청
     @Override
