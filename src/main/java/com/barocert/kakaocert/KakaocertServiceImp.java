@@ -26,6 +26,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.barocert.BarocertException;
+import com.barocert.crypto.EncryptorBuilder;
 import com.barocert.kakaocert.cms.RequestCMS;
 import com.barocert.kakaocert.cms.ResponseCMS;
 import com.barocert.kakaocert.cms.ResponseCMSStatus;
@@ -43,7 +44,6 @@ import com.barocert.kakaocert.sign.ResponseSign;
 import com.barocert.kakaocert.sign.ResponseSignStatus;
 import com.barocert.kakaocert.sign.ResponseVerifyMultiSign;
 import com.barocert.kakaocert.sign.ResponseVerifySign;
-import com.barocert.shield.EncryptorBuilder;
 import com.google.gson.Gson;
 
 import kr.co.linkhub.auth.Base64;
