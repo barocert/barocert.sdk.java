@@ -43,9 +43,9 @@ public class Encryptor{
 
     public String enc(String plainText) throws BarocertException {
         if("GCM".equals(mode)) {
-            return encCBC(plainText, key);
-        }else {
             return encGCM(plainText, key);
+        }else {
+            return encCBC(plainText, key);
         }
     }
 
