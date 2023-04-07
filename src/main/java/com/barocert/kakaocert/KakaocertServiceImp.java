@@ -26,7 +26,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.barocert.BarocertException;
-import com.barocert.crypto.EncryptorBuilder;
+import com.barocert.crypto.Encryptor;
 import com.barocert.kakaocert.cms.RequestCMS;
 import com.barocert.kakaocert.cms.ResponseCMS;
 import com.barocert.kakaocert.cms.ResponseCMSStatus;
@@ -73,7 +73,7 @@ public class KakaocertServiceImp implements KakaocertService {
     private String _SECRETKEY;
     private TokenBuilder tokenBuilder;
     
-    private EncryptorBuilder encryptor;
+    private Encryptor encryptor;
 
     private Gson _gsonParser = new Gson();
     private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
@@ -221,6 +221,7 @@ public class KakaocertServiceImp implements KakaocertService {
      * @throws BarocertException
      */
     protected <T> T httpPost(String url, String PostData, Class<T> clazz) throws BarocertException {
+        setupEncryptor();
         HttpURLConnection httpURLConnection;
         try {
             URL uri = new URL(getServiceURL() + url);
@@ -465,9 +466,13 @@ public class KakaocertServiceImp implements KakaocertService {
     }
     
 
+    private void setupEncryptor() throws BarocertException {
+        if(encryptor == null) this.encryptor = Encryptor.newInstance(_SECRETKEY);
+    }
+    
     @Override
     public String encrypt(String plainText) throws BarocertException {
-        if(encryptor == null) this.encryptor = EncryptorBuilder.newInstance(_SECRETKEY);
+        setupEncryptor();
         return encryptor.enc(plainText);
     }
 
