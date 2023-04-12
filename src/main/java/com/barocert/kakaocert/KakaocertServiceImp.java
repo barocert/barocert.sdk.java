@@ -266,8 +266,7 @@ public class KakaocertServiceImp implements KakaocertService {
             signTarget += sha256Base64(btPostData) + "\n";
             signTarget += date + "\n";
 
-            String Signature = base64Encode(
-                    HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
+            String Signature = base64Encode(HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
 
             httpURLConnection.setRequestProperty("x-bc-version".toLowerCase(), APIVERSION);
             httpURLConnection.setRequestProperty("x-bc-auth", Signature);

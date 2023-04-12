@@ -8,14 +8,14 @@ import com.barocert.kakaocert.identity.ResponseIdentity;
 import com.barocert.kakaocert.identity.ResponseIdentityStatus;
 import com.barocert.kakaocert.identity.ResponseVerifyIdentity;
 
-public class TEST_VerifyAuth {
+public class TEST_Identity {
 
     private final String testLinkID = "LINKHUB_BC";
     private final String testSecretKey = "npCAl0sHPpJqlvMbrcBmNagrxkQ74w9Sl0A+M++kMCE=";
 
     private KakaocertService kakaocertService;
 
-    public TEST_VerifyAuth() {
+    public TEST_Identity() {
         KakaocertServiceImp service = new KakaocertServiceImp();
         service.setLinkID(testLinkID);
         service.setSecretKey(testSecretKey);
@@ -67,7 +67,7 @@ public class TEST_VerifyAuth {
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {
-            ResponseIdentityStatus result = kakaocertService.getIdentityStatus("023030000004", "02303300230300000810000000000004");
+            ResponseIdentityStatus result = kakaocertService.getIdentityStatus("023030000004", "02304120230300000040000000000043");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -96,11 +96,12 @@ public class TEST_VerifyAuth {
     public void TEST_VerifyIdentity() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
-            ResponseVerifyIdentity result = kakaocertService.verifyIdentity("023030000004", "02303300230300000810000000000004");
+            ResponseVerifyIdentity result = kakaocertService.verifyIdentity("023030000004", "02304120230300000040000000000043");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
             System.out.println("SignedData : " + result.getSignedData());
+            System.out.println("ci : " + result.getCi());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());

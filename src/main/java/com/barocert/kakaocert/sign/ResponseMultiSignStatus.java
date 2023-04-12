@@ -19,6 +19,7 @@ public class ResponseMultiSignStatus {
     private String verifyDT;
     private String scheme;
     private boolean appUseYN;
+    private String ci;
 
     public String getReceiptID() {
         return receiptID;
@@ -154,6 +155,14 @@ public class ResponseMultiSignStatus {
 
     public void setAppUseYN(boolean appUseYN) {
         this.appUseYN = appUseYN;
+    }
+
+    public String getCi() {
+        return ci;
+    }
+
+    public void setCi(String ci) {
+        this.ci = ci;
     }
 
 }

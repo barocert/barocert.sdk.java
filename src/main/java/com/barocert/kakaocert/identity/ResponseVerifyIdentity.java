@@ -5,6 +5,7 @@ public class ResponseVerifyIdentity {
     private String receiptID;
     private String state;
     private String signedData;
+    private String ci;
 
     public String getReceiptID() {
         return receiptID;
@@ -28,6 +29,14 @@ public class ResponseVerifyIdentity {
 
     public void setSignedData(String signedData) {
         this.signedData = signedData;
+    }
+
+    public String getCi() {
+        return ci;
+    }
+
+    public void setCi(String ci) {
+        this.ci = ci;
     }
     
 }
