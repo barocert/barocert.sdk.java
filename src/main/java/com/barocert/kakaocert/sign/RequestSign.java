@@ -8,7 +8,7 @@ public class RequestSign {
     private String receiverBirthday;
     private String ci;
     private String reqTitle;
-    private int expireIn;
+    private Integer expireIn;
     private String token;
     private String tokenType;
     private String returnURL;
@@ -62,11 +62,11 @@ public class RequestSign {
         this.reqTitle = reqTitle;
     }
 
-    public int getExpireIn() {
+    public Integer getExpireIn() {
         return expireIn;
     }
 
-    public void setExpireIn(int expireIn) {
+    public void setExpireIn(Integer expireIn) {
         this.expireIn = expireIn;
     }
 

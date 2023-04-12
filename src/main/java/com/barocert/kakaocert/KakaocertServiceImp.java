@@ -546,6 +546,7 @@ public class KakaocertServiceImp implements KakaocertService {
             if (isNullOrEmpty(requestSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         }
         if (isNullOrEmpty(requestSign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (requestSign.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestSign.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestSign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
 
