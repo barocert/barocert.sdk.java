@@ -42,7 +42,7 @@ public class TEST_Sign {
             request.setReceiverHP(kakaocertService.encrypt("01054437896"));
             request.setReceiverName(kakaocertService.encrypt("최상혁"));
             request.setReceiverBirthday(kakaocertService.encrypt("19880301"));
-            // request.setCi(kakaocertService.encrypt(""));
+//             request.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
             request.setReqTitle("전자서명단건테스트");

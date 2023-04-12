@@ -485,9 +485,11 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
         if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
         if (requestIdentity == null) throw new BarocertException(-99999999, "본인인증 서명요청 정보가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestIdentity.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestIdentity.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestIdentity.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if(isNullOrEmpty(requestIdentity.getCi())) {
+            if (isNullOrEmpty(requestIdentity.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+            if (isNullOrEmpty(requestIdentity.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+            if (isNullOrEmpty(requestIdentity.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        }
         if (isNullOrEmpty(requestIdentity.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
         if (requestIdentity.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestIdentity.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
@@ -538,9 +540,11 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
         if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
         if (requestSign == null) throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestSign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestSign.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if(isNullOrEmpty(requestSign.getCi())) {
+            if (isNullOrEmpty(requestSign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+            if (isNullOrEmpty(requestSign.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+            if (isNullOrEmpty(requestSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        }
         if (isNullOrEmpty(requestSign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestSign.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestSign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
@@ -592,9 +596,11 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
         if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
         if (requestMultiSign == null) throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestMultiSign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestMultiSign.getReceiverName()))throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestMultiSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if(isNullOrEmpty(requestMultiSign.getCi())) {
+            if (isNullOrEmpty(requestMultiSign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+            if (isNullOrEmpty(requestMultiSign.getReceiverName()))throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+            if (isNullOrEmpty(requestMultiSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        }
         if (isNullOrEmpty(requestMultiSign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
         if (requestMultiSign.getExpireIn() == null ) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
         if (isNullorEmptyTitle(requestMultiSign.getTokens())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
@@ -649,9 +655,11 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
         if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
         if (requestCMS == null) throw new BarocertException(-99999999, "출금동의 서명요청 정보가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getReceiverHP()))throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getBankAccountBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if(isNullOrEmpty(requestCMS.getCi())) {
+            if (isNullOrEmpty(requestCMS.getReceiverHP()))throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+            if (isNullOrEmpty(requestCMS.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+            if (isNullOrEmpty(requestCMS.getBankAccountBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        }
         if (isNullOrEmpty(requestCMS.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
         if (requestCMS.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
         if (isNullOrEmpty(requestCMS.getRequestCorp())) throw new BarocertException(-99999999, "청구기관명이 입력되지 않았습니다.");

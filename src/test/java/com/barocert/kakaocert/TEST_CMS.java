@@ -37,7 +37,7 @@ public class TEST_CMS {
             request.setReceiverHP(kakaocertService.encrypt("01054437896"));
             request.setReceiverName(kakaocertService.encrypt("최상혁"));
             request.setReceiverBirthday(kakaocertService.encrypt("19880301"));
-            // cmsRequest.setCi(kakaocertService.encrypt("");
+//            request.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
             request.setReqTitle("인증요청 메시지 제공란");
