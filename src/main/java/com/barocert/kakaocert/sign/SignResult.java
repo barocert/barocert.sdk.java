@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.sign;
 
-public class ResponseVerifySign {
+public class SignResult {
 
     private String receiptID;
     private String state;

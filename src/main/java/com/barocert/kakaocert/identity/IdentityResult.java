@@ -1,9 +1,9 @@
 package com.barocert.kakaocert.identity;
 
-public class ResponseVerifyIdentity {
+public class IdentityResult {
 
     private String receiptID;
-    private String state;
+    private int state;
     private String signedData;
     private String ci;
 
@@ -15,11 +15,11 @@ public class ResponseVerifyIdentity {
         this.receiptID = receiptID;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 

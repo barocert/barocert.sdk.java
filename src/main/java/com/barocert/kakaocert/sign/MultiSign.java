@@ -1,6 +1,9 @@
 package com.barocert.kakaocert.sign;
 
-public class RequestSign {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MultiSign {
 
     private String requestID;
     private String receiverHP;
@@ -9,7 +12,9 @@ public class RequestSign {
     private String ci;
     private String reqTitle;
     private Integer expireIn;
-    private String token;
+
+    private List<MultiSignTokens> tokens = new ArrayList<MultiSignTokens>();
+
     private String tokenType;
     private String returnURL;
     private boolean appUseYN;
@@ -70,12 +75,12 @@ public class RequestSign {
         this.expireIn = expireIn;
     }
 
-    public String getToken() {
-        return token;
+    public List<MultiSignTokens> getTokens() {
+        return tokens;
     }
-
-    public void setToken(String token) {
-        this.token = token;
+    
+    public void addToken(MultiSignTokens token) {
+        this.tokens.add(token);
     }
 
     public String getTokenType() {
@@ -94,7 +99,7 @@ public class RequestSign {
         this.returnURL = returnURL;
     }
 
-    public boolean getAppUseYN() {
+    public boolean isAppUseYN() {
         return appUseYN;
     }
 

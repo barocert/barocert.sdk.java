@@ -1,6 +1,6 @@
 package com.barocert.kakaocert.identity;
 
-public class RequestIdentity {
+public class Identity {
 
     private String requestID;
     private String receiverHP;

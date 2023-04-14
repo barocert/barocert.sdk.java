@@ -1,6 +1,6 @@
-package com.barocert.kakaocert.identity;
+package com.barocert.kakaocert.sign;
 
-public class ResponseIdentityStatus {
+public class MultiSignStatus {
 
     private String receiptID;
     private String clientCode;
@@ -11,6 +11,7 @@ public class ResponseIdentityStatus {
     private String reqTitle;
     private String authCategory;
     private String returnURL;
+    private String tokenType;
     private String requestDT;
     private String viewDT;
     private String completeDT;
@@ -18,6 +19,7 @@ public class ResponseIdentityStatus {
     private String verifyDT;
     private String scheme;
     private boolean appUseYN;
+    private String ci;
 
     public String getReceiptID() {
         return receiptID;
@@ -91,6 +93,14 @@ public class ResponseIdentityStatus {
         this.returnURL = returnURL;
     }
 
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+
     public String getRequestDT() {
         return requestDT;
     }
@@ -145,6 +155,14 @@ public class ResponseIdentityStatus {
 
     public void setAppUseYN(boolean appUseYN) {
         this.appUseYN = appUseYN;
+    }
+
+    public String getCi() {
+        return ci;
+    }
+
+    public void setCi(String ci) {
+        this.ci = ci;
     }
 
 }

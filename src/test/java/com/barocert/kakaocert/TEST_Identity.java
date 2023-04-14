@@ -3,10 +3,10 @@ package com.barocert.kakaocert;
 import org.junit.Test;
 
 import com.barocert.BarocertException;
-import com.barocert.kakaocert.identity.RequestIdentity;
-import com.barocert.kakaocert.identity.ResponseIdentity;
-import com.barocert.kakaocert.identity.ResponseIdentityStatus;
-import com.barocert.kakaocert.identity.ResponseVerifyIdentity;
+import com.barocert.kakaocert.identity.Identity;
+import com.barocert.kakaocert.identity.IdentityReceipt;
+import com.barocert.kakaocert.identity.IdentityStatus;
+import com.barocert.kakaocert.identity.IdentityResult;
 
 public class TEST_Identity {
 
@@ -30,7 +30,7 @@ public class TEST_Identity {
     public void TEST_RequestIdentity() throws BarocertException {
         try {
             // 본인인증 요청 정보 객체
-            RequestIdentity request = new RequestIdentity();
+            Identity request = new Identity();
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
@@ -53,7 +53,7 @@ public class TEST_Identity {
             // App to App 방식 이용시, 호출할 URL
             // verifyAuthRequest.setReturnURL("https://www.kakaocert.com");
 
-            ResponseIdentity result = kakaocertService.requestIdentity("023030000004", request);
+            IdentityReceipt result = kakaocertService.requestIdentity("023030000004", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -67,7 +67,7 @@ public class TEST_Identity {
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {
-            ResponseIdentityStatus result = kakaocertService.getIdentityStatus("023030000004", "02304120230300000040000000000043");
+            IdentityStatus result = kakaocertService.getIdentityStatus("023030000004", "02304140230300000040000000000003");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -96,7 +96,7 @@ public class TEST_Identity {
     public void TEST_VerifyIdentity() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
-            ResponseVerifyIdentity result = kakaocertService.verifyIdentity("023030000004", "02304120230300000040000000000043");
+            IdentityResult result = kakaocertService.verifyIdentity("023030000004", "02304140230300000040000000000003");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

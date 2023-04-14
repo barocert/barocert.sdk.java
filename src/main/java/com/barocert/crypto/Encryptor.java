@@ -19,7 +19,6 @@ public class Encryptor{
     private static final int CBC_IV_LENGTH = 16;    
 
     private static SecureRandom random = new SecureRandom();
-    private static Encryptor _singleTone;
     private String key;
     private String mode;
     

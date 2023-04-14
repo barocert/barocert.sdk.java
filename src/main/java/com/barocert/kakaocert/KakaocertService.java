@@ -1,22 +1,22 @@
 package com.barocert.kakaocert;
 
 import com.barocert.BarocertException;
-import com.barocert.kakaocert.cms.RequestCMS;
-import com.barocert.kakaocert.cms.ResponseCMS;
-import com.barocert.kakaocert.cms.ResponseCMSStatus;
-import com.barocert.kakaocert.cms.ResponseVerifyCMS;
-import com.barocert.kakaocert.identity.RequestIdentity;
-import com.barocert.kakaocert.identity.ResponseIdentity;
-import com.barocert.kakaocert.identity.ResponseIdentityStatus;
-import com.barocert.kakaocert.identity.ResponseVerifyIdentity;
-import com.barocert.kakaocert.sign.RequestMultiSign;
-import com.barocert.kakaocert.sign.RequestSign;
-import com.barocert.kakaocert.sign.ResponseMultiSign;
-import com.barocert.kakaocert.sign.ResponseSign;
-import com.barocert.kakaocert.sign.ResponseMultiSignStatus;
-import com.barocert.kakaocert.sign.ResponseSignStatus;
-import com.barocert.kakaocert.sign.ResponseVerifyMultiSign;
-import com.barocert.kakaocert.sign.ResponseVerifySign;
+import com.barocert.kakaocert.cms.CMS;
+import com.barocert.kakaocert.cms.CMSReceipt;
+import com.barocert.kakaocert.cms.CMSStatus;
+import com.barocert.kakaocert.cms.CMSResult;
+import com.barocert.kakaocert.identity.Identity;
+import com.barocert.kakaocert.identity.IdentityReceipt;
+import com.barocert.kakaocert.identity.IdentityStatus;
+import com.barocert.kakaocert.identity.IdentityResult;
+import com.barocert.kakaocert.sign.MultiSign;
+import com.barocert.kakaocert.sign.Sign;
+import com.barocert.kakaocert.sign.MultiSignReceipt;
+import com.barocert.kakaocert.sign.SignReceipt;
+import com.barocert.kakaocert.sign.MultiSignStatus;
+import com.barocert.kakaocert.sign.SignStatus;
+import com.barocert.kakaocert.sign.MultiSignResult;
+import com.barocert.kakaocert.sign.SignResult;
 
 public interface KakaocertService {
 	
@@ -30,7 +30,7 @@ public interface KakaocertService {
 	 * @return ResponseVerify
 	 * @throws BarocertException
 	 */
-	public ResponseIdentity requestIdentity(String clientCode, RequestIdentity requestIdentity) throws BarocertException;
+	public IdentityReceipt requestIdentity(String clientCode, Identity requestIdentity) throws BarocertException;
 	
 	/**
 	 * 본인인증 상태확인
@@ -42,7 +42,7 @@ public interface KakaocertService {
 	 * @return ResponseIdentityStatus
 	 * @throws BarocertException
 	 */
-	public ResponseIdentityStatus getIdentityStatus(String clientCode, String receiptID) throws BarocertException;
+	public IdentityStatus getIdentityStatus(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 본인인증 서명검증
@@ -54,7 +54,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifyIdentity
 	 * @throws BarocertException
 	 */
-	public ResponseVerifyIdentity verifyIdentity(String clientCode, String receiptID) throws BarocertException;
+	public IdentityResult verifyIdentity(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 요청(단건) 
@@ -66,7 +66,7 @@ public interface KakaocertService {
 	 * @return ResponseSign
 	 * @throws BarocertException
 	 */
-	public ResponseSign requestSign(String clientCode, RequestSign requestSign) throws BarocertException;
+	public SignReceipt requestSign(String clientCode, Sign requestSign) throws BarocertException;
 	
 	/**
 	 * 전자서명 상태확인(단건)
@@ -78,7 +78,7 @@ public interface KakaocertService {
 	 * @return ResponseSignStatus
 	 * @throws BarocertException
 	 */
-	public ResponseSignStatus getSignStatus(String clientCode, String receiptID) throws BarocertException;
+	public SignStatus getSignStatus(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 서명검증(단건)
@@ -90,7 +90,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifySign
 	 * @throws BarocertException
 	 */
-	public ResponseVerifySign verifySign(String clientCode, String receiptID) throws BarocertException;
+	public SignResult verifySign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 요청(복수)
@@ -102,7 +102,7 @@ public interface KakaocertService {
 	 * @return ResponseMultiSign
 	 * @throws BarocertException
 	 */
-	public ResponseMultiSign requestMultiSign(String clientCode, RequestMultiSign requestMultiSign) throws BarocertException;
+	public MultiSignReceipt requestMultiSign(String clientCode, MultiSign requestMultiSign) throws BarocertException;
 	
 	/**
 	 * 전자서명 상태확인(복수)
@@ -114,7 +114,7 @@ public interface KakaocertService {
 	 * @return ResponseMultiSignStatus
 	 * @throws BarocertException
 	 */
-	public ResponseMultiSignStatus getMultiSignStatus(String clientCode, String receiptID) throws BarocertException;
+	public MultiSignStatus getMultiSignStatus(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 전자서명 서명검증(복수)
@@ -126,7 +126,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifyMultiSign
 	 * @throws BarocertException
 	 */
-	public ResponseVerifyMultiSign verifyMultiSign(String clientCode, String receiptID) throws BarocertException;
+	public MultiSignResult verifyMultiSign(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 출금동의 요청
@@ -138,7 +138,7 @@ public interface KakaocertService {
 	 * @return ResponseCMS
 	 * @throws BarocertException
 	 */
-	public ResponseCMS requestCMS(String clientCode, RequestCMS requestCMS) throws BarocertException;
+	public CMSReceipt requestCMS(String clientCode, CMS requestCMS) throws BarocertException;
 	
 	/**
 	 * 출금동의 상태확인
@@ -150,7 +150,7 @@ public interface KakaocertService {
 	 * @return ResponseCMSStatus
 	 * @throws BarocertException
 	 */
-	public ResponseCMSStatus getCMSStatus(String clientCode, String receiptID) throws BarocertException;
+	public CMSStatus getCMSStatus(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
 	 * 출금동의 서명검증
@@ -162,7 +162,7 @@ public interface KakaocertService {
 	 * @return ResponseVerifyCMS
 	 * @throws BarocertException
 	 */
-	public ResponseVerifyCMS verifyCMS(String clientCode, String receiptID) throws BarocertException;
+	public CMSResult verifyCMS(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
      * AES256/GCM/NoPadding (이상 1.8) or AES/CBC/PKCS5Padding(미만 1.8) 암호화

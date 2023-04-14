@@ -27,23 +27,23 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.barocert.BarocertException;
 import com.barocert.crypto.Encryptor;
-import com.barocert.kakaocert.cms.RequestCMS;
-import com.barocert.kakaocert.cms.ResponseCMS;
-import com.barocert.kakaocert.cms.ResponseCMSStatus;
-import com.barocert.kakaocert.cms.ResponseVerifyCMS;
-import com.barocert.kakaocert.identity.RequestIdentity;
-import com.barocert.kakaocert.identity.ResponseIdentity;
-import com.barocert.kakaocert.identity.ResponseIdentityStatus;
-import com.barocert.kakaocert.identity.ResponseVerifyIdentity;
+import com.barocert.kakaocert.cms.CMS;
+import com.barocert.kakaocert.cms.CMSReceipt;
+import com.barocert.kakaocert.cms.CMSStatus;
+import com.barocert.kakaocert.cms.CMSResult;
+import com.barocert.kakaocert.identity.Identity;
+import com.barocert.kakaocert.identity.IdentityReceipt;
+import com.barocert.kakaocert.identity.IdentityStatus;
+import com.barocert.kakaocert.identity.IdentityResult;
 import com.barocert.kakaocert.sign.MultiSignTokens;
-import com.barocert.kakaocert.sign.RequestMultiSign;
-import com.barocert.kakaocert.sign.RequestSign;
-import com.barocert.kakaocert.sign.ResponseMultiSign;
-import com.barocert.kakaocert.sign.ResponseMultiSignStatus;
-import com.barocert.kakaocert.sign.ResponseSign;
-import com.barocert.kakaocert.sign.ResponseSignStatus;
-import com.barocert.kakaocert.sign.ResponseVerifyMultiSign;
-import com.barocert.kakaocert.sign.ResponseVerifySign;
+import com.barocert.kakaocert.sign.MultiSign;
+import com.barocert.kakaocert.sign.Sign;
+import com.barocert.kakaocert.sign.MultiSignReceipt;
+import com.barocert.kakaocert.sign.MultiSignStatus;
+import com.barocert.kakaocert.sign.SignReceipt;
+import com.barocert.kakaocert.sign.SignStatus;
+import com.barocert.kakaocert.sign.MultiSignResult;
+import com.barocert.kakaocert.sign.SignResult;
 import com.google.gson.Gson;
 
 import kr.co.linkhub.auth.Base64;
@@ -478,30 +478,30 @@ public class KakaocertServiceImp implements KakaocertService {
 
     // 본인인증 서명요청
     @Override
-    public ResponseIdentity requestIdentity(String clientCode, RequestIdentity requestIdentity) throws BarocertException {
+    public IdentityReceipt requestIdentity(String clientCode, Identity identity) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
         if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
-        if (requestIdentity == null) throw new BarocertException(-99999999, "본인인증 서명요청 정보가 입력되지 않았습니다.");
-        if(isNullOrEmpty(requestIdentity.getCi())) {
-            if (isNullOrEmpty(requestIdentity.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
-            if (isNullOrEmpty(requestIdentity.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-            if (isNullOrEmpty(requestIdentity.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if (identity == null) throw new BarocertException(-99999999, "본인인증 서명요청 정보가 입력되지 않았습니다.");
+        if(isNullOrEmpty(identity.getCi())) {
+            if (isNullOrEmpty(identity.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+            if (isNullOrEmpty(identity.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+            if (isNullOrEmpty(identity.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         }
-        if (isNullOrEmpty(requestIdentity.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (requestIdentity.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestIdentity.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
+        if (isNullOrEmpty(identity.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (identity.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
+        if (isNullOrEmpty(identity.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
 
-        String postData = toJsonString(requestIdentity);
+        String postData = toJsonString(identity);
 
-        return httpPost("/KAKAO/Identity/" + clientCode, postData, ResponseIdentity.class);
+        return httpPost("/KAKAO/Identity/" + clientCode, postData, IdentityReceipt.class);
     }
 
     // 본인인증 상태확인
     @Override
-    public ResponseIdentityStatus getIdentityStatus(String clientCode, String receiptID) throws BarocertException {
+    public IdentityStatus getIdentityStatus(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -511,12 +511,12 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        return httpGet("/KAKAO/Identity/" + clientCode + "/" + receiptID, ResponseIdentityStatus.class);
+        return httpGet("/KAKAO/Identity/" + clientCode + "/" + receiptID, IdentityStatus.class);
     }
 
     // 본인인증 서명검증
     @Override
-    public ResponseVerifyIdentity verifyIdentity(String clientCode, String receiptID) throws BarocertException {
+    public IdentityResult verifyIdentity(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -528,36 +528,36 @@ public class KakaocertServiceImp implements KakaocertService {
 
         String postData = toJsonString("");
 
-        return httpPost("/KAKAO/Identity/" + clientCode + "/" + receiptID, postData, ResponseVerifyIdentity.class);
+        return httpPost("/KAKAO/Identity/" + clientCode + "/" + receiptID, postData, IdentityResult.class);
     }
 
     // 전자서명 서명요청(단건)
     @Override
-    public ResponseSign requestSign(String clientCode, RequestSign requestSign)
+    public SignReceipt requestSign(String clientCode, Sign sign)
             throws BarocertException {
 
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
         if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
-        if (requestSign == null) throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
-        if(isNullOrEmpty(requestSign.getCi())) {
-            if (isNullOrEmpty(requestSign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
-            if (isNullOrEmpty(requestSign.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-            if (isNullOrEmpty(requestSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if (sign == null) throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
+        if(isNullOrEmpty(sign.getCi())) {
+            if (isNullOrEmpty(sign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+            if (isNullOrEmpty(sign.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+            if (isNullOrEmpty(sign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         }
-        if (isNullOrEmpty(requestSign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (requestSign.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestSign.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestSign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
+        if (isNullOrEmpty(sign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (sign.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
+        if (isNullOrEmpty(sign.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
+        if (isNullOrEmpty(sign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
 
-        String postData = toJsonString(requestSign);
+        String postData = toJsonString(sign);
 
-        return httpPost("/KAKAO/Sign/" + clientCode, postData, ResponseSign.class);
+        return httpPost("/KAKAO/Sign/" + clientCode, postData, SignReceipt.class);
     }
 
     // 전자서명 상태확인(단건)
     @Override
-    public ResponseSignStatus getSignStatus(String clientCode, String receiptID) throws BarocertException {
+    public SignStatus getSignStatus(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -567,12 +567,12 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        return httpGet("/KAKAO/Sign/" + clientCode + "/" + receiptID, ResponseSignStatus.class);
+        return httpGet("/KAKAO/Sign/" + clientCode + "/" + receiptID, SignStatus.class);
     }
 
     // 전자서명 서명검증(단건)
     @Override
-    public ResponseVerifySign verifySign(String clientCode, String receiptID) throws BarocertException {
+    public SignResult verifySign(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -584,38 +584,38 @@ public class KakaocertServiceImp implements KakaocertService {
 
         String postData = toJsonString("");
 
-        return httpPost("/KAKAO/Sign/" + clientCode + "/" + receiptID, postData, ResponseVerifySign.class);
+        return httpPost("/KAKAO/Sign/" + clientCode + "/" + receiptID, postData, SignResult.class);
     }
 
     // 전자서명 서명요청(복수)
     @Override
-    public ResponseMultiSign requestMultiSign(String clientCode, RequestMultiSign requestMultiSign)
+    public MultiSignReceipt requestMultiSign(String clientCode, MultiSign multiSign)
             throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
         if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
-        if (requestMultiSign == null) throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
-        if(isNullOrEmpty(requestMultiSign.getCi())) {
-            if (isNullOrEmpty(requestMultiSign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
-            if (isNullOrEmpty(requestMultiSign.getReceiverName()))throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-            if (isNullOrEmpty(requestMultiSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if (multiSign == null) throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
+        if(isNullOrEmpty(multiSign.getCi())) {
+            if (isNullOrEmpty(multiSign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+            if (isNullOrEmpty(multiSign.getReceiverName()))throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+            if (isNullOrEmpty(multiSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         }
-        if (isNullOrEmpty(requestMultiSign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (requestMultiSign.getExpireIn() == null ) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
-        if (isNullorEmptyTitle(requestMultiSign.getTokens())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (isNullorEmptyToken(requestMultiSign.getTokens())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestMultiSign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
+        if (isNullOrEmpty(multiSign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (multiSign.getExpireIn() == null ) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
+        if (isNullorEmptyTitle(multiSign.getTokens())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (isNullorEmptyToken(multiSign.getTokens())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
+        if (isNullOrEmpty(multiSign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
 
-        String postData = toJsonString(requestMultiSign);
+        String postData = toJsonString(multiSign);
 
-        return httpPost("/KAKAO/MultiSign/" + clientCode, postData, ResponseMultiSign.class);
+        return httpPost("/KAKAO/MultiSign/" + clientCode, postData, MultiSignReceipt.class);
     }
 
     // 전자서명 상태확인(복수)
     @Override
-    public ResponseMultiSignStatus getMultiSignStatus(String clientCode, String receiptID)
+    public MultiSignStatus getMultiSignStatus(String clientCode, String receiptID)
             throws BarocertException {
 
         // 필수 값 체크.
@@ -626,12 +626,12 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        return httpGet("/KAKAO/MultiSign/" + clientCode + "/" + receiptID, ResponseMultiSignStatus.class);
+        return httpGet("/KAKAO/MultiSign/" + clientCode + "/" + receiptID, MultiSignStatus.class);
     }
 
     // 전자서명 서명검증(복수)
     @Override
-    public ResponseVerifyMultiSign verifyMultiSign(String clientCode, String receiptID)
+    public MultiSignResult verifyMultiSign(String clientCode, String receiptID)
             throws BarocertException {
 
         // 필수 값 체크.
@@ -644,40 +644,40 @@ public class KakaocertServiceImp implements KakaocertService {
 
         String postData = toJsonString("");
 
-        return httpPost("/KAKAO/MultiSign/" + clientCode + "/" + receiptID, postData, ResponseVerifyMultiSign.class);
+        return httpPost("/KAKAO/MultiSign/" + clientCode + "/" + receiptID, postData, MultiSignResult.class);
     }
 
     // 출금동의 서명요청
     @Override
-    public ResponseCMS requestCMS(String clientCode, RequestCMS requestCMS) throws BarocertException {
+    public CMSReceipt requestCMS(String clientCode, CMS cms) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
         if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
-        if (requestCMS == null) throw new BarocertException(-99999999, "출금동의 서명요청 정보가 입력되지 않았습니다.");
-        if(isNullOrEmpty(requestCMS.getCi())) {
-            if (isNullOrEmpty(requestCMS.getReceiverHP()))throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
-            if (isNullOrEmpty(requestCMS.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-            if (isNullOrEmpty(requestCMS.getBankAccountBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if (cms == null) throw new BarocertException(-99999999, "출금동의 서명요청 정보가 입력되지 않았습니다.");
+        if(isNullOrEmpty(cms.getCi())) {
+            if (isNullOrEmpty(cms.getReceiverHP()))throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+            if (isNullOrEmpty(cms.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+            if (isNullOrEmpty(cms.getBankAccountBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         }
-        if (isNullOrEmpty(requestCMS.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (requestCMS.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getRequestCorp())) throw new BarocertException(-99999999, "청구기관명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getBankName())) throw new BarocertException(-99999999, "은행명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getBankAccountNum())) throw new BarocertException(-99999999, "계좌번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getBankAccountName())) throw new BarocertException(-99999999, "예금주명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getBankAccountBirthday()))throw new BarocertException(-99999999, "예금주 생년월일이 입력되지 않았습니다.");
-        if (isNullOrEmpty(requestCMS.getBankServiceType())) throw new BarocertException(-99999999, "출금 유형이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (cms.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getRequestCorp())) throw new BarocertException(-99999999, "청구기관명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankName())) throw new BarocertException(-99999999, "은행명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankAccountNum())) throw new BarocertException(-99999999, "계좌번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankAccountName())) throw new BarocertException(-99999999, "예금주명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankAccountBirthday()))throw new BarocertException(-99999999, "예금주 생년월일이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankServiceType())) throw new BarocertException(-99999999, "출금 유형이 입력되지 않았습니다.");
 
-        String postData = toJsonString(requestCMS);
+        String postData = toJsonString(cms);
 
-        return httpPost("/KAKAO/CMS/" + clientCode, postData, ResponseCMS.class);
+        return httpPost("/KAKAO/CMS/" + clientCode, postData, CMSReceipt.class);
     }
 
     // 출금동의 상태확인
     @Override
-    public ResponseCMSStatus getCMSStatus(String clientCode, String receiptID) throws BarocertException {
+    public CMSStatus getCMSStatus(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -687,12 +687,12 @@ public class KakaocertServiceImp implements KakaocertService {
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
 
-        return httpGet("/KAKAO/CMS/" + clientCode + "/" + receiptID, ResponseCMSStatus.class);
+        return httpGet("/KAKAO/CMS/" + clientCode + "/" + receiptID, CMSStatus.class);
     }
 
     // 출금동의 서명검증
     @Override
-    public ResponseVerifyCMS verifyCMS(String clientCode, String receiptID) throws BarocertException {
+    public CMSResult verifyCMS(String clientCode, String receiptID) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -704,7 +704,7 @@ public class KakaocertServiceImp implements KakaocertService {
 
         String postData = toJsonString("");
 
-        return httpPost("/KAKAO/CMS/" + clientCode + "/" + receiptID, postData, ResponseVerifyCMS.class);
+        return httpPost("/KAKAO/CMS/" + clientCode + "/" + receiptID, postData, CMSResult.class);
     }
     
     private boolean isNullOrEmpty(String string) {

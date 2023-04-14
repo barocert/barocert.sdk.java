@@ -1,6 +1,6 @@
-package com.barocert.kakaocert.identity;
+package com.barocert.kakaocert.cms;
 
-public class ResponseIdentity {
+public class CMSReceipt {
 
     private String receiptID;
     private String scheme;

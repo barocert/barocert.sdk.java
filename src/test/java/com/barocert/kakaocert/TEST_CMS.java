@@ -3,10 +3,10 @@ package com.barocert.kakaocert;
 import org.junit.Test;
 
 import com.barocert.BarocertException;
-import com.barocert.kakaocert.cms.RequestCMS;
-import com.barocert.kakaocert.cms.ResponseCMS;
-import com.barocert.kakaocert.cms.ResponseCMSStatus;
-import com.barocert.kakaocert.cms.ResponseVerifyCMS;
+import com.barocert.kakaocert.cms.CMS;
+import com.barocert.kakaocert.cms.CMSReceipt;
+import com.barocert.kakaocert.cms.CMSStatus;
+import com.barocert.kakaocert.cms.CMSResult;
 
 public class TEST_CMS {
 
@@ -30,7 +30,7 @@ public class TEST_CMS {
     public void TEST_RequestCMS() {
         try {
             // 출금동의 요청 객체
-            RequestCMS request = new RequestCMS();
+            CMS request = new CMS();
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
@@ -66,7 +66,7 @@ public class TEST_CMS {
             // App to App 방식 이용시, 에러시 호출할 URL
             // request.setReturnURL("https://www.kakaocert.com");
 
-            ResponseCMS result = kakaocertService.requestCMS("023030000004", request);
+            CMSReceipt result = kakaocertService.requestCMS("023030000004", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -80,7 +80,7 @@ public class TEST_CMS {
     @Test
     public void TEST_GetCMSStatus() throws BarocertException {
         try {
-            ResponseCMSStatus result = kakaocertService.getCMSStatus("023030000004", "02304120230300000040000000000042");
+            CMSStatus result = kakaocertService.getCMSStatus("023030000004", "02304140230300000040000000000002");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -110,7 +110,7 @@ public class TEST_CMS {
     public void TEST_VerifyCMS() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
-            ResponseVerifyCMS result = kakaocertService.verifyCMS("023030000004", "02304120230300000040000000000042");
+            CMSResult result = kakaocertService.verifyCMS("023030000004", "02304140230300000040000000000002");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

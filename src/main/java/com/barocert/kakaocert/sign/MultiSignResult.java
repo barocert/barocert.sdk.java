@@ -2,7 +2,7 @@ package com.barocert.kakaocert.sign;
 
 import java.util.List;
 
-public class ResponseVerifyMultiSign {
+public class MultiSignResult {
 
     private String receiptID;
     private String state;
