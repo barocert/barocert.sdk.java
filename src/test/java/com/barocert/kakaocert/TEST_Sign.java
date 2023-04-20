@@ -39,9 +39,9 @@ public class TEST_Sign {
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
-            request.setReceiverHP(kakaocertService.encrypt("01054437896"));
-            request.setReceiverName(kakaocertService.encrypt("최상혁"));
-            request.setReceiverBirthday(kakaocertService.encrypt("19880301"));
+            request.setReceiverHP(kakaocertService.encrypt("01012341234"));
+            request.setReceiverName(kakaocertService.encrypt("홍길동"));
+            request.setReceiverBirthday(kakaocertService.encrypt("19700101"));
 //             request.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
@@ -59,7 +59,7 @@ public class TEST_Sign {
             request.setAppUseYN(false);
 
             // App to App 방식 이용시, 호출할 URL
-            // eSignRequest.setReturnURL("https://www.kakaocert.com");
+            // request.setReturnURL("https://www.kakaocert.com");
 
             SignReceipt result = kakaocertService.requestSign("023030000004", request);
 
@@ -127,13 +127,13 @@ public class TEST_Sign {
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
-            request.setReceiverHP(kakaocertService.encrypt("01054437896"));
-            request.setReceiverName(kakaocertService.encrypt("최상혁"));
-            request.setReceiverBirthday(kakaocertService.encrypt("19880301"));
+            request.setReceiverHP(kakaocertService.encrypt("01092706823"));
+            request.setReceiverName(kakaocertService.encrypt("허소연"));
+            request.setReceiverBirthday(kakaocertService.encrypt("19921012"));
             // multiSignRequest.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("전자서명복수테스트");
+            request.setReqTitle("전자서명(복수)");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
 
@@ -141,19 +141,39 @@ public class TEST_Sign {
             // 개별 요청 정보 객체
             MultiSignTokens token = new MultiSignTokens();
             // 인증요청 메시지 제목 - 최대 40자
-            token.setReqTitle("전자서명복수문서테스트1");
+            token.setReqTitle("계약1");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token.setToken(kakaocertService.encrypt("전자서명복수테스트데이터1"));
+            token.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
             request.addToken(token);
 
-            // 개별 요청 정보 객체
             MultiSignTokens token2 = new MultiSignTokens();
             // 인증요청 메시지 제목 - 최대 40자
-            token2.setReqTitle("전자서명복수문서테스트2");
+            token2.setReqTitle("계약2");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token2.setToken(kakaocertService.encrypt("전자서명복수테스트데이터2"));
+            token2.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
             request.addToken(token2);
-
+            
+            MultiSignTokens token3 = new MultiSignTokens();
+            // 인증요청 메시지 제목 - 최대 40자
+            token3.setReqTitle("계약3");
+            // 서명 원문 - 원문 2,800자 까지 입력가능
+            token3.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            request.addToken(token3);
+            
+            MultiSignTokens token4 = new MultiSignTokens();
+            // 인증요청 메시지 제목 - 최대 40자
+            token4.setReqTitle("계약4");
+            // 서명 원문 - 원문 2,800자 까지 입력가능
+            token4.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            request.addToken(token4);
+            
+            MultiSignTokens token5 = new MultiSignTokens();
+            // 인증요청 메시지 제목 - 최대 40자
+            token5.setReqTitle("계약5");
+            // 서명 원문 - 원문 2,800자 까지 입력가능
+            token5.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            request.addToken(token5);
+            
             // 서명 원문 유형
             // TEXT - 일반 텍스트, HASH - HASH 데이터
             request.setTokenType("TEXT");

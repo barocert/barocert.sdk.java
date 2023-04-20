@@ -34,9 +34,9 @@ public class TEST_Identity {
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
-            request.setReceiverHP(kakaocertService.encrypt("01054437896"));
-            request.setReceiverName(kakaocertService.encrypt("최상혁"));
-            request.setReceiverBirthday(kakaocertService.encrypt("19880301"));
+            request.setReceiverHP(kakaocertService.encrypt("01012341234"));
+            request.setReceiverName(kakaocertService.encrypt("홍길동"));
+            request.setReceiverBirthday(kakaocertService.encrypt("19700101"));
 //             request.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
