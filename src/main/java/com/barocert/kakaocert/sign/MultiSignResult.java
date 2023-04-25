@@ -5,7 +5,7 @@ import java.util.List;
 public class MultiSignResult {
 
     private String receiptID;
-    private String state;
+    private int state;
 
     private List<String> multiSignedData;
 
@@ -19,11 +19,11 @@ public class MultiSignResult {
         this.receiptID = receiptID;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 

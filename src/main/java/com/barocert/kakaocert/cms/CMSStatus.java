@@ -4,8 +4,8 @@ public class CMSStatus {
 
     private String receiptID;
     private String clientCode;
-    private String state;
-    private Integer expireIn;
+    private int state;
+    private int expireIn;
     private String callCenterName;
     private String callCenterNum;
     private String reqTitle;
@@ -36,19 +36,19 @@ public class CMSStatus {
         this.clientCode = clientCode;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 
-    public Integer getExpireIn() {
+    public int getExpireIn() {
         return expireIn;
     }
 
-    public void setExpireIn(Integer expireIn) {
+    public void setExpireIn(int expireIn) {
         this.expireIn = expireIn;
     }
 

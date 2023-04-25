@@ -3,7 +3,7 @@ package com.barocert.kakaocert.sign;
 public class SignResult {
 
     private String receiptID;
-    private String state;
+    private int state;
     private String signedData;
     private String ci;
 
@@ -15,11 +15,11 @@ public class SignResult {
         this.receiptID = receiptID;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 
