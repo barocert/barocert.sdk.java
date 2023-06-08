@@ -127,9 +127,9 @@ public class TEST_Sign {
 
             // 수신자 정보
             // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
-            request.setReceiverHP(kakaocertService.encrypt("01092706823"));
-            request.setReceiverName(kakaocertService.encrypt("허소연"));
-            request.setReceiverBirthday(kakaocertService.encrypt("19921012"));
+            request.setReceiverHP(kakaocertService.encrypt("01012341234"));
+            request.setReceiverName(kakaocertService.encrypt("홍길동"));
+            request.setReceiverBirthday(kakaocertService.encrypt("19700101"));
             // multiSignRequest.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
