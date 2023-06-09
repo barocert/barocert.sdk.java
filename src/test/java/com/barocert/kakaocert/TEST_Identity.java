@@ -32,12 +32,12 @@ public class TEST_Identity {
             // 본인인증 요청 정보 객체
             Identity request = new Identity();
 
-            // 수신자 정보
-            // 휴대폰번호,성명,생년월일 또는 Ci(연계정보)값 중 택 일
+            // 수신자 휴대폰번호 - 11자 (하이픈 제외)
             request.setReceiverHP(kakaocertService.encrypt("01012341234"));
+            // 수신자 성명 - 80자
             request.setReceiverName(kakaocertService.encrypt("홍길동"));
+            // 수신자 생년월일 - 8자 (yyyyMMdd)
             request.setReceiverBirthday(kakaocertService.encrypt("19700101"));
-//             request.setCi(kakaocertService.encrypt(""));
 
             // 인증요청 메시지 제목 - 최대 40자
             request.setReqTitle("인증요청 메시지 제목란");

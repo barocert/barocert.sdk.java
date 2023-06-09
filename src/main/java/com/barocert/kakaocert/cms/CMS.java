@@ -6,7 +6,6 @@ public class CMS {
 	private String receiverHP;
 	private String receiverName;
 	private String receiverBirthday;
-	private String ci;
 	private String reqTitle;
 	private Integer expireIn;
 	private String returnURL;	
@@ -48,14 +47,6 @@ public class CMS {
 
 	public void setReceiverBirthday(String receiverBirthday) {
 		this.receiverBirthday = receiverBirthday;
-	}
-
-	public String getCi() {
-		return ci;
-	}
-
-	public void setCi(String ci) {
-		this.ci = ci;
 	}
 
 	public String getReqTitle() {
