@@ -30,14 +30,16 @@ public class Encryptor{
         return _singleTone;
     }
 
+    // java ver 1.8 미만 운영모드 CBC, java 1.8버전 이상 운영모드 GCM
     private static String getAESMode() throws BarocertException {
         String version = System.getProperty("java.version");
         if(version == null || version.trim().isEmpty() ) throw new BarocertException(-99999999,"자바 버전을 확인할수 없습니다.");
-        if(version.startsWith("1.8")) {
-            return "GCM";
-        }else {
+        if(version.startsWith("1.6") || version.startsWith("1.7") ) {
             return "CBC";
+        }else {
+            return "GCM";
         }
+        
     }
 
     public String enc(String plainText) throws BarocertException {

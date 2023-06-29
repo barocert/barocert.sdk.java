@@ -58,7 +58,7 @@ public class KakaocertServiceImp implements KakaocertService {
     private static final String AUTH_STATIC_URL = "https://static-auth.linkhub.co.kr";
     private static final String SERVICEURL_STATIC = "https://static-barocert.linkhub.co.kr";
     private static final String SERVICEURL = "https://barocert.linkhub.co.kr";
-    private static final String APIVERSION = "2.0"; // sha256
+    private static final String APIVERSION = "2.1"; // sha256
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
 
     private static final TimeZone TIMEZONE = TimeZone.getTimeZone("UTC");
@@ -262,9 +262,9 @@ public class KakaocertServiceImp implements KakaocertService {
             httpURLConnection.setRequestProperty("Content-Length", String.valueOf(btPostData.length));
 
             String signTarget = "POST\n";
-            signTarget += url + "\n";
             signTarget += sha256Base64(btPostData) + "\n";
             signTarget += date + "\n";
+            signTarget += url + "\n";
 
             String Signature = base64Encode(HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
 
