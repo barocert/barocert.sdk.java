@@ -67,7 +67,7 @@ public class TEST_Sign {
             request.setOriginalURL("https://www.barocert.co.kr");
             // 원본형태코드
             // ('TEXT', 'HTML', 'DOWNLOAD_IMAGE', 'DOWNLOAD_DOCUMENT')
-            request.setOriginalFormatCode("");
+            request.setOriginalFormatCode("HTML");
 
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식
