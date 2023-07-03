@@ -84,7 +84,7 @@ public class TEST_Sign {
 
             SignReceipt result = passcertService.requestSign("023030000004", request);
 
-            System.out.println("ReceiptID : " + result.getReceiptId());
+            System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());

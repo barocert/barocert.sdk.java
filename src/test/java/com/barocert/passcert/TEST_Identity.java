@@ -68,7 +68,7 @@ public class TEST_Identity {
             IdentityReceipt result = passcertService.requestIdentity("023030000004", request);
 
             // 접수아이디, 앱스킴, 앱다운로드URL 
-            System.out.println("ReceiptID : " + result.getReceiptId());
+            System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
             System.out.println("MarketUrl : " + result.getMarketUrl());
         } catch (BarocertException be) {
