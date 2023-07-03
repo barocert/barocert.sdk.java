@@ -58,7 +58,7 @@ public interface PasscertService {
 	public IdentityResult verifyIdentity(String clientCode, String receiptID, IdentityVerify verify) throws BarocertException;
 	
 	/**
-	 * 전자서명 요청(단건) 
+	 * 전자서명 요청
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드
@@ -70,7 +70,7 @@ public interface PasscertService {
 	public SignReceipt requestSign(String clientCode, Sign requestSign) throws BarocertException;
 	
 	/**
-	 * 전자서명 상태확인(단건)
+	 * 전자서명 상태확인
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드
@@ -82,7 +82,7 @@ public interface PasscertService {
 	public SignStatus getSignStatus(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
-	 * 전자서명 서명검증(단건)
+	 * 전자서명 서명검증
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드

@@ -52,12 +52,9 @@ public class PasscertServiceImp implements PasscertService {
 
     private static final String SERVICE_ID = "BAROCERT";
 
-    // private static final String AUTH_STATIC_URL = "https://static-auth.linkhub.co.kr";
-    // private static final String SERVICEURL_STATIC = "https://static-barocert.linkhub.co.kr";
-    // private static final String SERVICEURL = "https://barocert.linkhub.co.kr";
-     private static final String AUTH_STATIC_URL = "https://dev-auth.linkhub.kr";
-     private static final String SERVICEURL_STATIC = "https://static-barocert.linkhub.co.kr";
-     private static final String SERVICEURL = "https://bc-api.linkhub.kr";
+    private static final String AUTH_STATIC_URL = "https://static-auth.linkhub.co.kr";
+    private static final String SERVICEURL_STATIC = "https://static-barocert.linkhub.co.kr";
+    private static final String SERVICEURL = "https://barocert.linkhub.co.kr";
     
     private static final String APIVERSION = "2.1"; // sha256
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
@@ -92,10 +89,10 @@ public class PasscertServiceImp implements PasscertService {
                     .useLocalTimeYN(useLocalTimeYN)       // 로컬시스템 시간 사용여부.
                     .ServiceID(SERVICE_ID)                // 서비스아이디.
                     .addScope("partner")            // partner
-                    .addScope("441")                // 전자서명(단건)
-                    .addScope("442")                // 전자서명(복수)
-                    .addScope("443")                // 본인인증
-                    .addScope("444");               // 출금동의
+                    .addScope("441")                // 전자서명
+                    .addScope("442")                // 본인인증
+                    .addScope("443")                // 출금동의
+                    .addScope("444");               // 간편로그인
 
             // AuthURL 이 null 이고, useStaticIP 가 true 이면, ServiceURL 이 Auth_Static_URL 적용.
             if (useStaticIP)
@@ -489,12 +486,9 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(identity.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
         if (isNullOrEmpty(identity.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         if (isNullOrEmpty(identity.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (isNullOrEmpty(identity.getReqMessage())) throw new BarocertException(-99999999, "인증요청 메시지 내용이 입력되지 않았습니다.");
         if (isNullOrEmpty(identity.getCallCenterNum())) throw new BarocertException(-99999999, "고객센터 연락처가 입력되지 않았습니다.");
         if (identity.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
         if (isNullOrEmpty(identity.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
-        if (isNullOrEmpty(identity.getTelcoType())) throw new BarocertException(-99999999, "통신사 유형이 입력되지 않았습니다.");
-        if (isNullOrEmpty(identity.getDeviceOSType())) throw new BarocertException(-99999999, "모바일장비 유형이 입력되지 않았습니다.");
 
         String postData = toJsonString(identity);
 
@@ -527,16 +521,17 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
+        if (isNullOrEmpty(verify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(verify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
 
         String postData = toJsonString(verify);
 
         return httpPost("/PASS/Identity/" + clientCode + "/" + receiptID, postData, IdentityResult.class);
     }
 
-    // 전자서명 서명요청(단건)
+    // 전자서명 서명요청
     @Override
-    public SignReceipt requestSign(String clientCode, Sign sign)
-            throws BarocertException {
+    public SignReceipt requestSign(String clientCode, Sign sign) throws BarocertException {
 
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
         if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
@@ -544,25 +539,18 @@ public class PasscertServiceImp implements PasscertService {
         if (sign == null) throw new BarocertException(-99999999, "전자서명 요청정보가 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(sign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (isNullOrEmpty(sign.getReqMessage())) throw new BarocertException(-99999999, "인증요청 메시지 내용이 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getCallCenterNum())) throw new BarocertException(-99999999, "고객센터 연락처가 입력되지 않았습니다.");
         if (sign.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
-        // if (isNullOrEmpty(sign.getOriginalTypeCode())) throw new BarocertException(-99999999, "원본유형코드가 입력되지 않았습니다.");
-        // if (isNullOrEmpty(sign.getOriginalURL())) throw new BarocertException(-99999999, "원본조회URL이 입력되지 않았습니다.");
-        // if (isNullOrEmpty(sign.getOriginalFormatCode())) throw new BarocertException(-99999999, "원본형태코드가 입력되지 않았습니다.");
-        if (isNullOrEmpty(sign.getTelcoType())) throw new BarocertException(-99999999, "통신사 유형이 입력되지 않았습니다.");
-        if (isNullOrEmpty(sign.getDeviceOSType())) throw new BarocertException(-99999999, "모바일장비 유형이 입력되지 않았습니다.");
 
         String postData = toJsonString(sign);
 
         return httpPost("/PASS/Sign/" + clientCode, postData, SignReceipt.class);
     }
 
-    // 전자서명 상태확인(단건)
+    // 전자서명 상태확인
     @Override
     public SignStatus getSignStatus(String clientCode, String receiptID) throws BarocertException {
 
@@ -577,7 +565,7 @@ public class PasscertServiceImp implements PasscertService {
         return httpGet("/PASS/Sign/" + clientCode + "/" + receiptID, SignStatus.class);
     }
 
-    // 전자서명 서명검증(단건)
+    // 전자서명 서명검증
     @Override
     public SignResult verifySign(String clientCode, String receiptID, SignVerify verify) throws BarocertException {
 
@@ -588,6 +576,8 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
+        if (isNullOrEmpty(verify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(verify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
 
         String postData = toJsonString(verify);
 
@@ -605,21 +595,13 @@ public class PasscertServiceImp implements PasscertService {
         if (cms == null) throw new BarocertException(-99999999, "출금동의 서명요청 정보가 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getReceiverHP()))throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(cms.getReceiverBirthday())) throw new BarocertException(-99999999, "수신자 생년월일이 입력되지 않았습니다.");
-        // if (isNullOrEmpty(cms.getBankAccountBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
-        if (isNullOrEmpty(cms.getReqMessage())) throw new BarocertException(-99999999, "인증요청 메시지 내용이 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getCallCenterNum())) throw new BarocertException(-99999999, "고객센터 연락처가 입력되지 않았습니다.");
         if (cms.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
-        // if (isNullOrEmpty(cms.getRequestCorp())) throw new BarocertException(-99999999, "청구기관명이 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getBankName())) throw new BarocertException(-99999999, "출금은행명이 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getBankAccountNum())) throw new BarocertException(-99999999, "출금계좌번호가 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getBankAccountName())) throw new BarocertException(-99999999, "출금계좌 예금주명이 입력되지 않았습니다.");
-        if (isNullOrEmpty(cms.getBankWithdraw())) throw new BarocertException(-99999999, "출금액이 입력되지 않았습니다.");
-        // if (isNullOrEmpty(cms.getBankAccountBirthday()))throw new BarocertException(-99999999, "예금주 생년월일이 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getBankServiceType())) throw new BarocertException(-99999999, "출금 유형이 입력되지 않았습니다.");
-        if (isNullOrEmpty(cms.getTelcoType())) throw new BarocertException(-99999999, "통신사 유형이 입력되지 않았습니다.");
-        if (isNullOrEmpty(cms.getDeviceOSType())) throw new BarocertException(-99999999, "모바일장비 유형이 입력되지 않았습니다.");
 
         String postData = toJsonString(cms);
 
@@ -652,6 +634,8 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
+        if (isNullOrEmpty(verify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(verify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
 
         String postData = toJsonString(verify);
 

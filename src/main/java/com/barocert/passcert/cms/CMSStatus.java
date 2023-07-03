@@ -11,13 +11,11 @@ public class CMSStatus {
     private String reqTitle;
     private String reqMessage;
     private String requestDT;
-    private String viewDT;
     private String completeDT;
     private String expireDT;
     private String rejectDT;
     private String tokenType;
     private boolean userAgreementYN;
-    private boolean receiverInfoYN;
     private String telcoType;
     private String deviceOSType;
     private String originalTypeCode;
@@ -98,14 +96,6 @@ public class CMSStatus {
         this.requestDT = requestDT;
     }
 
-    public String getViewDT() {
-        return this.viewDT;
-    }
-
-    public void setViewDT(String viewDT) {
-        this.viewDT = viewDT;
-    }
-
     public String getCompleteDT() {
         return this.completeDT;
     }
@@ -144,14 +134,6 @@ public class CMSStatus {
 
     public void setUserAgreementYN(boolean userAgreementYN) {
         this.userAgreementYN = userAgreementYN;
-    }
-
-    public boolean getReceiverInfoYN() {
-        return this.receiverInfoYN;
-    }
-
-    public void setReceiverInfoYN(boolean receiverInfoYN) {
-        this.receiverInfoYN = receiverInfoYN;
     }
 
     public String getTelcoType() {

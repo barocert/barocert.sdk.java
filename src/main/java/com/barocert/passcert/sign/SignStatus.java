@@ -11,7 +11,6 @@ public class SignStatus {
     private String reqTitle;
     private String reqMessage;
     private String requestDT;
-    private String viewDT;
     private String completeDT;
     private String expireDT;
     private String rejectDT;
@@ -96,14 +95,6 @@ public class SignStatus {
 
     public void setRequestDT(String requestDT) {
         this.requestDT = requestDT;
-    }
-
-    public String getViewDT() {
-        return this.viewDT;
-    }
-
-    public void setViewDT(String viewDT) {
-        this.viewDT = viewDT;
     }
 
     public String getCompleteDT() {

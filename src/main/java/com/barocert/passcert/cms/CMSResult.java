@@ -4,7 +4,6 @@ public class CMSResult {
 
     private String receiptID;
     private int state;
-    private String receiverHP;
     private String receiverName;
     private String receiverBirthday;
     private String receiverGender;
@@ -26,14 +25,6 @@ public class CMSResult {
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public String getReceiverHP() {
-        return this.receiverHP;
-    }
-
-    public void setReceiverHP(String receiverHP) {
-        this.receiverHP = receiverHP;
     }
 
     public String getReceiverName() {

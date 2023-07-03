@@ -10,7 +10,6 @@ public class CMS {
 	private String callCenterNum;
 	private Integer expireIn;
 	private boolean userAgreementYN;
-	private boolean receiverInfoYN;
 	private String bankName;
 	private String bankAccountNum;
 	private String bankAccountName;
@@ -20,7 +19,6 @@ public class CMS {
 	private String deviceOSType;
 	private boolean appUseYN;
 	private boolean useTssYN;
-
 	private String originalTypeCode;
 	private String originalURL;
 	private String originalFormatCode;
@@ -113,14 +111,6 @@ public class CMS {
 
 	public void setUserAgreementYN(boolean userAgreementYN) {
 		this.userAgreementYN = userAgreementYN;
-	}
-
-	public boolean isReceiverInfoYN() {
-		return this.receiverInfoYN;
-	}
-
-	public void setReceiverInfoYN(boolean receiverInfoYN) {
-		this.receiverInfoYN = receiverInfoYN;
 	}
 
 	public String getBankName() {

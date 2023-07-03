@@ -12,8 +12,8 @@ import com.barocert.passcert.sign.SignVerify;
 
 public class TEST_Sign {
 
-    private final String testLinkID = "TESTER_WS";
-    private final String testSecretKey = "a0NVsYKdOI11fBREgTrKRVRaO8PZJi5XroiIKG+WQZY=";
+    private final String testLinkID = "LINKHUB_BC";
+    private final String testSecretKey = "npCAl0sHPpJqlvMbrcBmNagrxkQ74w9Sl0A+M++kMCE=";
 
     private PasscertService passcertService;
 
@@ -36,19 +36,19 @@ public class TEST_Sign {
 
             // 수신자 휴대폰번호 - 11자 (하이픈 제외)
             request.setReceiverHP(passcertService.encrypt("01012341234"));
-            // 수신자 성명 - 80자
+            // 수신자 성명 - 최대 80자
             request.setReceiverName(passcertService.encrypt("홍길동"));
             // 수신자 생년월일 - 8자 (yyyyMMdd)
             request.setReceiverBirthday(passcertService.encrypt("19700101"));
 
             // 인증요청 메시지 제목 - 최대 40자
             request.setReqTitle("패스써트 전자서명 인증요청 타이틀");
-            // 인증요청 메시지
-            request.setReqMessage(passcertService.encrypt("패스써트 전자서명 인증요청 내용"));
-            // 고객센터 연락처
+            // 인증요청 메시지 - 최대 500자
+            request.setReqMessage(passcertService.encrypt("패스써트 전자서명 인증요청 메시지"));
+            // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
-            request.setExpireIn(1000);
+            request.setExpireIn(100);
             // 서명 원문 - 원문 2,800자 까지 입력가능
             request.setToken(passcertService.encrypt("패스써트 전자서명테스트데이터"));
             // 서명 원문 유형
@@ -62,9 +62,10 @@ public class TEST_Sign {
             request.setReceiverInfoYN(true);
             
             // 원본유형코드
-            request.setOriginalTypeCode("GD");
+            // 'AG' - 동의서, 'AP' - 신청서, 'CT' - 계약서, 'GD' - 안내서, 'NT' - 통지서, 'TR' - 약관
+            request.setOriginalTypeCode("TR");
             // 원본조회URL
-            request.setOriginalURL("https://www.barocert.co.kr");
+            request.setOriginalURL("https://www.passcert.co.kr");
             // 원본형태코드
             // ('TEXT', 'HTML', 'DOWNLOAD_IMAGE', 'DOWNLOAD_DOCUMENT')
             request.setOriginalFormatCode("HTML");
@@ -73,15 +74,15 @@ public class TEST_Sign {
             // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);
             // ApptoApp 인증방식에서 사용
-            // 통신사 유형('SKT', 'KT', 'LG'), 대문자 입력(대소문자 구분)
-            request.setTelcoType("SKT");
+            // 통신사 유형('SKT', 'KT', 'LGU'), 대문자 입력(대소문자 구분)
+            // request.setTelcoType("SKT");
             // ApptoApp 인증방식에서 사용
             // 모바일장비 유형('ANDROID', 'IOS'), 대문자 입력(대소문자 구분)
-            request.setDeviceOSType("IOS");
+            // request.setDeviceOSType("IOS");
 
             request.setUseTssYN(false);
 
-            SignReceipt result = passcertService.requestSign("023060000044", request);
+            SignReceipt result = passcertService.requestSign("023030000004", request);
 
             System.out.println("ReceiptID : " + result.getReceiptId());
             System.out.println("Scheme : " + result.getScheme());
@@ -95,26 +96,25 @@ public class TEST_Sign {
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
-            SignStatus result = passcertService.getSignStatus("023060000044", "02306290230600000440000000000002");
+            SignStatus result = passcertService.getSignStatus("023030000004", "02306300230300000040000000000037");
 
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("ExpireIn : " + result.getExpireIn());
+            System.out.println("ExpireIn : " + result.getExpireIn()); // 단위: 초(s)
             System.out.println("CallCenterName : " + result.getCallCenterName());
             System.out.println("CallCenterNum : " + result.getCallCenterNum());
             System.out.println("ReqTitle : " + result.getReqTitle());
             System.out.println("ReqMessage : " + result.getReqMessage());
             System.out.println("RequestDT : " + result.getRequestDT());
-            System.out.println("ViewDT : " + result.getViewDT());
             System.out.println("CompleteDT : " + result.getCompleteDT());
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("RejectDT : " + result.getRejectDT());
             System.out.println("TokenType : " + result.getTokenType());
             System.out.println("UserAgreementYN : " + result.getUserAgreementYN());
             System.out.println("ReceiverInfoYN : " + result.getReceiverInfoYN());
-            System.out.println("TelcoType : " + result.getTelcoType());
-            System.out.println("DeviceOSType : " + result.getDeviceOSType());
+            System.out.println("TelcoType : " + result.getTelcoType()); // 통신사 유형('SKT', 'KT', 'LGU')
+            System.out.println("DeviceOSType : " + result.getDeviceOSType()); // 모바일장비 유형('ANDROID', 'IOS')
             System.out.println("OriginalTypeCode : " + result.getOriginalTypeCode());
             System.out.println("OriginalURL : " + result.getOriginalURL());
             System.out.println("OriginalFormatCode : " + result.getOriginalFormatCode());
@@ -134,10 +134,10 @@ public class TEST_Sign {
             SignVerify verify = new SignVerify();
             // 검증 요청자 휴대폰번호 - 11자 (하이픈 제외)
             verify.setReceiverHP(passcertService.encrypt("01012341234")); 
-            // 검증 요청자 성명 - 80자
+            // 검증 요청자 성명
             verify.setReceiverName(passcertService.encrypt("홍길동"));
 
-            SignResult result = passcertService.verifySign("023060000044", "02306290230600000440000000000002", verify);
+            SignResult result = passcertService.verifySign("023030000004", "02306300230300000040000000000037", verify);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

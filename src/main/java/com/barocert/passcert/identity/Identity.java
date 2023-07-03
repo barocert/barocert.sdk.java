@@ -11,7 +11,6 @@ public class Identity {
     private Integer expireIn;
     private String token;
     private boolean userAgreementYN;
-    private boolean receiverInfoYN;
     private String telcoType;
     private String deviceOSType;
     private boolean appUseYN;
@@ -89,14 +88,6 @@ public class Identity {
         this.userAgreementYN = userAgreementYN;
     }
 
-    public boolean isReceiverInfoYN() {
-        return this.receiverInfoYN;
-    }
-
-    public void setReceiverInfoYN(boolean receiverInfoYN) {
-        this.receiverInfoYN = receiverInfoYN;
-    }
-
     public String getTelcoType() {
         return this.telcoType;
     }
@@ -113,7 +104,7 @@ public class Identity {
         this.deviceOSType = deviceOSType;
     }
 
-    public boolean isAppUseYN() {
+    public boolean getAppUseYN() {
         return this.appUseYN;
     }
 
