@@ -512,7 +512,7 @@ public class PasscertServiceImp implements PasscertService {
 
     // 본인인증 서명검증
     @Override
-    public IdentityResult verifyIdentity(String clientCode, String receiptID, IdentityVerify verify) throws BarocertException {
+    public IdentityResult verifyIdentity(String clientCode, String receiptID, IdentityVerify identityVerify) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -521,10 +521,10 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
-        if (isNullOrEmpty(verify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(verify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(identityVerify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(identityVerify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
 
-        String postData = toJsonString(verify);
+        String postData = toJsonString(identityVerify);
 
         return httpPost("/PASS/Identity/" + clientCode + "/" + receiptID, postData, IdentityResult.class);
     }
@@ -567,7 +567,7 @@ public class PasscertServiceImp implements PasscertService {
 
     // 전자서명 서명검증
     @Override
-    public SignResult verifySign(String clientCode, String receiptID, SignVerify verify) throws BarocertException {
+    public SignResult verifySign(String clientCode, String receiptID, SignVerify signVerify) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -576,10 +576,10 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
-        if (isNullOrEmpty(verify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(verify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(signVerify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(signVerify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
 
-        String postData = toJsonString(verify);
+        String postData = toJsonString(signVerify);
 
         return httpPost("/PASS/Sign/" + clientCode + "/" + receiptID, postData, SignResult.class);
     }
@@ -625,7 +625,7 @@ public class PasscertServiceImp implements PasscertService {
 
     // 출금동의 서명검증
     @Override
-    public CMSResult verifyCMS(String clientCode, String receiptID, CMSVerify verify) throws BarocertException {
+    public CMSResult verifyCMS(String clientCode, String receiptID, CMSVerify cmsVerify) throws BarocertException {
 
         // 필수 값 체크.
         if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
@@ -634,16 +634,16 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
-        if (isNullOrEmpty(verify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(verify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cmsVerify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(cmsVerify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
 
-        String postData = toJsonString(verify);
+        String postData = toJsonString(cmsVerify);
 
         return httpPost("/PASS/CMS/" + clientCode + "/" + receiptID, postData, CMSResult.class);
     }
     
     private boolean isNullOrEmpty(String string) {
-		return string == null || string.trim().isEmpty();
+        return string == null || string.trim().isEmpty();
 	}
     
     public void setIPRestrictOnOff(boolean isIPRestrictOnOff) {

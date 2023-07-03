@@ -12,8 +12,8 @@ import com.barocert.passcert.sign.SignVerify;
 
 public class TEST_Sign {
 
-    private final String testLinkID = "LINKHUB_BC";
-    private final String testSecretKey = "npCAl0sHPpJqlvMbrcBmNagrxkQ74w9Sl0A+M++kMCE=";
+    private final String testLinkID = "TESTER";
+    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
 
     private PasscertService passcertService;
 
@@ -131,13 +131,13 @@ public class TEST_Sign {
     public void TEST_VerifySign() throws BarocertException {
         try {
             // 검증 요청 정보 객체
-            SignVerify verify = new SignVerify();
+            SignVerify request = new SignVerify();
             // 검증 요청자 휴대폰번호 - 11자 (하이픈 제외)
-            verify.setReceiverHP(passcertService.encrypt("01012341234")); 
+            request.setReceiverHP(passcertService.encrypt("01012341234")); 
             // 검증 요청자 성명
-            verify.setReceiverName(passcertService.encrypt("홍길동"));
+            request.setReceiverName(passcertService.encrypt("홍길동"));
 
-            SignResult result = passcertService.verifySign("023030000004", "02306300230300000040000000000037", verify);
+            SignResult result = passcertService.verifySign("023030000004", "02306300230300000040000000000037", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

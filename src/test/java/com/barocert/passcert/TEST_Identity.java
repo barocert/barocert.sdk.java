@@ -11,8 +11,8 @@ import com.barocert.passcert.identity.IdentityVerify;
 
 public class TEST_Identity {
 
-    private final String testLinkID = "LINKHUB_BC";
-    private final String testSecretKey = "npCAl0sHPpJqlvMbrcBmNagrxkQ74w9Sl0A+M++kMCE=";
+    private final String testLinkID = "TESTER";
+    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
 
     private PasscertService passcertService;
 
@@ -113,13 +113,13 @@ public class TEST_Identity {
     public void TEST_VerifyIdentity() throws BarocertException {
         try {
             // 서명검증 요청 정보 객체
-            IdentityVerify verify = new IdentityVerify();
+            IdentityVerify request = new IdentityVerify();
             // 서명검증 요청 휴대폰번호 - 11자 (하이픈 제외)
-            verify.setReceiverHP(passcertService.encrypt("01012341234")); 
+            request.setReceiverHP(passcertService.encrypt("01012341234")); 
             // 서명검증 요청 성명
-            verify.setReceiverName(passcertService.encrypt("홍길동")); 
+            request.setReceiverName(passcertService.encrypt("홍길동")); 
             
-            IdentityResult result = passcertService.verifyIdentity("023030000004", "02306300230300000040000000000028", verify);
+            IdentityResult result = passcertService.verifyIdentity("023030000004", "02306300230300000040000000000028", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

@@ -26,7 +26,7 @@ public interface PasscertService {
 	 * 			이용기관코드
 	 * @param requestIdentity
 	 * 			본인인증 요청정보
-	 * @return ResponseVerify
+	 * @return IdentityReceipt
 	 * @throws BarocertException
 	 */
 	public IdentityReceipt requestIdentity(String clientCode, Identity requestIdentity) throws BarocertException;
@@ -38,7 +38,7 @@ public interface PasscertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			본인인증 접수아이디
-	 * @return ResponseIdentityStatus
+	 * @return IdentityStatus
 	 * @throws BarocertException
 	 */
 	public IdentityStatus getIdentityStatus(String clientCode, String receiptID) throws BarocertException;
@@ -52,7 +52,7 @@ public interface PasscertService {
 	 * 			본인인증 접수아이디
 	 * @param verify
 	 * 			서명검증 요청정보
-	 * @return ResponseVerifyIdentity
+	 * @return IdentityResult
 	 * @throws BarocertException
 	 */
 	public IdentityResult verifyIdentity(String clientCode, String receiptID, IdentityVerify verify) throws BarocertException;
@@ -64,7 +64,7 @@ public interface PasscertService {
 	 * 			이용기관코드
 	 * @param requestSign
 	 * 			전자서명 요청정보
-	 * @return ResponseSign
+	 * @return SignReceipt
 	 * @throws BarocertException
 	 */
 	public SignReceipt requestSign(String clientCode, Sign requestSign) throws BarocertException;
@@ -76,7 +76,7 @@ public interface PasscertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			전자서명 접수아이디
-	 * @return ResponseSignStatus
+	 * @return SignStatus
 	 * @throws BarocertException
 	 */
 	public SignStatus getSignStatus(String clientCode, String receiptID) throws BarocertException;
@@ -90,7 +90,7 @@ public interface PasscertService {
 	 * 			전자서명 접수아이디
 	 * @param verify
 	 * 			서명검증 요청정보
-	 * @return ResponseVerifySign
+	 * @return SignResult
 	 * @throws BarocertException
 	 */
 	public SignResult verifySign(String clientCode, String receiptID, SignVerify verify) throws BarocertException;
@@ -102,7 +102,7 @@ public interface PasscertService {
 	 * 			이용기관코드
 	 * @param requestCMS
 	 * 			출금동의 요청정보
-	 * @return ResponseCMS
+	 * @return CMSReceipt
 	 * @throws BarocertException
 	 */
 	public CMSReceipt requestCMS(String clientCode, CMS requestCMS) throws BarocertException;
@@ -114,7 +114,7 @@ public interface PasscertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			출금동의 접수아이디
-	 * @return ResponseCMSStatus
+	 * @return CMSStatus
 	 * @throws BarocertException
 	 */
 	public CMSStatus getCMSStatus(String clientCode, String receiptID) throws BarocertException;
@@ -128,7 +128,7 @@ public interface PasscertService {
 	 * 			출금동의 접수아이디
 	 * @param verify
 	 * 			서명검증 요청정보
-	 * @return ResponseVerifyCMS
+	 * @return CMSResult
 	 * @throws BarocertException
 	 */
 	public CMSResult verifyCMS(String clientCode, String receiptID, CMSVerify verify) throws BarocertException;
