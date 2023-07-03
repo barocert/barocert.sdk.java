@@ -2,16 +2,16 @@ package com.barocert.passcert.identity;
 
 public class IdentityReceipt {
 
-    private String receiptID;
+    private String receiptId;
     private String scheme;
     private String marketUrl;
 
     public String getReceiptID() {
-        return receiptID;
+        return receiptId;
     }
 
-    public void setReceiptID(String receiptID) {
-        this.receiptID = receiptID;
+    public void setReceiptID(String receiptId) {
+        this.receiptId = receiptId;
     }
 
     public String getScheme() {

@@ -2,15 +2,15 @@ package com.barocert.passcert.cms;
 
 public class CMSReceipt {
 
-    private String receiptID;
+    private String receiptId;
     private String scheme;
 
     public String getReceiptID() {
-        return receiptID;
+        return receiptId;
     }
 
-    public void setReceiptID(String receiptID) {
-        this.receiptID = receiptID;
+    public void setReceiptID(String receiptId) {
+        this.receiptId = receiptId;
     }
 
     public String getScheme() {
