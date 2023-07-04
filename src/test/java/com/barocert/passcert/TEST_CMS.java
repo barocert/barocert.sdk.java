@@ -47,7 +47,7 @@ public class TEST_CMS {
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
-            request.setExpireIn(100);
+            request.setExpireIn(1000);
             // 사용자 동의 필요 여부
             request.setUserAgreementYN(false);
 

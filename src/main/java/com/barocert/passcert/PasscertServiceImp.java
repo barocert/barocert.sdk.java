@@ -642,9 +642,10 @@ public class PasscertServiceImp implements PasscertService {
         return httpPost("/PASS/CMS/" + clientCode + "/" + receiptID, postData, CMSResult.class);
     }
     
+
     private boolean isNullOrEmpty(String string) {
         return string == null || string.trim().isEmpty();
-	}
+    }
     
     public void setIPRestrictOnOff(boolean isIPRestrictOnOff) {
         this.isIPRestrictOnOff = isIPRestrictOnOff;
