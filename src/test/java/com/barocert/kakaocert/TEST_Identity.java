@@ -10,8 +10,8 @@ import com.barocert.kakaocert.identity.IdentityResult;
 
 public class TEST_Identity {
 
-    private final String testLinkID = "LINKHUB_BC";
-    private final String testSecretKey = "npCAl0sHPpJqlvMbrcBmNagrxkQ74w9Sl0A+M++kMCE=";
+    private final String testLinkID = "TESTER";
+    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
 
     private KakaocertService kakaocertService;
 

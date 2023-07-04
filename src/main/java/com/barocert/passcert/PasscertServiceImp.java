@@ -521,8 +521,7 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
-        if (isNullOrEmpty(identityVerify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(identityVerify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
+        if (identityVerify == null) throw new BarocertException(-99999999, "본인인증 검증 요청 정보가 입력되지 않았습니다.");
 
         String postData = toJsonString(identityVerify);
 
@@ -576,8 +575,7 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
-        if (isNullOrEmpty(signVerify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(signVerify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
+        if (signVerify == null) throw new BarocertException(-99999999, "전자서명 검증 요청 정보가 입력되지 않았습니다.");
 
         String postData = toJsonString(signVerify);
 
@@ -634,14 +632,12 @@ public class PasscertServiceImp implements PasscertService {
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
-        if (isNullOrEmpty(cmsVerify.getReceiverHP())) throw new BarocertException(-99999999, "검증 수신자 휴대폰번호가 입력되지 않았습니다.");
-        if (isNullOrEmpty(cmsVerify.getReceiverName())) throw new BarocertException(-99999999, "검증 수신자 성명이 입력되지 않았습니다.");
+        if (cmsVerify == null) throw new BarocertException(-99999999, "전자서명 검증 요청 정보가 입력되지 않았습니다.");
 
         String postData = toJsonString(cmsVerify);
 
         return httpPost("/PASS/CMS/" + clientCode + "/" + receiptID, postData, CMSResult.class);
     }
-    
 
     private boolean isNullOrEmpty(String string) {
         return string == null || string.trim().isEmpty();
