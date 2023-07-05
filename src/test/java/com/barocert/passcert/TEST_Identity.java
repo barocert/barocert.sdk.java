@@ -116,7 +116,7 @@ public class TEST_Identity {
             IdentityVerify request = new IdentityVerify();
             // 서명검증 요청 휴대폰번호 - 11자 (하이픈 제외)
             request.setReceiverHP(passcertService.encrypt("01012341234")); 
-            // 서명검증 요청 성명
+            // 서명검증 요청 성명 - 최대 80자
             request.setReceiverName(passcertService.encrypt("홍길동")); 
             
             IdentityResult result = passcertService.verifyIdentity("023030000004", "02306300230300000040000000000028", request);

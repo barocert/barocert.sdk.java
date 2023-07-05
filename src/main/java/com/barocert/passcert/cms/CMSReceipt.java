@@ -4,6 +4,7 @@ public class CMSReceipt {
 
     private String receiptId;
     private String scheme;
+    private String marketUrl;
 
     public String getReceiptID() {
         return receiptId;
@@ -19,6 +20,14 @@ public class CMSReceipt {
 
     public void setScheme(String scheme) {
         this.scheme = scheme;
+    }
+
+    public String getMarketUrl() {
+        return this.marketUrl;
+    }
+
+    public void setMarketUrl(String marketUrl) {
+        this.marketUrl = marketUrl;
     }
 
 }

@@ -77,8 +77,10 @@ public class TEST_CMS {
 
             CMSReceipt result = passcertService.requestCMS("023030000004", request);
 
+            // 접수아이디, 앱스킴, 앱다운로드URL 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
+            System.out.println("MarketUrl : " + result.getMarketUrl());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
@@ -123,7 +125,7 @@ public class TEST_CMS {
             CMSVerify request = new CMSVerify(); 
             // 검증 요청자 휴대폰번호 - 11자 (하이픈 제외)
             request.setReceiverHP(passcertService.encrypt("01012341234")); 
-            // 검증 요청자 성명
+            // 검증 요청자 성명 - 최대 80자
             request.setReceiverName(passcertService.encrypt("홍길동"));
 
             CMSResult result = passcertService.verifyCMS("023030000004", "02307030230300000040000000000010", request);
