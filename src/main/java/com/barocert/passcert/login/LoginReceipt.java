@@ -1,19 +1,19 @@
-package com.barocert.passcert.sign;
+package com.barocert.passcert.login;
 
 /**
- *  전자서명 요청 응답 정보
+ *  간편로그인 요청 응답 정보
  *  @field receiptId        - 접수아이디
  *  @field scheme           - 앱스킴
  *  @field marketUrl        - 앱다운로드 URL
  */
-public class SignReceipt {
+public class LoginReceipt {
 
     private String receiptId;
     private String scheme;
     private String marketUrl;
 
     public String getReceiptID() {
-        return this.receiptId;
+        return receiptId;
     }
 
     public void setReceiptID(String receiptId) {
@@ -21,7 +21,7 @@ public class SignReceipt {
     }
 
     public String getScheme() {
-        return this.scheme;
+        return scheme;
     }
 
     public void setScheme(String scheme) {

@@ -1,5 +1,22 @@
 package com.barocert.kakaocert.cms;
 
+/**
+ *  출금동의 요청 정보
+ * 	@field requestID		- 접수아이디
+ *  @field receiverHP       - 수신자 휴대폰번호
+ *  @field receiverName     - 수신자 성명
+ *  @field receiverBirthday - 수신자 생년월일
+ *  @field reqTitle         - 메시지 제목
+ *  @field expireIn         - 요청 만료시간
+ *  @field requestCorp      - 청구기관명
+ *  @field bankName  		- 출금은행명
+ *  @field bankAccountNum  	- 출금계좌번호
+ *  @field bankAccountName  - 출금계좌 예금주명
+ *  @field bankAccountBirthday - 출금계좌 예금주 생년월일
+ *  @field bankServiceType  - 서비스종류
+ *  @field appUseYN         - 앱사용유무
+ *	@field returnURL        - 복귀URL
+ */
 public class CMS {
 
 	private String requestID;

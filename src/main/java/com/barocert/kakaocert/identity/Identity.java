@@ -1,5 +1,17 @@
 package com.barocert.kakaocert.identity;
 
+/**
+ *  본인인증 요청 정보
+ *  @field requestID        - 접수 아이디
+ *  @field receiverHP       - 수신자 휴대폰번호
+ *  @field receiverName     - 수신자 성명
+ *  @field receiverBirthday - 수신자 생년월일
+ *  @field reqTitle         - 메시지 제목
+ *  @field expireIn         - 요청 만료시간
+ *  @field token            - 원문
+ *  @field appUseYN         - 앱사용유무
+ *  @field returnURL        - 복귀 URL
+ */
 public class Identity {
 
     private String requestID;

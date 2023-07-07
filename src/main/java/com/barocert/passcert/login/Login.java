@@ -1,6 +1,7 @@
-package com.barocert.passcert.identity;
+package com.barocert.passcert.login;
+
 /**
- *  본인인증 요청 정보
+ *  간편로그인 요청 정보
  *  @field receiverHP       - 수신자 휴대폰번호
  *  @field receiverName     - 수신자 성명
  *  @field receiverBirthday - 수신자 생년월일
@@ -15,7 +16,7 @@ package com.barocert.passcert.identity;
  *  @field appUseYN         - 앱사용유무
  *  @field useTssYN         - Tss 사용 여부
  */
-public class Identity {
+public class Login {
 
     private String receiverHP;
     private String receiverName;
@@ -95,7 +96,7 @@ public class Identity {
         this.token = token;
     }
 
-    public boolean isUserAgreementYN() {
+    public boolean getUserAgreementYN() {
         return this.userAgreementYN;
     }
 
@@ -127,13 +128,12 @@ public class Identity {
         this.appUseYN = appUseYN;
     }
 
-    public boolean isUseTssYN() {
+    public boolean getUseTssYN() {
         return this.useTssYN;
     }
 
     public void setUseTssYN(boolean useTssYN) {
         this.useTssYN = useTssYN;
     }
-
             
 }

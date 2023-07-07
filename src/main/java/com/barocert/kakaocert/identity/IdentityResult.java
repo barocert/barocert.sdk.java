@@ -1,5 +1,12 @@
 package com.barocert.kakaocert.identity;
 
+/**
+	 *  본인인증 검증 응답 정보
+     *  @field receiptID        - 접수아이디
+     *  @field state            - 상태
+     *  @field signedData       - 전자서명 데이터 전문
+     *  @field ci               - Connection Information
+	 */
 public class IdentityResult {
 
     private String receiptID;

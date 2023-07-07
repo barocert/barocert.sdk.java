@@ -1,7 +1,7 @@
-package com.barocert.passcert.cms;
+package com.barocert.passcert.login;
 
 /**
-	 *  출금동의 상태확인 응답 정보
+	 *  간편로그인 상태확인 응답 정보
      *  @field clientCode           - 이용기관 코드
      *  @field receiptID            - 접수 아이디
      *  @field state                - 상태
@@ -21,7 +21,7 @@ package com.barocert.passcert.cms;
      *  @field scheme               - 앱스킴
      *  @field appUseYN             - 앱사용유무
 	 */
-public class CMSStatus {
+public class LoginStatus {
 
     private String clientCode;
     private String receiptID;
@@ -39,9 +39,6 @@ public class CMSStatus {
     private boolean userAgreementYN;
     private String telcoType;
     private String deviceOSType;
-    private String originalTypeCode;
-    private String originalURL;
-    private String originalFormatCode;
     private String scheme;
     private boolean appUseYN;
 
@@ -173,30 +170,6 @@ public class CMSStatus {
         this.deviceOSType = deviceOSType;
     }
 
-    public String getOriginalTypeCode() {
-        return this.originalTypeCode;
-    }
-
-    public void setOriginalTypeCode(String originalTypeCode) {
-        this.originalTypeCode = originalTypeCode;
-    }
-
-    public String getOriginalURL() {
-        return this.originalURL;
-    }
-
-    public void setOriginalURL(String originalURL) {
-        this.originalURL = originalURL;
-    }
-
-    public String getOriginalFormatCode() {
-        return this.originalFormatCode;
-    }
-
-    public void setOriginalFormatCode(String originalFormatCode) {
-        this.originalFormatCode = originalFormatCode;
-    }
-
     public String getScheme() {
         return this.scheme;
     }
@@ -213,4 +186,5 @@ public class CMSStatus {
         this.appUseYN = appUseYN;
     }
 
+    
 }

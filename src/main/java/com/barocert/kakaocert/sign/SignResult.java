@@ -1,5 +1,12 @@
 package com.barocert.kakaocert.sign;
 
+/**
+	 *  전자서명 검증 응답 정보
+     *  @field receiptID        - 접수아이디
+     *  @field state            - 상태
+     *  @field signedData       - 전자서명값
+     *  @field ci               - Connection Information
+	 */
 public class SignResult {
 
     private String receiptID;

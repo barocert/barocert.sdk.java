@@ -36,6 +36,11 @@ import com.barocert.passcert.identity.IdentityReceipt;
 import com.barocert.passcert.identity.IdentityResult;
 import com.barocert.passcert.identity.IdentityStatus;
 import com.barocert.passcert.identity.IdentityVerify;
+import com.barocert.passcert.login.Login;
+import com.barocert.passcert.login.LoginReceipt;
+import com.barocert.passcert.login.LoginResult;
+import com.barocert.passcert.login.LoginStatus;
+import com.barocert.passcert.login.LoginVerify;
 import com.barocert.passcert.sign.Sign;
 import com.barocert.passcert.sign.SignReceipt;
 import com.barocert.passcert.sign.SignResult;
@@ -639,6 +644,61 @@ public class PasscertServiceImp implements PasscertService {
         return httpPost("/PASS/CMS/" + clientCode + "/" + receiptID, postData, CMSResult.class);
     }
 
+     // 간편로그인 요청
+    @Override
+    public LoginReceipt requestLogin(String clientCode, Login login) throws BarocertException {
+
+        // 필수 값 체크.
+        if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
+        if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
+        if (login == null) throw new BarocertException(-99999999, "간편로그인 서명요청 정보가 입력되지 않았습니다.");
+        if (isNullOrEmpty(login.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(login.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(login.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if (isNullOrEmpty(login.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (isNullOrEmpty(login.getCallCenterNum())) throw new BarocertException(-99999999, "고객센터 연락처가 입력되지 않았습니다.");
+        if (login.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
+        if (isNullOrEmpty(login.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
+
+        String postData = toJsonString(login);
+
+        return httpPost("/PASS/Login/" + clientCode, postData, LoginReceipt.class);
+    }
+
+    // 간편로그인 상태확인
+    @Override
+    public LoginStatus getLoginStatus(String clientCode, String receiptID) throws BarocertException {
+
+        // 필수 값 체크.
+        if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
+        if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
+        if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+        if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
+        if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
+
+        return httpGet("/PASS/Login/" + clientCode + "/" + receiptID, LoginStatus.class);
+    }
+
+    // 간편로그인 검증
+    @Override
+    public LoginResult verifyLogin(String clientCode, String receiptID, LoginVerify loginVerify) throws BarocertException {
+
+        // 필수 값 체크.
+        if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
+        if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
+        if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+        if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
+        if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
+        if (loginVerify == null) throw new BarocertException(-99999999, "간편로그인 검증 정보가 입력되지 않았습니다.");
+
+        String postData = toJsonString(loginVerify);
+
+        return httpPost("/PASS/Login/" + clientCode + "/" + receiptID, postData, LoginResult.class);
+    }
+    
     private boolean isNullOrEmpty(String string) {
         return string == null || string.trim().isEmpty();
     }

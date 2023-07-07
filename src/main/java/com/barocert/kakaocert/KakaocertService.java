@@ -25,12 +25,13 @@ public interface KakaocertService {
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드
-	 * @param requestIdentity
+	 * @param identity
 	 * 			본인인증 요청정보
 	 * @return ResponseVerify
+	 * 			본인인증 요청 응답정보
 	 * @throws BarocertException
 	 */
-	public IdentityReceipt requestIdentity(String clientCode, Identity requestIdentity) throws BarocertException;
+	public IdentityReceipt requestIdentity(String clientCode, Identity identity) throws BarocertException;
 	
 	/**
 	 * 본인인증 상태확인
@@ -40,6 +41,7 @@ public interface KakaocertService {
 	 * @param receiptID
 	 * 			본인인증 접수아이디
 	 * @return ResponseIdentityStatus
+	 * 			본인인증 상태확인 응답정보
 	 * @throws BarocertException
 	 */
 	public IdentityStatus getIdentityStatus(String clientCode, String receiptID) throws BarocertException;
@@ -51,7 +53,8 @@ public interface KakaocertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			본인인증 접수아이디
-	 * @return ResponseVerifyIdentity
+	 * @return IdentityResult
+	 * 			본인인증 서명검증 응답정보
 	 * @throws BarocertException
 	 */
 	public IdentityResult verifyIdentity(String clientCode, String receiptID) throws BarocertException;
@@ -61,12 +64,13 @@ public interface KakaocertService {
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드
-	 * @param requestSign
+	 * @param sign
 	 * 			전자서명 요청정보
 	 * @return ResponseSign
+	 * 			전자서명 요청 응답정보
 	 * @throws BarocertException
 	 */
-	public SignReceipt requestSign(String clientCode, Sign requestSign) throws BarocertException;
+	public SignReceipt requestSign(String clientCode, Sign sign) throws BarocertException;
 	
 	/**
 	 * 전자서명 상태확인(단건)
@@ -76,6 +80,7 @@ public interface KakaocertService {
 	 * @param receiptID
 	 * 			전자서명 접수아이디
 	 * @return ResponseSignStatus
+	 * 			전자서명 상태확인 응답정보
 	 * @throws BarocertException
 	 */
 	public SignStatus getSignStatus(String clientCode, String receiptID) throws BarocertException;
@@ -87,7 +92,8 @@ public interface KakaocertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			전자서명 접수아이디
-	 * @return ResponseVerifySign
+	 * @return SignResult
+	 * 			전자서명 서명검증 응답정보
 	 * @throws BarocertException
 	 */
 	public SignResult verifySign(String clientCode, String receiptID) throws BarocertException;
@@ -97,12 +103,13 @@ public interface KakaocertService {
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드
-	 * @param requestMultiSign	
+	 * @param multiSign	
 	 * 			전자서명 요청정보
-	 * @return ResponseMultiSign
+	 * @return MultiSignReceipt
+	 * 			전자서명 요청 응답정보
 	 * @throws BarocertException
 	 */
-	public MultiSignReceipt requestMultiSign(String clientCode, MultiSign requestMultiSign) throws BarocertException;
+	public MultiSignReceipt requestMultiSign(String clientCode, MultiSign multiSign) throws BarocertException;
 	
 	/**
 	 * 전자서명 상태확인(복수)
@@ -111,7 +118,8 @@ public interface KakaocertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			전자서명 접수아이디
-	 * @return ResponseMultiSignStatus
+	 * @return MultiSignStatus
+	 * 			전자서명 상태확인 응답정보
 	 * @throws BarocertException
 	 */
 	public MultiSignStatus getMultiSignStatus(String clientCode, String receiptID) throws BarocertException;
@@ -123,7 +131,8 @@ public interface KakaocertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			전자서명 접수아이디
-	 * @return ResponseVerifyMultiSign
+	 * @return MultiSignResult
+	 * 			전자서명 서명검증 응답정보
 	 * @throws BarocertException
 	 */
 	public MultiSignResult verifyMultiSign(String clientCode, String receiptID) throws BarocertException;
@@ -133,12 +142,13 @@ public interface KakaocertService {
 	 * 
 	 * @param clientCode
 	 * 			이용기관코드
-	 * @param requestCMS
+	 * @param cms
 	 * 			출금동의 요청정보
-	 * @return ResponseCMS
+	 * @return CMSReceipt
+	 * 			출금동의 요청 응답정보
 	 * @throws BarocertException
 	 */
-	public CMSReceipt requestCMS(String clientCode, CMS requestCMS) throws BarocertException;
+	public CMSReceipt requestCMS(String clientCode, CMS cms) throws BarocertException;
 	
 	/**
 	 * 출금동의 상태확인
@@ -147,7 +157,8 @@ public interface KakaocertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			출금동의 접수아이디
-	 * @return ResponseCMSStatus
+	 * @return CMSStatus
+	 * 			출금동의 상태확인 응답정보
 	 * @throws BarocertException
 	 */
 	public CMSStatus getCMSStatus(String clientCode, String receiptID) throws BarocertException;
@@ -159,7 +170,8 @@ public interface KakaocertService {
 	 * 			이용기관코드
 	 * @param receiptID
 	 * 			출금동의 접수아이디
-	 * @return ResponseVerifyCMS
+	 * @return CMSResult
+	 * 			출금동의 서명검증 응답정보
 	 * @throws BarocertException
 	 */
 	public CMSResult verifyCMS(String clientCode, String receiptID) throws BarocertException;

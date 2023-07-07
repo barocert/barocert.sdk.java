@@ -1,10 +1,9 @@
-package com.barocert.passcert.sign;
+package com.barocert.passcert.login;
 
 /**
-	 *  전자서명 검증 응답 정보
+	 *  간편로그인 검증 응답 정보
      *  @field receiptID        - 접수아이디
      *  @field state            - 상태
-     *  @field receiverHP       - 수신자 휴대폰번호
      *  @field receiverName     - 수신자 성명
      *  @field receiverBirthday - 수신자 생년월일
      *  @field receiverGender   - 수신자 성별
@@ -12,11 +11,10 @@ package com.barocert.passcert.sign;
      *  @field signedData       - 전자서명 데이터 전문
      *  @field ci               - Connection Information
 	 */
-public class SignResult {
+public class LoginResult {
 
     private String receiptID;
     private int state;
-    private String receiverHP;
     private String receiverName;
     private String receiverBirthday;
     private String receiverGender;
@@ -38,14 +36,6 @@ public class SignResult {
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public String getReceiverHP() {
-        return this.receiverHP;
-    }
-
-    public void setReceiverHP(String receiverHP) {
-        this.receiverHP = receiverHP;
     }
 
     public String getReceiverName() {
@@ -95,5 +85,6 @@ public class SignResult {
     public void setCi(String ci) {
         this.ci = ci;
     }
+
     
 }

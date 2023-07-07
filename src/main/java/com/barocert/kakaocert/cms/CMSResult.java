@@ -1,5 +1,12 @@
 package com.barocert.kakaocert.cms;
 
+/**
+	 *  출금동의 검증 응답 정보
+     *  @field receiptID        - 접수아이디
+     *  @field state            - 상태
+     *  @field signedData       - 전자서명 데이터 전문
+     *  @field ci               - Connection Information
+	 */
 public class CMSResult {
 
     private String receiptID;

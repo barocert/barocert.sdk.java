@@ -1,5 +1,26 @@
 package com.barocert.passcert.identity;
 
+/**
+	 *  본인인증 상태확인 응답 정보
+     *  @field clientCode           - 이용기관 코드
+     *  @field receiptID            - 접수 아이디
+     *  @field state                - 상태
+     *  @field expireIn             - 요청 만료시간
+     *  @field callCenterName       - 이용기관명
+     *  @field callCenterNum        - 이용기관 연락처
+     *  @field reqTitle             - 메시지 제목
+     *  @field reqMessage           - 메시지 내용
+     *  @field requestDT            - 서명요청일시
+     *  @field completeDT           - 서명완료일시
+     *  @field expireDT             - 서명만료일시
+     *  @field rejectDT             - 서명거절일시
+     *  @field tokenType            - 원문 유형
+     *  @field userAgreementYN      - 사용자동의 필요 여부
+     *  @field telcoType            - 통신사 유형
+     *  @field deviceOSType         - 모바일장비 유형
+     *  @field scheme               - 앱스킴
+     *  @field appUseYN             - 앱사용유무
+	 */
 public class IdentityStatus {
 
     private String clientCode;
@@ -16,12 +37,8 @@ public class IdentityStatus {
     private String rejectDT;
     private String tokenType;
     private boolean userAgreementYN;
-    private boolean receiverInfoYN;
     private String telcoType;
     private String deviceOSType;
-    private String originalTypeCode;
-    private String originalURL;
-    private String originalFormatCode;
     private String scheme;
     private boolean appUseYN;
 
@@ -137,14 +154,6 @@ public class IdentityStatus {
         this.userAgreementYN = userAgreementYN;
     }
 
-    public boolean getReceiverInfoYN() {
-        return this.receiverInfoYN;
-    }
-
-    public void setReceiverInfoYN(boolean receiverInfoYN) {
-        this.receiverInfoYN = receiverInfoYN;
-    }
-
     public String getTelcoType() {
         return this.telcoType;
     }
@@ -159,30 +168,6 @@ public class IdentityStatus {
 
     public void setDeviceOSType(String deviceOSType) {
         this.deviceOSType = deviceOSType;
-    }
-
-    public String getOriginalTypeCode() {
-        return this.originalTypeCode;
-    }
-
-    public void setOriginalTypeCode(String originalTypeCode) {
-        this.originalTypeCode = originalTypeCode;
-    }
-
-    public String getOriginalURL() {
-        return this.originalURL;
-    }
-
-    public void setOriginalURL(String originalURL) {
-        this.originalURL = originalURL;
-    }
-
-    public String getOriginalFormatCode() {
-        return this.originalFormatCode;
-    }
-
-    public void setOriginalFormatCode(String originalFormatCode) {
-        this.originalFormatCode = originalFormatCode;
     }
 
     public String getScheme() {
