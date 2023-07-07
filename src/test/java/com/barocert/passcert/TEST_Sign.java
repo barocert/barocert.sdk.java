@@ -28,6 +28,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 서명요청
+    // https://developers.barocert.com/reference/pass/java/sign/api#RequestSign
     @Test
     public void TEST_RequestSign() throws BarocertException {
         try {
@@ -95,6 +96,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 상태확인
+    // https://developers.barocert.com/reference/pass/java/sign/api#GetSignStatus
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
@@ -129,6 +131,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 서명검증
+    // https://developers.barocert.com/reference/pass/java/sign/api#VerifySign
     @Test
     public void TEST_VerifySign() throws BarocertException {
         try {

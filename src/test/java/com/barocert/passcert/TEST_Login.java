@@ -27,6 +27,7 @@ public class TEST_Login {
     }
 
     // 간편로그인 요청
+    // https://developers.barocert.com/reference/pass/java/login/api#RequestLogin
     @Test
     public void TEST_RequestLogin() throws BarocertException {
         try {
@@ -78,6 +79,7 @@ public class TEST_Login {
     }
 
     // 간편로그인 상태확인
+    // https://developers.barocert.com/reference/pass/java/login/api#GetLoginStatus
     @Test
     public void TEST_GetLoginStatus() throws BarocertException {
         try {                                                                                               
@@ -108,6 +110,7 @@ public class TEST_Login {
     }
 
     // 간편로그인 검증
+    // https://developers.barocert.com/reference/pass/java/login/api#VerifyLogin
     @Test
     public void TEST_VerifyLogin() throws BarocertException {
         try {

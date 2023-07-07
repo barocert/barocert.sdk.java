@@ -31,6 +31,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 서명요청(단건)
+    // https://developers.barocert.com/reference/kakao/java/sign/api-single#RequestSign
     @Test
     public void TEST_RequestSign() throws BarocertException {
         try {
@@ -72,6 +73,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 상태확인(단건)
+    // https://developers.barocert.com/reference/kakao/java/sign/api-single#GetSignStatus
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
@@ -101,6 +103,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 서명검증(단건)
+    // https://developers.barocert.com/reference/kakao/java/sign/api-single#VerifySign
     @Test
     public void TEST_VerifySign() throws BarocertException {
         try {
@@ -119,6 +122,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 서명요청(복수)
+    // https://developers.barocert.com/reference/kakao/java/sign/api-multi#RequestMultiSign
     @Test
     public void TEST_RequestMultiSign() throws BarocertException {
         try {
@@ -197,6 +201,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 상태확인(복수)
+    // https://developers.barocert.com/reference/kakao/java/sign/api-multi#GetMultiSignStatus
     @Test
     public void TEST_GetMultiSignStatus() throws BarocertException {
         try {
@@ -226,6 +231,7 @@ public class TEST_Sign {
     }
 
     // 전자서명 서명검증(복수)
+    // https://developers.barocert.com/reference/kakao/java/sign/api-multi#VerifyMultiSign
     @Test
     public void TEST_VerifyMultiSign() throws BarocertException {
         try {

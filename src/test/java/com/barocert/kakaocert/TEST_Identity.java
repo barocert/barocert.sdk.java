@@ -26,6 +26,7 @@ public class TEST_Identity {
     }
 
     // 본인인증 요청
+    // https://developers.barocert.com/reference/kakao/java/identity/api#RequestIdentity
     @Test
     public void TEST_RequestIdentity() throws BarocertException {
         try {
@@ -64,6 +65,7 @@ public class TEST_Identity {
     }
 
     // 본인인증 상태확인
+    // https://developers.barocert.com/reference/kakao/java/identity/api#GetIdentityStatus
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {
@@ -92,6 +94,7 @@ public class TEST_Identity {
     }
 
     // 본인인증 서명검증
+    // https://developers.barocert.com/reference/kakao/java/identity/api#VerifyIdentity
     @Test
     public void TEST_VerifyIdentity() throws BarocertException {
         try {

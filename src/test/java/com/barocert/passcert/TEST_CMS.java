@@ -27,6 +27,7 @@ public class TEST_CMS {
     }
 
     // 출금동의 요청
+    // https://developers.barocert.com/reference/pass/java/cms/api#RequestCMS
     @Test
     public void TEST_RequestCMS() {
         try {
@@ -88,6 +89,7 @@ public class TEST_CMS {
     }
 
     // 출금동의 상태확인
+    // https://developers.barocert.com/reference/pass/java/cms/api#GetCMSStatus
     @Test
     public void TEST_GetCMSStatus() throws BarocertException {
         try {
@@ -118,6 +120,7 @@ public class TEST_CMS {
     }
 
     // 출금동의 검증
+    // https://developers.barocert.com/reference/pass/java/cms/api#VerifyCMS
     @Test
     public void TEST_VerifyCMS() throws BarocertException {
         try {
