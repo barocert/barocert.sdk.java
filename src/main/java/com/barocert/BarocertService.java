@@ -37,9 +37,9 @@ public abstract class BarocertService {
 
     private static final String SERVICE_ID = "BAROCERT";
 
-    private String AUTH_STATIC_URL = "https://auth.linkhub.co.kr";
-    private String SERVICEURL_STATIC = "https://static-barocert.linkhub.co.kr";
-    private String SERVICEURL = "https://barocert.linkhub.co.kr";
+    private String auth_static_URL = "https://auth.linkhub.co.kr";
+    private String serviceURL_static = "https://static-barocert.linkhub.co.kr";
+    private String serviceURL = "https://barocert.linkhub.co.kr";
 
     private static final String APIVERSION = "2.1"; // sha256
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
@@ -61,11 +61,11 @@ public abstract class BarocertService {
     private Gson _gsonParser = new Gson();
     private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
 
-    public String getServiceURL() {
+    public String getURL() {
         if (useStaticIP)
-            return SERVICEURL_STATIC;
+            return serviceURL_static;
         else
-            return SERVICEURL;
+            return serviceURL;
     }
 
     private TokenBuilder getTokenbuilder() {
@@ -79,7 +79,7 @@ public abstract class BarocertService {
 
             // AuthURL 이 null 이고, useStaticIP 가 true 이면, ServiceURL 이 Auth_Static_URL 적용.
             if (useStaticIP)
-                tokenBuilder.setServiceURL(AUTH_STATIC_URL);
+                tokenBuilder.setServiceURL(auth_static_URL);
 
             if (proxyIP != null && proxyPort != null) { 
                 tokenBuilder.setProxyIP(proxyIP);
@@ -169,7 +169,7 @@ public abstract class BarocertService {
     protected <T> T httpGet(String url, Class<T> clazz) throws BarocertException {
         HttpURLConnection httpURLConnection;
         try {
-            URL uri = new URL(getServiceURL() + url);
+            URL uri = new URL(getURL() + url);
 
             if (proxyIP != null && proxyPort != null) { // 프록시 정보가 있다면,
                 // 프록시 객체를 통한 연결설정.
@@ -205,7 +205,7 @@ public abstract class BarocertService {
         setupEncryptor();
         HttpURLConnection httpURLConnection;
         try {
-            URL uri = new URL(getServiceURL() + url);
+            URL uri = new URL(getURL() + url);
 
             // 프록시 설정
             if (proxyIP != null && proxyPort != null) {
@@ -456,28 +456,28 @@ public abstract class BarocertService {
         return encryptor.enc(plainText);
     }
 
-    public String getAUTH_STATIC_URL() {
-        return this.AUTH_STATIC_URL;
+    public String getAuth_static_URL() {
+        return this.auth_static_URL;
     }
 
-    public void setAUTH_STATIC_URL(String AUTH_STATIC_URL) {
-        this.AUTH_STATIC_URL = AUTH_STATIC_URL;
+    public void setAuth_static_URL(String AUTH_STATIC_URL) {
+        this.auth_static_URL = AUTH_STATIC_URL;
     }
 
-    public String getSERVICEURL_STATIC() {
-        return this.SERVICEURL_STATIC;
+    public String getServiceURL_static() {
+        return this.serviceURL_static;
     }
 
-    public void setSERVICEURL_STATIC(String SERVICEURL_STATIC) {
-        this.SERVICEURL_STATIC = SERVICEURL_STATIC;
+    public void setServiceURL_static(String SERVICEURL_STATIC) {
+        this.serviceURL_static = SERVICEURL_STATIC;
     }
 
-    public String getSERVICEURL() {
-        return this.SERVICEURL;
+    public String getServiceURL() {
+        return this.serviceURL;
     }
 
-    public void setSERVICEURL(String SERVICEURL) {
-        this.SERVICEURL = SERVICEURL;
+    public void setServiceURL(String SERVICEURL) {
+        this.serviceURL = SERVICEURL;
     }
     
     public void setIPRestrictOnOff(boolean isIPRestrictOnOff) {
