@@ -11,6 +11,7 @@ public class CMSStatus {
     private String reqTitle;
     private String authCategory;
     private String returnURL;
+    private String tokenType;
     private String requestDT;
     private String viewDT;
     private String completeDT;
@@ -89,6 +90,14 @@ public class CMSStatus {
 
     public void setReturnURL(String returnURL) {
         this.returnURL = returnURL;
+    }
+
+    public String getTokenType() {
+        return this.tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
     }
 
     public String getRequestDT() {

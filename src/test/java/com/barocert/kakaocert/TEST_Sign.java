@@ -88,6 +88,7 @@ public class TEST_Sign {
             System.out.println("ReqTitle : " + result.getReqTitle());
             System.out.println("AuthCategory : " + result.getAuthCategory());
             System.out.println("ReturnURL : " + result.getReturnURL());
+            System.out.println("tokenType : " + result.getTokenType());
             System.out.println("RequestDT : " + result.getRequestDT());
             System.out.println("ViewDT : " + result.getViewDT());
             System.out.println("CompleteDT : " + result.getCompleteDT());
@@ -215,6 +216,7 @@ public class TEST_Sign {
             System.out.println("ReqTitle : " + result.getReqTitle());
             System.out.println("AuthCategory : " + result.getAuthCategory());
             System.out.println("ReturnURL : " + result.getReturnURL());
+            System.out.println("tokenType : " + result.getTokenType());
             System.out.println("RequestDT : " + result.getRequestDT());
             System.out.println("ViewDT : " + result.getViewDT());
             System.out.println("CompleteDT : " + result.getCompleteDT());
