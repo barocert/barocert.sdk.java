@@ -1,26 +1,5 @@
 package com.barocert.passcert.sign;
 
-/**
- *  전자서명 요청 정보
- *  @field receiverHP       - 수신자 휴대폰번호
- *  @field receiverName     - 수신자 성명
- *  @field receiverBirthday - 수신자 생년월일
- *  @field reqTitle         - 메시지 제목
- *  @field reqMessage       - 메시지 내용
- *  @field callCenterNum    - 고객센터 연락처
- *  @field expireIn         - 요청 만료시간
- *  @field token            - 원문
- *  @field tokenType        - 원문 유형
- *  @field userAgreementYN  - 사용자동의 필요 여부
- *  @field receiverInfoYN   - 사용자정보 포함 여부 
- *  @field originalTypeCode - 원본유형코드
- *  @field originalURL      - 원본조회URL
- *  @field originalFormatCode - 원본형태코드
- *  @field telcoType        - 통신사 유형
- *  @field deviceOSType     - 모바일장비 유형
- *  @field appUseYN         - 앱사용유무
- *  @field useTssYN         - Tss 사용 여부
- */
 public class Sign {
 
     private String receiverHP;
@@ -114,7 +93,7 @@ public class Sign {
         this.tokenType = tokenType;
     }
 
-    public boolean isUserAgreementYN() {
+    public boolean getUserAgreementYN() {
         return this.userAgreementYN;
     }
 
@@ -122,7 +101,7 @@ public class Sign {
         this.userAgreementYN = userAgreementYN;
     }
 
-    public boolean isReceiverInfoYN() {
+    public boolean getReceiverInfoYN() {
         return this.receiverInfoYN;
     }
 
@@ -170,7 +149,7 @@ public class Sign {
         this.deviceOSType = deviceOSType;
     }
 
-    public boolean isAppUseYN() {
+    public boolean getAppUseYN() {
         return this.appUseYN;
     }
 
@@ -178,7 +157,7 @@ public class Sign {
         this.appUseYN = appUseYN;
     }
 
-    public boolean isUseTssYN() {
+    public boolean getUseTssYN() {
         return this.useTssYN;
     }
 

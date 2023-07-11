@@ -1,25 +1,5 @@
 package com.barocert.kakaocert.cms;
 
-/**
-	 *  출금동의 상태확인 응답 정보
-     *  @field clientCode           - 이용기관 코드
-     *  @field receiptID            - 접수 아이디
-     *  @field state                - 상태
-     *  @field expireIn             - 요청 만료시간
-     *  @field callCenterName       - 이용기관명
-     *  @field callCenterNum        - 이용기관 연락처
-     *  @field reqTitle             - 메시지 제목
-     *  @field authCategory         - 인증 분류
-     *  @field tokenType            - 원문 유형
-     *  @field requestDT            - 서명요청일시
-     *  @field viewDT               - 서명요청일시
-     *  @field completeDT           - 서명완료일시
-     *  @field expireDT             - 서명만료일시
-     *  @field verifyDT             - 서명검증일시
-     *  @field scheme               - 앱스킴
-     *  @field appUseYN             - 앱사용유무
-     *  @field returnURL            - 복귀 URL
-	 */
 public class CMSStatus {
 
     private String receiptID;
@@ -31,7 +11,6 @@ public class CMSStatus {
     private String reqTitle;
     private String authCategory;
     private String returnURL;
-    private String tokenType;
     private String requestDT;
     private String viewDT;
     private String completeDT;
@@ -110,14 +89,6 @@ public class CMSStatus {
 
     public void setReturnURL(String returnURL) {
         this.returnURL = returnURL;
-    }
-
-    public String getTokenType() {
-        return tokenType;
-    }
-
-    public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
     }
 
     public String getRequestDT() {

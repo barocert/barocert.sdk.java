@@ -27,7 +27,6 @@ public class TEST_Login {
     }
 
     // 간편로그인 요청
-    // https://developers.barocert.com/reference/pass/java/login/api#RequestLogin
     @Test
     public void TEST_RequestLogin() throws BarocertException {
         try {
@@ -48,7 +47,7 @@ public class TEST_Login {
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
-            request.setExpireIn(100);
+            request.setExpireIn(1000);
             // 서명 원문 - 최대 2,800자 까지 입력가능
             request.setToken(passcertService.encrypt("간편로그인 서명 원문"));
             
@@ -66,7 +65,7 @@ public class TEST_Login {
 
             request.setUseTssYN(false);
 
-            LoginReceipt result = passcertService.requestLogin("023060000044", request);
+            LoginReceipt result = passcertService.requestLogin("023040000001", request);
 
             // 접수아이디, 앱스킴, 앱다운로드URL 
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -79,11 +78,10 @@ public class TEST_Login {
     }
 
     // 간편로그인 상태확인
-    // https://developers.barocert.com/reference/pass/java/login/api#GetLoginStatus
     @Test
     public void TEST_GetLoginStatus() throws BarocertException {
         try {                                                                                               
-            LoginStatus result = passcertService.getLoginStatus("023030000004", "02306300230300000040000000000028");
+            LoginStatus result = passcertService.getLoginStatus("023040000001", "02307100230400000010000000000009");
 
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -110,7 +108,6 @@ public class TEST_Login {
     }
 
     // 간편로그인 검증
-    // https://developers.barocert.com/reference/pass/java/login/api#VerifyLogin
     @Test
     public void TEST_VerifyLogin() throws BarocertException {
         try {
@@ -121,7 +118,7 @@ public class TEST_Login {
             // 검증 요청 성명 - 최대 80자
             verify.setReceiverName(passcertService.encrypt("홍길동")); 
             
-            LoginResult result = passcertService.verifyLogin("023030000004", "02306300230300000040000000000028", verify);
+            LoginResult result = passcertService.verifyLogin("023040000001", "02307100230400000010000000000009", verify);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

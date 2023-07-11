@@ -1,11 +1,5 @@
 package com.barocert.passcert.identity;
 
-/**
- *  본인인증 요청 응답 정보
- *  @field receiptId        - 접수아이디
- *  @field scheme           - 앱스킴
- *  @field marketUrl        - 앱다운로드 URL
- */
 public class IdentityReceipt {
 
     private String receiptId;

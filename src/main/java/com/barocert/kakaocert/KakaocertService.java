@@ -177,10 +177,12 @@ public interface KakaocertService {
 	public CMSResult verifyCMS(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
-     * AES256/GCM/NoPadding (이상 1.8) or AES/CBC/PKCS5Padding(미만 1.8) 암호화
+     * AES256/GCM/NoPadding(java 1.8 이상) or AES/CBC/PKCS5Padding(java 1.8 미만) 암호화
      * 
      * @param plainText
+	 * 			평문
      * @return String
+	 * 			암호문
      * @throws BarocertException
      */
 	public String encrypt(String plainText) throws BarocertException;

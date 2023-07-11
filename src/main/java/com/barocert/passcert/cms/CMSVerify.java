@@ -1,10 +1,5 @@
 package com.barocert.passcert.cms;
 
-/**
-	 *  출금동의 검증 요청 정보
-     *  @field receiverHP           - 수신자 휴대폰번호
-     *  @field receiverName         - 수신자 성명
-	 */
 public class CMSVerify {
 
     private String receiverHP;

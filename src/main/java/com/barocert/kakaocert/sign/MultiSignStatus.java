@@ -1,26 +1,5 @@
 package com.barocert.kakaocert.sign;
 
-/**
-	 *  전자서명 상태확인 응답 정보
-     *  @field receiptID            - 접수 아이디
-     *  @field clientCode           - 이용기관 코드
-     *  @field state                - 상태
-     *  @field expireIn             - 요청 만료시간
-     *  @field callCenterName       - 이용기관명
-     *  @field callCenterNum        - 이용기관 연락처
-     *  @field reqTitle             - 메시지 제목
-     *  @field authCategory         - 인증 분류
-     *  @field tokenType            - 원문 유형
-     *  @field requestDT            - 서명요청일시
-     *  @field viewDT               - 서명조회일시
-     *  @field completeDT           - 서명완료일시
-     *  @field expireDT             - 서명만료일시
-     *  @field verifyDT             - 서명검증일시
-     *  @field scheme               - 앱스킴
-     *  @field appUseYN             - 앱사용유무
-     *  @field ci                   - Connection Information
-     *  
-	 */
 public class MultiSignStatus {
 
     private String receiptID;
@@ -32,7 +11,6 @@ public class MultiSignStatus {
     private String reqTitle;
     private String authCategory;
     private String returnURL;
-    private String tokenType;
     private String requestDT;
     private String viewDT;
     private String completeDT;
@@ -40,7 +18,6 @@ public class MultiSignStatus {
     private String verifyDT;
     private String scheme;
     private boolean appUseYN;
-    private String ci;
 
     public String getReceiptID() {
         return receiptID;
@@ -114,14 +91,6 @@ public class MultiSignStatus {
         this.returnURL = returnURL;
     }
 
-    public String getTokenType() {
-        return tokenType;
-    }
-
-    public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
-    }
-
     public String getRequestDT() {
         return requestDT;
     }
@@ -176,14 +145,6 @@ public class MultiSignStatus {
 
     public void setAppUseYN(boolean appUseYN) {
         this.appUseYN = appUseYN;
-    }
-
-    public String getCi() {
-        return ci;
-    }
-
-    public void setCi(String ci) {
-        this.ci = ci;
     }
 
 }

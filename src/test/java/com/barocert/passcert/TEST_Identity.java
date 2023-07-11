@@ -27,7 +27,6 @@ public class TEST_Identity {
     }
 
     // 본인인증 요청
-    // https://developers.barocert.com/reference/pass/java/identity/api#RequestIdentity
     @Test
     public void TEST_RequestIdentity() throws BarocertException {
         try {
@@ -66,7 +65,7 @@ public class TEST_Identity {
 
             request.setUseTssYN(false);
 
-            IdentityReceipt result = passcertService.requestIdentity("023030000004", request);
+            IdentityReceipt result = passcertService.requestIdentity("023040000001", request);
 
             // 접수아이디, 앱스킴, 앱다운로드URL 
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -79,11 +78,10 @@ public class TEST_Identity {
     }
 
     // 본인인증 상태확인
-    // https://developers.barocert.com/reference/pass/java/identity/api#GetIdentityStatus
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {                                                                                               
-            IdentityStatus result = passcertService.getIdentityStatus("023030000004", "02306300230300000040000000000002");
+            IdentityStatus result = passcertService.getIdentityStatus("023040000001", "02307100230400000010000000000004");
 
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -110,7 +108,6 @@ public class TEST_Identity {
     }
 
     // 본인인증 서명검증
-    // https://developers.barocert.com/reference/pass/java/identity/api#VerifyIdentity
     @Test
     public void TEST_VerifyIdentity() throws BarocertException {
         try {
@@ -121,7 +118,7 @@ public class TEST_Identity {
             // 서명검증 요청 성명 - 최대 80자
             request.setReceiverName(passcertService.encrypt("홍길동")); 
             
-            IdentityResult result = passcertService.verifyIdentity("023030000004", "02306300230300000040000000000028", request);
+            IdentityResult result = passcertService.verifyIdentity("023040000001", "02307100230400000010000000000004", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

@@ -187,7 +187,7 @@ public interface PasscertService {
 	 * @throws BarocertException
 	 */
 	public LoginResult verifyLogin(String clientCode, String receiptID, LoginVerify loginVerify) throws BarocertException;
-
+	
 	/**
      * AES256/GCM/NoPadding(java 1.8 이상) or AES/CBC/PKCS5Padding(java 1.8 미만) 암호화
      * 

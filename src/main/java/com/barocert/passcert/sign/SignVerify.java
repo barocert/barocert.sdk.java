@@ -1,10 +1,5 @@
 package com.barocert.passcert.sign;
 
-/**
-	 *  전자서명 검증 요청 정보
-     *  @field receiverHP           - 수신자 휴대폰번호
-     *  @field receiverName         - 수신자 성명
-	 */
 public class SignVerify {
 
     private String receiverHP;
@@ -25,6 +20,5 @@ public class SignVerify {
     public void setReceiverName(String receiverName) {
         this.receiverName = receiverName;
     }
-  
-            
+    
 }

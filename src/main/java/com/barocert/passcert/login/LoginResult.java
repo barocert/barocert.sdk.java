@@ -1,16 +1,5 @@
 package com.barocert.passcert.login;
 
-/**
-	 *  간편로그인 검증 응답 정보
-     *  @field receiptID        - 접수아이디
-     *  @field state            - 상태
-     *  @field receiverName     - 수신자 성명
-     *  @field receiverBirthday - 수신자 생년월일
-     *  @field receiverGender   - 수신자 성별
-     *  @field telcoType        - 통신사 유형
-     *  @field signedData       - 전자서명 데이터 전문
-     *  @field ci               - Connection Information
-	 */
 public class LoginResult {
 
     private String receiptID;

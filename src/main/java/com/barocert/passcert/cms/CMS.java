@@ -1,25 +1,5 @@
 package com.barocert.passcert.cms;
 
-/**
- *  출금동의 요청 정보
- *  @field receiverHP       - 수신자 휴대폰번호
- *  @field receiverName     - 수신자 성명
- *  @field receiverBirthday - 수신자 생년월일
- *  @field reqTitle         - 메시지 제목
- *  @field reqMessage       - 메시지 내용
- *  @field callCenterNum    - 고객센터 연락처
- *  @field expireIn         - 요청 만료시간
- *  @field userAgreementYN  - 사용자동의 필요 여부
- *  @field bankName  		- 출금은행명
- *  @field bankAccountNum  	- 출금계좌번호
- *  @field bankAccountName  - 출금계좌 예금주명
- *  @field bankWithdraw     - 출금액
- *  @field bankServiceType  - 서비스종류
- *  @field telcoType        - 통신사 유형
- *  @field deviceOSType     - 모바일장비 유형
- *  @field appUseYN         - 앱사용유무
- *  @field useTssYN         - Tss 사용 여부
- */
 public class CMS {
 
 	private String receiverHP;
@@ -66,8 +46,6 @@ public class CMS {
 	public void setOriginalTypeCode(String originalTypeCode) {
 		this.originalTypeCode = originalTypeCode;
 	}
-
-
 
 	public String getReceiverHP() {
 		return this.receiverHP;
@@ -125,7 +103,7 @@ public class CMS {
 		this.expireIn = expireIn;
 	}
 
-	public boolean isUserAgreementYN() {
+	public boolean getUserAgreementYN() {
 		return this.userAgreementYN;
 	}
 
@@ -189,7 +167,7 @@ public class CMS {
 		this.deviceOSType = deviceOSType;
 	}
 
-	public boolean isAppUseYN() {
+	public boolean getAppUseYN() {
 		return this.appUseYN;
 	}
 
@@ -197,7 +175,7 @@ public class CMS {
 		this.appUseYN = appUseYN;
 	}
 
-	public boolean isUseTssYN() {
+	public boolean getUseTssYN() {
 		return this.useTssYN;
 	}
 

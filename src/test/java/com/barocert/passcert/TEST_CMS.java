@@ -27,7 +27,6 @@ public class TEST_CMS {
     }
 
     // 출금동의 요청
-    // https://developers.barocert.com/reference/pass/java/cms/api#RequestCMS
     @Test
     public void TEST_RequestCMS() {
         try {
@@ -50,7 +49,7 @@ public class TEST_CMS {
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
             // 사용자 동의 필요 여부
-            request.setUserAgreementYN(false);
+            request.setUserAgreementYN(true);
 
             // 출금은행명 - 최대 100자
             request.setBankName(passcertService.encrypt("국민은행"));
@@ -76,7 +75,7 @@ public class TEST_CMS {
             
             request.setUseTssYN(false);
 
-            CMSReceipt result = passcertService.requestCMS("023030000004", request);
+            CMSReceipt result = passcertService.requestCMS("023040000001", request);
 
             // 접수아이디, 앱스킴, 앱다운로드URL 
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -89,11 +88,10 @@ public class TEST_CMS {
     }
 
     // 출금동의 상태확인
-    // https://developers.barocert.com/reference/pass/java/cms/api#GetCMSStatus
     @Test
     public void TEST_GetCMSStatus() throws BarocertException {
         try {
-            CMSStatus result = passcertService.getCMSStatus("023030000004", "02307030230300000040000000000010");
+            CMSStatus result = passcertService.getCMSStatus("023040000001", "02307100230400000010000000000006");
 
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -120,7 +118,6 @@ public class TEST_CMS {
     }
 
     // 출금동의 검증
-    // https://developers.barocert.com/reference/pass/java/cms/api#VerifyCMS
     @Test
     public void TEST_VerifyCMS() throws BarocertException {
         try {
@@ -131,7 +128,7 @@ public class TEST_CMS {
             // 검증 요청자 성명 - 최대 80자
             request.setReceiverName(passcertService.encrypt("홍길동"));
 
-            CMSResult result = passcertService.verifyCMS("023030000004", "02307030230300000040000000000010", request);
+            CMSResult result = passcertService.verifyCMS("023040000001", "02307100230400000010000000000006", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

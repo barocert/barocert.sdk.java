@@ -28,7 +28,6 @@ public class TEST_Sign {
     }
 
     // 전자서명 서명요청
-    // https://developers.barocert.com/reference/pass/java/sign/api#RequestSign
     @Test
     public void TEST_RequestSign() throws BarocertException {
         try {
@@ -49,13 +48,13 @@ public class TEST_Sign {
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
-            request.setExpireIn(100);
+            request.setExpireIn(1000);
             // 서명 원문 - 원문 2,800자 까지 입력가능
             request.setToken(passcertService.encrypt("패스써트 전자서명테스트데이터"));
             // 서명 원문 유형
             // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터, 'URL' - URL 데이터
             // 원본데이터(originalTypeCode, originalURL, originalFormatCode) 입력시 'TEXT'사용 불가
-            request.setTokenType(passcertService.encrypt("TEXT"));
+            request.setTokenType(passcertService.encrypt("URL"));
 
             // 사용자 동의 필요 여부
             request.setUserAgreementYN(true);
@@ -83,7 +82,7 @@ public class TEST_Sign {
 
             request.setUseTssYN(false);
 
-            SignReceipt result = passcertService.requestSign("023030000004", request);
+            SignReceipt result = passcertService.requestSign("023040000001", request);
 
             // 접수아이디, 앱스킴, 앱다운로드URL 
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -96,11 +95,10 @@ public class TEST_Sign {
     }
 
     // 전자서명 상태확인
-    // https://developers.barocert.com/reference/pass/java/sign/api#GetSignStatus
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
-            SignStatus result = passcertService.getSignStatus("023030000004", "02306300230300000040000000000037");
+            SignStatus result = passcertService.getSignStatus("023040000001", "02307100230400000010000000000005");
 
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -131,7 +129,6 @@ public class TEST_Sign {
     }
 
     // 전자서명 서명검증
-    // https://developers.barocert.com/reference/pass/java/sign/api#VerifySign
     @Test
     public void TEST_VerifySign() throws BarocertException {
         try {
@@ -142,7 +139,7 @@ public class TEST_Sign {
             // 검증 요청자 성명 - 최대 80자
             request.setReceiverName(passcertService.encrypt("홍길동"));
 
-            SignResult result = passcertService.verifySign("023030000004", "02306300230300000040000000000037", request);
+            SignResult result = passcertService.verifySign("023040000001", "02307100230400000010000000000005", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

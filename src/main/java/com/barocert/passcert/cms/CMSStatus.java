@@ -1,26 +1,5 @@
 package com.barocert.passcert.cms;
 
-/**
-	 *  출금동의 상태확인 응답 정보
-     *  @field clientCode           - 이용기관 코드
-     *  @field receiptID            - 접수 아이디
-     *  @field state                - 상태
-     *  @field expireIn             - 요청 만료시간
-     *  @field callCenterName       - 이용기관명
-     *  @field callCenterNum        - 이용기관 연락처
-     *  @field reqTitle             - 메시지 제목
-     *  @field reqMessage           - 메시지 내용
-     *  @field requestDT            - 서명요청일시
-     *  @field completeDT           - 서명완료일시
-     *  @field expireDT             - 서명만료일시
-     *  @field rejectDT             - 서명거절일시
-     *  @field tokenType            - 원문 유형
-     *  @field userAgreementYN      - 사용자동의 필요 여부
-     *  @field telcoType            - 통신사 유형
-     *  @field deviceOSType         - 모바일장비 유형
-     *  @field scheme               - 앱스킴
-     *  @field appUseYN             - 앱사용유무
-	 */
 public class CMSStatus {
 
     private String clientCode;

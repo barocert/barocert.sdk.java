@@ -67,7 +67,7 @@ public class TEST_CMS {
             // App to App 방식 이용시, 에러시 호출할 URL
             // request.setReturnURL("https://www.kakaocert.com");
 
-            CMSReceipt result = kakaocertService.requestCMS("023030000004", request);
+            CMSReceipt result = kakaocertService.requestCMS("023040000001", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -82,7 +82,7 @@ public class TEST_CMS {
     @Test
     public void TEST_GetCMSStatus() throws BarocertException {
         try {
-            CMSStatus result = kakaocertService.getCMSStatus("023030000004", "02304140230300000040000000000002");
+            CMSStatus result = kakaocertService.getCMSStatus("023040000001", "02307100230400000010000000000005");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -93,7 +93,6 @@ public class TEST_CMS {
             System.out.println("ReqTitle : " + result.getReqTitle());
             System.out.println("AuthCategory : " + result.getAuthCategory());
             System.out.println("ReturnURL : " + result.getReturnURL());
-            System.out.println("TokenType : " + result.getTokenType());
             System.out.println("RequestDT : " + result.getRequestDT());
             System.out.println("ViewDT : " + result.getViewDT());
             System.out.println("CompleteDT : " + result.getCompleteDT());
@@ -113,7 +112,7 @@ public class TEST_CMS {
     public void TEST_VerifyCMS() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
-            CMSResult result = kakaocertService.verifyCMS("023030000004", "02304140230300000040000000000002");
+            CMSResult result = kakaocertService.verifyCMS("023040000001", "02307100230400000010000000000005");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
