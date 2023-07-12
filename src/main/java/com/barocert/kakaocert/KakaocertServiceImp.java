@@ -3,7 +3,7 @@ package com.barocert.kakaocert;
 import java.util.Arrays;
 import java.util.List;
 import com.barocert.BarocertException;
-import com.barocert.BarocertService;
+import com.barocert.ServiceImpBase;
 import com.barocert.kakaocert.cms.CMS;
 import com.barocert.kakaocert.cms.CMSReceipt;
 import com.barocert.kakaocert.cms.CMSStatus;
@@ -22,7 +22,7 @@ import com.barocert.kakaocert.sign.SignStatus;
 import com.barocert.kakaocert.sign.MultiSignResult;
 import com.barocert.kakaocert.sign.SignResult;
 
-public class KakaocertServiceImp extends BarocertService implements KakaocertService {
+public class KakaocertServiceImp extends ServiceImpBase implements KakaocertService {
 
     @Override
     protected List<String> getScopes() {

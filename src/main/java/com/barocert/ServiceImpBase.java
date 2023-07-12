@@ -33,13 +33,15 @@ import kr.co.linkhub.auth.LinkhubException;
 import kr.co.linkhub.auth.Token;
 import kr.co.linkhub.auth.TokenBuilder;
 
-public abstract class BarocertService {
+public abstract class ServiceImpBase {
 
     private static final String SERVICE_ID = "BAROCERT";
 
-    private String auth_static_URL = "https://auth.linkhub.co.kr";
-    private String serviceURL_static = "https://static-barocert.linkhub.co.kr";
-    private String serviceURL = "https://barocert.linkhub.co.kr";
+    private static final String AUTH_STATIC_URL = "https://static-auth.linkhub.co.kr";
+    private static final String SERVICEURL_STATIC = "https://static-barocert.linkhub.co.kr";
+    private static final String SERVICEURL = "https://barocert.linkhub.co.kr";
+    private String forceServiceURL;
+    private String forceAuthURL;
 
     private static final String APIVERSION = "2.1"; // sha256
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
@@ -62,10 +64,14 @@ public abstract class BarocertService {
     private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
 
     public String getURL() {
+        // forceServiceURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 serviceURL 우선 적용.
+        if (!isNullOrEmpty(forceServiceURL))    return forceServiceURL;
+        
+        // forceServiceURL 값이 설정되지 않았다면, useStaticIP 설정에 따라 URL 적용.
         if (useStaticIP)
-            return serviceURL_static;
+            return SERVICEURL_STATIC;
         else
-            return serviceURL;
+            return SERVICEURL;
     }
 
     private TokenBuilder getTokenbuilder() {
@@ -77,9 +83,15 @@ public abstract class BarocertService {
             for (String scope : getScopes())
                 tokenBuilder.addScope(scope);
 
+            // forceAuthURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 forceAuthURL 우선 적용.
+            if (!isNullOrEmpty(forceAuthURL)) {
+                tokenBuilder.setServiceURL(forceAuthURL);
+            }
             // AuthURL 이 null 이고, useStaticIP 가 true 이면, ServiceURL 이 Auth_Static_URL 적용.
-            if (useStaticIP)
-                tokenBuilder.setServiceURL(auth_static_URL);
+            else {
+                if (useStaticIP)
+                    tokenBuilder.setServiceURL(AUTH_STATIC_URL);
+            }
 
             if (proxyIP != null && proxyPort != null) { 
                 tokenBuilder.setProxyIP(proxyIP);
@@ -446,6 +458,9 @@ public abstract class BarocertService {
         return result;
     }
     
+    private boolean isNullOrEmpty(String string) {
+        return string == null || string.trim().isEmpty();
+    }
 
     private void setupEncryptor() throws BarocertException {
         if(encryptor == null) this.encryptor = Encryptor.newInstance(_SECRETKEY);
@@ -456,30 +471,22 @@ public abstract class BarocertService {
         return encryptor.enc(plainText);
     }
 
-    public String getAuth_static_URL() {
-        return this.auth_static_URL;
+    public String getForceAuthURL() {
+        return this.forceAuthURL;
     }
 
-    public void setAuth_static_URL(String AUTH_STATIC_URL) {
-        this.auth_static_URL = AUTH_STATIC_URL;
+    public void setForceAuthURL(String forceAuthURL) {
+        this.forceAuthURL = forceAuthURL;
     }
 
-    public String getServiceURL_static() {
-        return this.serviceURL_static;
+    public String getForceServiceURL() {
+        return this.forceServiceURL;
     }
 
-    public void setServiceURL_static(String SERVICEURL_STATIC) {
-        this.serviceURL_static = SERVICEURL_STATIC;
+    public void setForceServiceURL(String setServiceURL) {
+        this.forceServiceURL = setServiceURL;
     }
 
-    public String getServiceURL() {
-        return this.serviceURL;
-    }
-
-    public void setServiceURL(String SERVICEURL) {
-        this.serviceURL = SERVICEURL;
-    }
-    
     public void setIPRestrictOnOff(boolean isIPRestrictOnOff) {
         this.isIPRestrictOnOff = isIPRestrictOnOff;
     }

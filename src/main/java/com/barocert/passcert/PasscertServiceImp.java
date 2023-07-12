@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.barocert.BarocertException;
-import com.barocert.BarocertService;
+import com.barocert.ServiceImpBase;
 import com.barocert.passcert.cms.CMS;
 import com.barocert.passcert.cms.CMSReceipt;
 import com.barocert.passcert.cms.CMSResult;
@@ -26,7 +26,7 @@ import com.barocert.passcert.sign.SignResult;
 import com.barocert.passcert.sign.SignStatus;
 import com.barocert.passcert.sign.SignVerify;
 
-public class PasscertServiceImp extends BarocertService implements PasscertService {
+public class PasscertServiceImp extends ServiceImpBase implements PasscertService {
 
     @Override
     protected List<String> getScopes() {
