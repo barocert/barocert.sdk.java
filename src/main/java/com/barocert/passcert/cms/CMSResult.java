@@ -4,10 +4,11 @@ public class CMSResult {
 
     private String receiptID;
     private int state;
+    private String receiverHP;
     private String receiverName;
     private String receiverBirthday;
     private String receiverGender;
-    private String telcoType;
+    private String receiverTelcoType;
     private String signedData;
     private String ci;
 
@@ -25,6 +26,14 @@ public class CMSResult {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public String getReceiverHP() {
+        return this.receiverHP;
+    }
+
+    public void setReceiverHP(String receiverHP) {
+        this.receiverHP = receiverHP;
     }
 
     public String getReceiverName() {
@@ -51,12 +60,12 @@ public class CMSResult {
         this.receiverGender = receiverGender;
     }
 
-    public String getTelcoType() {
-        return this.telcoType;
+    public String getReceiverTelcoType() {
+        return this.receiverTelcoType;
     }
 
-    public void setTelcoType(String telcoType) {
-        this.telcoType = telcoType;
+    public void setReceiverTelcoType(String telcoType) {
+        this.receiverTelcoType = telcoType;
     }
 
     public String getSignedData() {

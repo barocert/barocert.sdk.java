@@ -198,4 +198,15 @@ public interface PasscertService {
      * @throws BarocertException
      */
 	public String encrypt(String plainText) throws BarocertException;
+
+	/**
+     * RSA/ECB/PKCS1Padding, 
+     * 
+     * @param cipherText
+	 * 			암호문
+     * @return String
+	 * 			평문
+     * @throws BarocertException
+     */
+	public String decrypt(String cipherText) throws BarocertException;
 }

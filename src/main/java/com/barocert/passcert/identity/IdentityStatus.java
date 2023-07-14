@@ -16,6 +16,7 @@ public class IdentityStatus {
     private String rejectDT;
     private String tokenType;
     private boolean userAgreementYN;
+    private boolean receiverInfoYN;
     private String telcoType;
     private String deviceOSType;
     private String scheme;
@@ -133,6 +134,14 @@ public class IdentityStatus {
         this.userAgreementYN = userAgreementYN;
     }
 
+    public boolean getReceiverInfoYN() {
+        return this.receiverInfoYN;
+    }
+
+    public void setReceiverInfoYN(boolean receiverInfoYN) {
+        this.receiverInfoYN = receiverInfoYN;
+    }
+
     public String getTelcoType() {
         return this.telcoType;
     }
@@ -165,5 +174,4 @@ public class IdentityStatus {
         this.appUseYN = appUseYN;
     }
 
-    
 }

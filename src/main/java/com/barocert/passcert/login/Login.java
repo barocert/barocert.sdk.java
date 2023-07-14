@@ -11,6 +11,7 @@ public class Login {
     private Integer expireIn;
     private String token;
     private boolean userAgreementYN;
+    private boolean receiverInfoYN;
     private String telcoType;
     private String deviceOSType;
     private boolean appUseYN;
@@ -86,6 +87,14 @@ public class Login {
 
     public void setUserAgreementYN(boolean userAgreementYN) {
         this.userAgreementYN = userAgreementYN;
+    }
+
+    public boolean getReceiverInfoYN() {
+        return this.receiverInfoYN;
+    }
+
+    public void setReceiverInfoYN(boolean receiverInfoYN) {
+        this.receiverInfoYN = receiverInfoYN;
     }
 
     public String getTelcoType() {

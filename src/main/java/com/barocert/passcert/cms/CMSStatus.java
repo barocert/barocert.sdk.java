@@ -16,6 +16,7 @@ public class CMSStatus {
     private String rejectDT;
     private String tokenType;
     private boolean userAgreementYN;
+    private boolean receiverInfoYN;
     private String telcoType;
     private String deviceOSType;
     private String originalTypeCode;
@@ -134,6 +135,14 @@ public class CMSStatus {
 
     public void setUserAgreementYN(boolean userAgreementYN) {
         this.userAgreementYN = userAgreementYN;
+    }
+
+    public boolean getReceiverInfoYN() {
+        return this.receiverInfoYN;
+    }
+
+    public void setReceiverInfoYN(boolean receiverInfoYN) {
+        this.receiverInfoYN = receiverInfoYN;
     }
 
     public String getTelcoType() {
