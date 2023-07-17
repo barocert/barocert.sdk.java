@@ -20,9 +20,9 @@ public class Decryptor{
     public String decrypt(String cipherText, String algorithm) throws BarocertException {
         if(cipherText == null || cipherText.trim().isEmpty() ) return null;
 
-        if (algorithm.equals("RSA"))
+        if ("RSA".equals(algorithm))
             return decRSA(cipherText);
-        else if (algorithm.equals("AES"))
+        else if ("AES".equals(algorithm))
             throw new BarocertException(-99999999,"서비스 준비중인 암호화 알고리즘 입니다.");
         else
             throw new BarocertException(-99999999,"지원하지 않는 복호화 알고리즘입니다.");
