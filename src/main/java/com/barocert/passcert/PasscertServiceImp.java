@@ -81,6 +81,8 @@ public class PasscertServiceImp extends ServiceImpBase implements PasscertServic
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
         if (identityVerify == null) throw new BarocertException(-99999999, "본인인증 검증 요청 정보가 입력되지 않았습니다.");
+        if (identityVerify.getReceiverHP() == null) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (identityVerify.getReceiverName() == null) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
 
         String postData = toJsonString(identityVerify);
 
@@ -135,6 +137,8 @@ public class PasscertServiceImp extends ServiceImpBase implements PasscertServic
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
         if (signVerify == null) throw new BarocertException(-99999999, "전자서명 검증 요청 정보가 입력되지 않았습니다.");
+        if (signVerify.getReceiverHP() == null) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (signVerify.getReceiverName() == null) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
 
         String postData = toJsonString(signVerify);
 
@@ -192,6 +196,8 @@ public class PasscertServiceImp extends ServiceImpBase implements PasscertServic
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
         if (cmsVerify == null) throw new BarocertException(-99999999, "전자서명 검증 요청 정보가 입력되지 않았습니다.");
+        if (cmsVerify.getReceiverHP() == null) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (cmsVerify.getReceiverName() == null) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
 
         String postData = toJsonString(cmsVerify);
 
@@ -246,6 +252,8 @@ public class PasscertServiceImp extends ServiceImpBase implements PasscertServic
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
         if (loginVerify == null) throw new BarocertException(-99999999, "간편로그인 검증 정보가 입력되지 않았습니다.");
+        if (loginVerify.getReceiverHP() == null) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (loginVerify.getReceiverName() == null) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
 
         String postData = toJsonString(loginVerify);
 

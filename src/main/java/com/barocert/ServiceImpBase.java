@@ -486,13 +486,13 @@ public abstract class ServiceImpBase {
     public String decrypt(String cipherText) throws BarocertException {
         if(cipherText == null || cipherText.trim().isEmpty() ) return null;
         setupDecryptor();
-        return decryptor.decrypt(cipherText);
+        return decryptor.dec(cipherText);
     }
 
     public String decrypt(String cipherText, String algorithm) throws BarocertException {
         if(cipherText == null || cipherText.trim().isEmpty() ) return null;
         setupDecryptor();
-        return decryptor.decrypt(cipherText, algorithm);
+        return decryptor.dec(cipherText, algorithm);
     }
 
     public String getForceAuthURL() {

@@ -53,7 +53,7 @@ public class Encryptor{
                 return encCBC(plainText, key);
             }
         } else if("RSA".equals(algorithm)) {
-            throw new BarocertException(-99999999,"서비스 준비중인 암호화 알고리즘 입니다.");
+            throw new BarocertException(-99999999,"지원하지 않는 암호화 알고리즘입니다.");
         } else {
             throw new BarocertException(-99999999,"지원하지 않는 암호화 알고리즘입니다.");
         }
