@@ -10,10 +10,27 @@ import com.barocert.BarocertException;
 public class Decryptor{
 
     private PrivateKey privateKey;
-    
+
+    public String decrypt(String cipherText) throws BarocertException {
+        if(cipherText == null || cipherText.trim().isEmpty() ) return null;
+
+        return decrypt(cipherText, "AES");
+    }
+
+    public String decrypt(String cipherText, String algorithm) throws BarocertException {
+        if(cipherText == null || cipherText.trim().isEmpty() ) return null;
+
+        if (algorithm.equals("RSA"))
+            return decRSA(cipherText);
+        else if (algorithm.equals("AES"))
+            throw new BarocertException(-99999999,"서비스 준비중인 암호화 알고리즘 입니다.");
+        else
+            throw new BarocertException(-99999999,"지원하지 않는 복호화 알고리즘입니다.");
+    }
+
     // RSA PrivateKey Set
     public static Decryptor newInstance(String key) throws BarocertException {
-        if(key == null || key.trim().isEmpty() ) throw new BarocertException(-99999999,"SecretKey가 입력되지 않았습니다.");
+        if(key == null || key.trim().isEmpty() ) throw new BarocertException(-99999999,"RSA Key가 입력되지 않았습니다.");
         
         Decryptor _decryptor = new Decryptor();        
         try {
@@ -33,11 +50,11 @@ public class Decryptor{
     }
 
     // RSA Decrypt
-    public String Decrypt(String cipherText) throws BarocertException {
+    public String decRSA(String cipherText) throws BarocertException {
         
-        if(cipherText == null || cipherText.trim().isEmpty() ) return null;
+        if(cipherText == null || cipherText.trim().isEmpty() ) throw new BarocertException(-99999999,"There is nothing to encrypt. (RSA Decrypt)");
 
-        String decryptedText;
+        String decryptedText = "";
 
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
@@ -52,5 +69,5 @@ public class Decryptor{
 
         return decryptedText;
     }
-
+    
 }

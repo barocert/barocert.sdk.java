@@ -200,7 +200,20 @@ public interface PasscertService {
 	public String encrypt(String plainText) throws BarocertException;
 
 	/**
-     * RSA/ECB/PKCS1Padding, 
+     * 선택된 암호화 알고리즘을 사용하여 평문 암호화
+     * 
+     * @param plainText
+	 * 			평문
+     * @param algorithm
+	 * 			암호화 알고리즘
+     * @return String
+	 * 			암호문
+     * @throws BarocertException
+     */
+	public String encrypt(String plainText, String algorithm) throws BarocertException;
+
+	/**
+     * AES256/GCM/NoPadding(java 1.8 이상) or AES/CBC/PKCS5Padding(java 1.8 미만) 복호화
      * 
      * @param cipherText
 	 * 			암호문
@@ -209,4 +222,17 @@ public interface PasscertService {
      * @throws BarocertException
      */
 	public String decrypt(String cipherText) throws BarocertException;
+
+	/**
+     * 선택된 복호화 알고리즘을 사용하여 암호문 복호화
+     * 
+     * @param cipherText
+	 * 			암호문
+     * @param algorithm
+	 * 			복호화 알고리즘
+     * @return String
+	 * 			평문
+     * @throws BarocertException
+     */
+	public String decrypt(String cipherText, String algorithm) throws BarocertException;
 }

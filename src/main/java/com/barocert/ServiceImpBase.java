@@ -474,13 +474,25 @@ public abstract class ServiceImpBase {
         return encryptor.enc(plainText);
     }
 
+    public String encrypt(String plainText, String algorithm) throws BarocertException {
+        setupEncryptor();
+        return encryptor.enc(plainText, algorithm);
+    }
+
     private void setupDecryptor() throws BarocertException {
         if(decryptor == null) this.decryptor = Decryptor.newInstance(_DECRYPTKEY);
     }
     
     public String decrypt(String cipherText) throws BarocertException {
+        if(cipherText == null || cipherText.trim().isEmpty() ) return null;
         setupDecryptor();
-        return decryptor.Decrypt(cipherText);
+        return decryptor.decrypt(cipherText);
+    }
+
+    public String decrypt(String cipherText, String algorithm) throws BarocertException {
+        if(cipherText == null || cipherText.trim().isEmpty() ) return null;
+        setupDecryptor();
+        return decryptor.decrypt(cipherText, algorithm);
     }
 
     public String getForceAuthURL() {

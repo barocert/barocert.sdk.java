@@ -39,14 +39,27 @@ public class Encryptor{
         }else {
             return "GCM";
         }
-        
     }
-
+    
     public String enc(String plainText) throws BarocertException {
         if("GCM".equals(mode)) {
             return encGCM(plainText, key);
         }else {
             return encCBC(plainText, key);
+        }
+    }
+    
+    public String enc(String plainText, String algorithm) throws BarocertException {
+        if(algorithm.equals("AES")) {
+            if("GCM".equals(mode)) {
+                return encGCM(plainText, key);
+            }else {
+                return encCBC(plainText, key);
+            }
+        } else if(algorithm.equals("RSA")) {
+            throw new BarocertException(-99999999,"서비스 준비중인 암호화 알고리즘 입니다.");
+        } else {
+            throw new BarocertException(-99999999,"지원하지 않는 암호화 알고리즘입니다.");
         }
     }
 
