@@ -128,7 +128,7 @@ public abstract class ServiceImpBase {
             } catch (LinkhubException le) {
                 throw new BarocertException(le);
             } catch (Exception e) {
-                throw new BarocertException(-99999999, "Passcert Parse Exception", e);
+                throw new BarocertException(-99999999, "Barocert Parse Exception", e);
             }
         }
 
@@ -194,7 +194,7 @@ public abstract class ServiceImpBase {
                 httpURLConnection = (HttpURLConnection) uri.openConnection();
             }
         } catch (Exception e) {
-            throw new BarocertException(-99999999, "Passcert API 서버 접속 실패", e);
+            throw new BarocertException(-99999999, "Barocert API 서버 접속 실패", e);
         }
 
         httpURLConnection.setRequestProperty("Authorization", "Bearer " + getSessionToken());
@@ -230,7 +230,7 @@ public abstract class ServiceImpBase {
                 httpURLConnection = (HttpURLConnection) uri.openConnection();
             }
         } catch (Exception e) {
-            throw new BarocertException(-99999999, "Passcert API 서버 접속 실패", e);
+            throw new BarocertException(-99999999, "Barocert API 서버 접속 실패", e);
         }
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -245,7 +245,7 @@ public abstract class ServiceImpBase {
         try {
             httpURLConnection.setRequestMethod("POST");
         } catch (ProtocolException e1) {
-            throw new BarocertException(-99999999, "Passcert Protocol Exception", e1);
+            throw new BarocertException(-99999999, "Barocert Protocol Exception", e1);
         }
 
         httpURLConnection.setUseCaches(false);
@@ -275,13 +275,13 @@ public abstract class ServiceImpBase {
                 output.write(btPostData);
                 output.flush();
             } catch (Exception e) {
-                throw new BarocertException(-99999999, "Passcert Fail to POST data to Server.", e);
+                throw new BarocertException(-99999999, "Barocert Fail to POST data to Server.", e);
             } finally {
                 try {
                     if (output != null)
                         output.close();
                 } catch (IOException e1) {
-                    throw new BarocertException(-99999999, "Passcert httppost func DataOutputStream close() Exception",
+                    throw new BarocertException(-99999999, "Barocert httppost func DataOutputStream close() Exception",
                             e1);
                 }
             }
@@ -299,7 +299,7 @@ public abstract class ServiceImpBase {
             md = MessageDigest.getInstance("SHA-256");
             btResult = md.digest(input);
         } catch (NoSuchAlgorithmException e) {
-            throw new BarocertException(-99999999, "Passcert sha256 base64 Exception", e);
+            throw new BarocertException(-99999999, "Barocert sha256 base64 Exception", e);
         }
 
         return Base64.encode(btResult);
@@ -321,7 +321,7 @@ public abstract class ServiceImpBase {
             mac.init(signingKey);
             return mac.doFinal(input);
         } catch (Exception e) {
-            throw new BarocertException(-99999999,"Passcert Fail to Calculate HMAC-SHA256, Please check your SecretKey.", e);
+            throw new BarocertException(-99999999,"Barocert Fail to Calculate HMAC-SHA256, Please check your SecretKey.", e);
         }
     }
 
@@ -357,7 +357,7 @@ public abstract class ServiceImpBase {
                 read = br.readLine();
             }
         } catch (IOException e) {
-            throw new BarocertException(-99999999, "Passcert fromStream func Exception", e);
+            throw new BarocertException(-99999999, "Barocert fromStream func Exception", e);
         } finally {
             try {
                 if (br != null)
@@ -365,7 +365,7 @@ public abstract class ServiceImpBase {
                 if (is != null)
                     is.close();
             } catch (IOException e) {
-                throw new BarocertException(-99999999, "Passcert fromStream func finally close Exception", e);
+                throw new BarocertException(-99999999, "Barocert fromStream func finally close Exception", e);
             }
         }
 
@@ -391,7 +391,7 @@ public abstract class ServiceImpBase {
                 read = br.readLine();
             }
         } catch (IOException e) {
-            throw new BarocertException(-99999999, "Passcert fromGzipStream func Exception", e);
+            throw new BarocertException(-99999999, "Barocert fromGzipStream func Exception", e);
         } finally {
             try {
                 if (br != null)
@@ -401,7 +401,7 @@ public abstract class ServiceImpBase {
                 if (zipReader != null)
                     zipReader.close();
             } catch (IOException e) {
-                throw new BarocertException(-99999999, "Passcert fromGzipStream func finally close Exception", e);
+                throw new BarocertException(-99999999, "Barocert fromGzipStream func finally close Exception", e);
             }
         }
 
@@ -430,18 +430,18 @@ public abstract class ServiceImpBase {
                 result = fromStream(errorIs);
                 error = fromJsonString(result, ErrorResponse.class);
             } catch (Exception ignored) {
-                throw new BarocertException(-99999999, "Passcert parseResponse func InputStream Exception", ignored);
+                throw new BarocertException(-99999999, "Barocert parseResponse func InputStream Exception", ignored);
             } finally {
                 try {
                     if (errorIs != null)
                         errorIs.close();
                 } catch (IOException e1) {
-                    throw new BarocertException(-99999999, "Passcert parseResponse func InputStream close() Exception", e1);
+                    throw new BarocertException(-99999999, "Barocert parseResponse func InputStream close() Exception", e1);
                 }
             }
 
             if (error == null) {
-                exception = new BarocertException(-99999999, "Passcert Fail to receive data from Server.", e);
+                exception = new BarocertException(-99999999, "Barocert Fail to receive data from Server.", e);
             } else {
                 exception = new BarocertException(error.getCode(), error.getMessage());
             }
@@ -450,7 +450,7 @@ public abstract class ServiceImpBase {
                 if (input != null)
                     input.close();
             } catch (IOException e2) {
-                throw new BarocertException(-99999999, "Passcert parseResponse func InputStream close() Exception",
+                throw new BarocertException(-99999999, "Barocert parseResponse func InputStream close() Exception",
                         e2);
             }
         }
