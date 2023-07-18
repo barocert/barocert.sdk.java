@@ -4,7 +4,7 @@ import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import javax.crypto.Cipher;
-import java.util.Base64;
+
 import com.barocert.BarocertException;
 
 public class Decryptor{
@@ -20,7 +20,7 @@ public class Decryptor{
         try {
             key = key.replace("-----BEGIN RSA PRIVATE KEY-----", "").replaceAll(System.lineSeparator(), "").replaceAll("\\n", "")
                     .replace("-----END RSA PRIVATE KEY-----", "");
-            byte[] bkey = Base64.getDecoder().decode(key);
+            byte[] bkey = Base64.decode(key);
             PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(bkey);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             
@@ -65,7 +65,7 @@ public class Decryptor{
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
 
-            byte[] encData = Base64.getDecoder().decode(cipherText.getBytes());
+            byte[] encData = Base64.decode(cipherText);
             byte[] decryptedData = cipher.doFinal(encData);
             decryptedText = new String(decryptedData, "utf-8");
         } catch(Exception e) {
