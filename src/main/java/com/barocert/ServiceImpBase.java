@@ -41,8 +41,8 @@ public abstract class ServiceImpBase {
     private static final String AUTH_STATIC_URL = "https://static-auth.linkhub.co.kr";
     private static final String SERVICEURL_STATIC = "https://static-barocert.linkhub.co.kr";
     private static final String SERVICEURL = "https://barocert.linkhub.co.kr";
-    private String forceServiceURL;
-    private String forceAuthURL;
+    private String serviceURL;
+    private String authURL;
 
     private static final String APIVERSION = "2.0"; // sha256
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
@@ -67,10 +67,10 @@ public abstract class ServiceImpBase {
     private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
 
     public String getURL() {
-        // forceServiceURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 serviceURL 우선 적용.
-        if (!isNullOrEmpty(forceServiceURL))    return forceServiceURL;
+        // ServiceURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 serviceURL 우선 적용.
+        if (!isNullOrEmpty(serviceURL))    return serviceURL;
         
-        // forceServiceURL 값이 설정되지 않았다면, useStaticIP 설정에 따라 URL 적용.
+        // ServiceURL 값이 설정되지 않았다면, useStaticIP 설정에 따라 URL 적용.
         if (useStaticIP)
             return SERVICEURL_STATIC;
         else
@@ -86,9 +86,9 @@ public abstract class ServiceImpBase {
             for (String scope : getScopes())
                 tokenBuilder.addScope(scope);
 
-            // forceAuthURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 forceAuthURL 우선 적용.
-            if (!isNullOrEmpty(forceAuthURL)) {
-                tokenBuilder.setServiceURL(forceAuthURL);
+            // AuthURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 AuthURL 우선 적용.
+            if (!isNullOrEmpty(authURL)) {
+                tokenBuilder.setServiceURL(authURL);
             }
             // AuthURL 이 null 이고, useStaticIP 가 true 이면, ServiceURL 이 Auth_Static_URL 적용.
             else {
@@ -495,20 +495,20 @@ public abstract class ServiceImpBase {
         return decryptor.dec(cipherText, algorithm);
     }
 
-    public String getForceAuthURL() {
-        return this.forceAuthURL;
+    public String getServiceURL() {
+        return this.serviceURL;
     }
 
-    public void setForceAuthURL(String forceAuthURL) {
-        this.forceAuthURL = forceAuthURL;
+    public void setServiceURL(String serviceURL) {
+        this.serviceURL = serviceURL;
     }
 
-    public String getForceServiceURL() {
-        return this.forceServiceURL;
+    public String getAuthURL() {
+        return this.authURL;
     }
 
-    public void setForceServiceURL(String setServiceURL) {
-        this.forceServiceURL = setServiceURL;
+    public void setAuthURL(String authURL) {
+        this.authURL = authURL;
     }
 
     public void setIPRestrictOnOff(boolean isIPRestrictOnOff) {
