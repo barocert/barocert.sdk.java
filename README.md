@@ -6,7 +6,7 @@ BaroCert SDK for JAVA
     <dependency>
         <groupId>kr.co.linkhub</groupId>
         <artifactId>barocert-sdk</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.9</version>
     </dependency>
 
 1. KakaoCert 
