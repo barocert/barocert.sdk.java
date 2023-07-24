@@ -11,6 +11,7 @@ import com.barocert.kakaocert.cms.CMSResult;
 import com.barocert.kakaocert.identity.Identity;
 import com.barocert.kakaocert.identity.IdentityReceipt;
 import com.barocert.kakaocert.identity.IdentityStatus;
+import com.barocert.kakaocert.login.LoginResult;
 import com.barocert.kakaocert.identity.IdentityResult;
 import com.barocert.kakaocert.sign.MultiSignTokens;
 import com.barocert.kakaocert.sign.MultiSign;
@@ -252,6 +253,21 @@ public class KakaocertServiceImp extends ServiceImpBase implements KakaocertServ
         return httpPost("/KAKAO/CMS/" + clientCode + "/" + receiptID, postData, CMSResult.class);
     }
     
+    // 간편로그인 서명검증
+    @Override
+    public LoginResult verifyLogin(String clientCode, String txID) throws BarocertException {
+        
+        // 필수 값 체크.
+        if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
+        if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
+        if (isNullOrEmpty(txID)) throw new BarocertException(-99999999, "txID가 입력되지 않았습니다.");
+
+        String postData = toJsonString("");
+
+        return httpPost("/KAKAO/Login/" + clientCode + "/" + txID, postData, LoginResult.class);
+    }
+
     private boolean isNullOrEmpty(String string) {
 		return string == null || string.trim().isEmpty();
 	}
@@ -275,5 +291,7 @@ public class KakaocertServiceImp extends ServiceImpBase implements KakaocertServ
         }
         return false;
     }
+
+    
     
 }

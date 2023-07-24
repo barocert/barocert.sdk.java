@@ -15,6 +15,7 @@ import com.barocert.kakaocert.sign.MultiSignReceipt;
 import com.barocert.kakaocert.sign.SignReceipt;
 import com.barocert.kakaocert.sign.MultiSignStatus;
 import com.barocert.kakaocert.sign.SignStatus;
+import com.barocert.kakaocert.login.LoginResult;
 import com.barocert.kakaocert.sign.MultiSignResult;
 import com.barocert.kakaocert.sign.SignResult;
 
@@ -177,6 +178,19 @@ public interface KakaocertService {
 	public CMSResult verifyCMS(String clientCode, String receiptID) throws BarocertException;
 	
 	/**
+	 * 간편로그인 서명검증
+	 * 
+	 * @param clientCode
+	 * 			이용기관코드
+	 * @param txID
+	 * 			간편로그인 txID
+	 * @return LoginResult
+	 * 			간편로그인 서명검증 응답정보
+	 * @throws BarocertException
+	 */			
+	public LoginResult verifyLogin(String clientCode, String txID) throws BarocertException;
+
+	/**
      * AES256/GCM/NoPadding(java 1.8 이상) or AES/CBC/PKCS5Padding(java 1.8 미만) 암호화
      * 
      * @param plainText
@@ -186,4 +200,6 @@ public interface KakaocertService {
      * @throws BarocertException
      */
 	public String encrypt(String plainText) throws BarocertException;
+
+    
 }
