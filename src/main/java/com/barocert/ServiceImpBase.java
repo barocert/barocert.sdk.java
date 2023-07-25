@@ -25,7 +25,6 @@ import java.util.zip.GZIPInputStream;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.barocert.crypto.Decryptor;
 import com.barocert.crypto.Encryptor;
 import com.google.gson.Gson;
 
@@ -61,7 +60,6 @@ public abstract class ServiceImpBase {
     private TokenBuilder tokenBuilder;
     
     private Encryptor encryptor;
-    private Decryptor decryptor;
 
     private Gson _gsonParser = new Gson();
     private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
@@ -477,22 +475,6 @@ public abstract class ServiceImpBase {
     public String encrypt(String plainText, String algorithm) throws BarocertException {
         setupEncryptor();
         return encryptor.enc(plainText, algorithm);
-    }
-
-    private void setupDecryptor() throws BarocertException {
-        if(decryptor == null) this.decryptor = Decryptor.newInstance(_DECRYPTKEY);
-    }
-    
-    public String decrypt(String cipherText) throws BarocertException {
-        if(cipherText == null || cipherText.trim().isEmpty() ) return null;
-        setupDecryptor();
-        return decryptor.dec(cipherText);
-    }
-
-    public String decrypt(String cipherText, String algorithm) throws BarocertException {
-        if(cipherText == null || cipherText.trim().isEmpty() ) return null;
-        setupDecryptor();
-        return decryptor.dec(cipherText, algorithm);
     }
 
     public String getServiceURL() {

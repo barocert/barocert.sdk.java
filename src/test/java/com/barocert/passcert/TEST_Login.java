@@ -11,11 +11,8 @@ import com.barocert.passcert.login.LoginVerify;
 
 public class TEST_Login {
 
-    private static final String DEC_ALGORITHM = "RSA";
-
     private final String testLinkID = "TESTER";
     private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
-    private final String testDecretKey = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCyKXf5N/gMXQmAag28kJMrT3IDSdbwQbXl0eFoeYI/uq8eKbh7ogV2eSDURrmyS5mGDY8yKcXwyEVT4Lbx9yyOcoT0leXT3JVhiYGK5Ds2+I4YZznEESvawMCz8QtZuX5IXEHK9kqWUeSqMQn9Hi9epLXtXN/J1o4DtTIxewdCKhT/yxbW/1d+MJTJkukC75HgeG/4ADl/yow1J81J+GRnvbIS7OTTvIf9uAP1Eu1HL94fP2JJ/Qi0+xfEXEe6/aRTMsGl9P/4XSY8i4RaZAuZqoej/bU4Dm7bhnobz6bo9iPoKPnkd+EE2pLKDEDAqEmCQYXN3TqYpOmF16npvxTTAgMBAAECggEBAK7NSx4lkOUof4MUCwhA3XR4DUg2sYGnJz4m778ewPGgS+MPUidTb4KvE8vS3K2XyTiioyW3oLM+++5xI25CcuAMcnC7hfSZj6NUU9qfVY34zwoYda/unRWTWz7xuI4/Fi0O/6qQfdwA25c0aDWF4To95xXNsvCI52ux415y9Esv9MlMQa/io8KDyuOkTPhZP+sgnwFupvNfunT8CjwpAtDpzznb4zfcEoU3z7jMDRvbTsDgdMmzr46pX+2kmeKtNXX9dnziZXjoLm+gS1Iukt5I7SyLhO2KjdJOBGJ56YYLwq3T3d18smYSe00BXxOqI7RJgwK+G+Ou5sYpgUIu3CkCgYEA5E7GOIwW5zxe0lfz82ZvwMyKJHgF5tdgx9IW7EUBWXbeDlGqVGTnXMb2lftEApmL3cZ+UzxKwCITpyiJfGFBnhV7JYbo9QbFMEPcdfIlZW9d/0SKxzBlHDfHviwLnV2qYjbSMZSH1MkqRh64l1eGeaf8UDVzaToA3Yux6Gu3Fg8CgYEAx8WcKS0E7AW8WcIpUHQXqlzINJ2GNBbrMOz3phVyTp5xWY2gW9dfMrep+ukZicMwirwvh1G6AI0ahnc/0s1n9IkaXQ1xOrvW/K4+NQ0yhZxkJNG1c3hYdCWIA0JZItRRwOXq4xvbO/AOjgEHb5kyeNsnQMgf3fuy8Fzdt4pVOP0CgYEAierkZ6iI9WtMxLiJEBJjlA57rQgsWITnXA6X9mbBJ/BcuD2xLYY/FZbDw1qkfQWQroqIKXQUm/h58tLUKyT9ZKgJWmQjOlG6sSttdHqxCJO8LsaTJz0e92ri6Qjmg0vf77C6TWUyoOJc/Tr1u8cN31QRYcrIS1rUxwDqmkLnuRUCgYEAqQ1Fh+ar6psz93UCBy4mtKkNVtESt1PJtT5il25Aq90SqKjb0bxguAeKVWUakmTV2CFFyypSz5KYpr+VB+uAlAPNhn8QmZZJaMx+oeBIJ57fc/TuqwdlOuxju/ZSfdHUWPt3mLaDAKa1el/OjhbDCljST9TKesw7cYH0shPi6HUCgYAp1hXRnIi5Fu8dKPsk6pQTNV1WtUhEX/aqCtv/qZ3jYTPdA7HJNi9rakizVHQBs6o0JMv/NMMrXeGWw+RCYVNN6DOe5esSKn//uubnHpntlEAz6AKtwUhSU7F58zAQO1L/jsqvpKCFw1p5Z90Hc6UGDW0YMibVMc2nzCf3xxeaDw==";
 
     private PasscertService passcertService;
 
@@ -23,7 +20,6 @@ public class TEST_Login {
         PasscertServiceImp service = new PasscertServiceImp();
         service.setLinkID(testLinkID);
         service.setSecretKey(testSecretKey);
-        service.setDecryptKey(testDecretKey);
         service.setIPRestrictOnOff(true);
         service.setUseStaticIP(false);
         service.setUseLocalTimeYN(true);
@@ -127,10 +123,10 @@ public class TEST_Login {
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("ReceiverName : " + passcertService.decrypt(result.getReceiverName(), DEC_ALGORITHM));
-            System.out.println("ReceiverBirthday : " + passcertService.decrypt(result.getReceiverBirthday(), DEC_ALGORITHM));
-            System.out.println("ReceiverGender : " + passcertService.decrypt(result.getReceiverGender(), DEC_ALGORITHM));
-            System.out.println("ReceiverTelcoType : " + passcertService.decrypt(result.getReceiverTelcoType(), DEC_ALGORITHM));
+            System.out.println("ReceiverName : " + result.getReceiverName());
+            System.out.println("ReceiverBirthday : " + result.getReceiverBirthday());
+            System.out.println("ReceiverGender : " + result.getReceiverGender());
+            System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());
             System.out.println("SignedData : " + result.getSignedData());
             System.out.println("CI : " + result.getCi());
         } catch (BarocertException be) {

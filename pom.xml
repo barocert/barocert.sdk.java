@@ -132,8 +132,8 @@
                         </configuration>
                     </plugin>
                 </plugins>
-           </build>
-       </profile>
+            </build>
+        </profile>
     </profiles>
 
     <!-- Build Encoding UTF-8 Setting -->
