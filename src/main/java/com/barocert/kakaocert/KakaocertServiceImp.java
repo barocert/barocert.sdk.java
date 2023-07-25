@@ -27,7 +27,7 @@ public class KakaocertServiceImp extends ServiceImpBase implements KakaocertServ
 
     @Override
     protected List<String> getScopes() {
-        return Arrays.asList("401", "402", "403", "404");
+        return Arrays.asList("401", "402", "403", "404", "405");
     }
 
     // 본인인증 서명요청
