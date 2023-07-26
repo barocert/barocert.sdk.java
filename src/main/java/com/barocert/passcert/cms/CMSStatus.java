@@ -19,9 +19,6 @@ public class CMSStatus {
     private boolean receiverInfoYN;
     private String telcoType;
     private String deviceOSType;
-    private String originalTypeCode;
-    private String originalURL;
-    private String originalFormatCode;
     private String scheme;
     private boolean appUseYN;
 
@@ -159,30 +156,6 @@ public class CMSStatus {
 
     public void setDeviceOSType(String deviceOSType) {
         this.deviceOSType = deviceOSType;
-    }
-
-    public String getOriginalTypeCode() {
-        return this.originalTypeCode;
-    }
-
-    public void setOriginalTypeCode(String originalTypeCode) {
-        this.originalTypeCode = originalTypeCode;
-    }
-
-    public String getOriginalURL() {
-        return this.originalURL;
-    }
-
-    public void setOriginalURL(String originalURL) {
-        this.originalURL = originalURL;
-    }
-
-    public String getOriginalFormatCode() {
-        return this.originalFormatCode;
-    }
-
-    public void setOriginalFormatCode(String originalFormatCode) {
-        this.originalFormatCode = originalFormatCode;
     }
 
     public String getScheme() {
