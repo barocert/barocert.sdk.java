@@ -20,33 +20,6 @@ public class CMS {
 	private String deviceOSType;
 	private boolean appUseYN;
 	private boolean useTssYN;
-	private String originalTypeCode;
-	private String originalURL;
-	private String originalFormatCode;
-
-	public String getOriginalURL() {
-		return this.originalURL;
-	}
-
-	public void setOriginalURL(String originalURL) {
-		this.originalURL = originalURL;
-	}
-
-	public String getOriginalFormatCode() {
-		return this.originalFormatCode;
-	}
-
-	public void setOriginalFormatCode(String originalFormatCode) {
-		this.originalFormatCode = originalFormatCode;
-	}
-
-	public String getOriginalTypeCode() {
-		return this.originalTypeCode;
-	}
-
-	public void setOriginalTypeCode(String originalTypeCode) {
-		this.originalTypeCode = originalTypeCode;
-	}
 
 	public String getReceiverHP() {
 		return this.receiverHP;
