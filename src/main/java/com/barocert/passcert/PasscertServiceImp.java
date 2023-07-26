@@ -195,7 +195,7 @@ public class PasscertServiceImp extends ServiceImpBase implements PasscertServic
         if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
         if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
         if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
-        if (cmsVerify == null) throw new BarocertException(-99999999, "전자서명 검증 요청 정보가 입력되지 않았습니다.");
+        if (cmsVerify == null) throw new BarocertException(-99999999, "출금동의 검증 요청 정보가 입력되지 않았습니다.");
         if (cmsVerify.getReceiverHP() == null) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
         if (cmsVerify.getReceiverName() == null) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
 
