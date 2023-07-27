@@ -56,7 +56,7 @@ public class TEST_Login {
             // 사용자 정보 포함 여부
             request.setReceiverInfoYN(true);
             // AppToApp 인증요청 여부
-            // true - AppToApp 인증방식, false - Talk Message 인증방식
+            // true - AppToApp 인증방식, false - Push 인증방식
             request.setAppUseYN(false);
             // ApptoApp 인증방식에서 사용
             // 통신사 유형('SKT', 'KT', 'LGU'), 대문자 입력(대소문자 구분)
