@@ -26,7 +26,10 @@ public class TEST_Login {
         passcertService = service;
     }
 
-    // 간편로그인 요청
+    /*
+     * 패스 이용자에게 간편로그인을 요청합니다.
+     * https://developers.barocert.com/reference/pass/java/login/api#RequestLogin
+     */
     @Test
     public void TEST_RequestLogin() throws BarocertException {
         try {
@@ -77,7 +80,12 @@ public class TEST_Login {
         }
     }
 
-    // 간편로그인 상태확인
+    /*
+     * 간편로그인 요청 후 반환받은 접수아이디로 진행 상태를 확인합니다.
+     * 상태확인 함수는 간편로그인 요청 함수를 호출한 당일 23시 59분 59초까지만 호출 가능합니다.
+     * 간편로그인 요청 함수를 호출한 당일 23시 59분 59초 이후 상태확인 함수를 호출할 경우 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/pass/java/login/api#GetLoginStatus
+     */
     @Test
     public void TEST_GetLoginStatus() throws BarocertException {
         try {                                                                                               
@@ -108,7 +116,12 @@ public class TEST_Login {
         }
     }
 
-    // 간편로그인 검증
+    /*
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 검증 함수는 간편로그인 요청 함수를 호출한 당일 23시 59분 59초까지만 호출 가능합니다.
+     * 간편로그인 요청 함수를 호출한 당일 23시 59분 59초 이후 검증 함수를 호출할 경우 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/pass/java/login/api#VerifyLogin
+     */
     @Test
     public void TEST_VerifyLogin() throws BarocertException {
         try {
@@ -122,9 +135,10 @@ public class TEST_Login {
             LoginResult result = passcertService.verifyLogin("023040000001", "02307100230400000010000000000009", verify);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
-            System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
+            System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4),미처리(5)
             System.out.println("ReceiverName : " + result.getReceiverName());
-            System.out.println("ReceiverBirthday : " + result.getReceiverBirthday());
+            System.out.println("ReceiverYear : " + result.getReceiverYear());
+            System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverGender : " + result.getReceiverGender());
             System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());
             System.out.println("SignedData : " + result.getSignedData());

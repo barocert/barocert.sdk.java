@@ -21,8 +21,12 @@ public class TEST_Login {
         kakaocertService = service;
     }
 
-    // 간편로그인 서명검증
-    // https://developers.barocert.com/reference/kakao/java/login/api#VerifyLogin
+    /*
+     * 완료된 전자서명을 검증하고 전자서명 데이터 전문(signedData)을 반환 받습니다.
+     * 카카오 보안정책에 따라 검증 API는 1회만 호출할 수 있습니다. 재시도시 오류가 반환됩니다.
+     * 전자서명 완료일시로부터 10분 이후에 검증 API를 호출하면 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/kakao/java/login/api#VerifyLogin
+     */
     @Test
     public void TEST_VerifyLogin() throws BarocertException {
         try {

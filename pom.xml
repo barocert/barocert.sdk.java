@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>kr.co.linkhub</groupId>
     <artifactId>barocert-sdk</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <name>Barocert API SDK</name>

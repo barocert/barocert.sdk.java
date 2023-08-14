@@ -30,8 +30,10 @@ public class TEST_Sign {
         kakaocertService = service;
     }
 
-    // 전자서명 서명요청(단건)
-    // https://developers.barocert.com/reference/kakao/java/sign/api-single#RequestSign
+    /*
+     * 카카오톡 이용자에게 단건(1건) 문서의 전자서명을 요청합니다.
+     * https://developers.barocert.com/reference/kakao/java/sign/api-single#RequestSign
+     */
     @Test
     public void TEST_RequestSign() throws BarocertException {
         try {
@@ -72,8 +74,10 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 상태확인(단건)
-    // https://developers.barocert.com/reference/kakao/java/sign/api-single#GetSignStatus
+    /*
+     * 전자서명(단건) 요청 후 반환받은 접수아이디로 인증 진행 상태를 확인합니다.
+     * https://developers.barocert.com/reference/kakao/java/sign/api-single#GetSignStatus
+     */
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
@@ -102,13 +106,16 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 서명검증(단건)
-    // https://developers.barocert.com/reference/kakao/java/sign/api-single#VerifySign
+    /*
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 카카오 보안정책에 따라 검증 API는 1회만 호출할 수 있습니다. 재시도시 오류가 반환됩니다.
+     * 전자서명 완료일시로부터 10분 이내에 검증 API를 호출하지 않으면 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/kakao/java/sign/api-single#VerifySign
+     */
     @Test
     public void TEST_VerifySign() throws BarocertException {
         try {
-            // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며,
-            // 사용자가 서명을 완료하고, 10분(유효시간) 까지 검증하기 API 요청가능 합니다.
+            // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
             SignResult result = kakaocertService.verifySign("023040000001", "02307100230400000010000000000003");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -121,14 +128,15 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 서명요청(복수)
-    // https://developers.barocert.com/reference/kakao/java/sign/api-multi#RequestMultiSign
+    /*
+     * 카카오톡 이용자에게 복수(최대 20건) 문서의 전자서명을 요청합니다.
+     * https://developers.barocert.com/reference/kakao/java/sign/api-multi#RequestMultiSign
+     */
     @Test
     public void TEST_RequestMultiSign() throws BarocertException {
         try {
             // 전자서명 요청 정보 객체
             MultiSign request = new MultiSign();
-
 
             // 수신자 휴대폰번호 - 11자 (하이픈 제외)
             request.setReceiverHP(kakaocertService.encrypt("01012341234"));
@@ -200,8 +208,10 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 상태확인(복수)
-    // https://developers.barocert.com/reference/kakao/java/sign/api-multi#GetMultiSignStatus
+    /*
+     * 전자서명(복수) 요청 후 반환받은 접수아이디로 인증 진행 상태를 확인합니다.
+     * https://developers.barocert.com/reference/kakao/java/sign/api-multi#GetMultiSignStatus
+     */
     @Test
     public void TEST_GetMultiSignStatus() throws BarocertException {
         try {
@@ -230,8 +240,12 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 서명검증(복수)
-    // https://developers.barocert.com/reference/kakao/java/sign/api-multi#VerifyMultiSign
+    /*
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 카카오 보안정책에 따라 검증 API는 1회만 호출할 수 있습니다. 재시도시 오류가 반환됩니다.
+     * 전자서명 완료일시로부터 10분 이후에 검증 API를 호출하면 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/kakao/java/sign/api-multi#VerifyMultiSign
+     */
     @Test
     public void TEST_VerifyMultiSign() throws BarocertException {
         try {

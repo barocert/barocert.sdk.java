@@ -40,10 +40,8 @@ public abstract class ServiceImpBase {
     private static final String AUTH_STATIC_URL = "https://static-auth.linkhub.co.kr";
     private static final String SERVICEURL_STATIC = "https://static-barocert.linkhub.co.kr";
     private static final String SERVICEURL = "https://barocert.linkhub.co.kr";
-    private String serviceURL;
-    private String authURL;
 
-    private static final String APIVERSION = "2.0"; // sha256
+    private static final String APIVERSION = "2.1"; // sha256
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
 
     private static final TimeZone TIMEZONE = TimeZone.getTimeZone("UTC");
@@ -54,6 +52,8 @@ public abstract class ServiceImpBase {
     private boolean useStaticIP = false;    // API 서비스고정 IP - 기본값(false)
     private boolean useLocalTimeYN = true;  // 로컬시스템 시간 사용여부 - 기본값(true)
 
+    private String _serviceURL;
+    private String _authURL;
     private String _linkID;
     private String _SECRETKEY;
     private String _DECRYPTKEY;
@@ -66,7 +66,7 @@ public abstract class ServiceImpBase {
 
     public String getURL() {
         // ServiceURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 serviceURL 우선 적용.
-        if (!isNullOrEmpty(serviceURL))    return serviceURL;
+        if (!isNullOrEmpty(_serviceURL))    return _serviceURL;
         
         // ServiceURL 값이 설정되지 않았다면, useStaticIP 설정에 따라 URL 적용.
         if (useStaticIP)
@@ -85,8 +85,8 @@ public abstract class ServiceImpBase {
                 tokenBuilder.addScope(scope);
 
             // AuthURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 AuthURL 우선 적용.
-            if (!isNullOrEmpty(authURL)) {
-                tokenBuilder.setServiceURL(authURL);
+            if (!isNullOrEmpty(_authURL)) {
+                tokenBuilder.setServiceURL(_authURL);
             }
             // AuthURL 이 null 이고, useStaticIP 가 true 이면, ServiceURL 이 Auth_Static_URL 적용.
             else {
@@ -256,9 +256,9 @@ public abstract class ServiceImpBase {
             httpURLConnection.setRequestProperty("Content-Length", String.valueOf(btPostData.length));
 
             String signTarget = "POST\n";
-            signTarget += url + "\n";
             signTarget += sha256Base64(btPostData) + "\n";
             signTarget += date + "\n";
+            signTarget += url + "\n";
 
             String Signature = base64Encode(HMacSha256(base64Decode(getSecretKey()), signTarget.getBytes(Charset.forName("UTF-8"))));
 
@@ -478,19 +478,19 @@ public abstract class ServiceImpBase {
     }
 
     public String getServiceURL() {
-        return this.serviceURL;
+        return _serviceURL;
     }
 
     public void setServiceURL(String serviceURL) {
-        this.serviceURL = serviceURL;
+        this._serviceURL = serviceURL;
     }
 
     public String getAuthURL() {
-        return this.authURL;
+        return _authURL;
     }
 
     public void setAuthURL(String authURL) {
-        this.authURL = authURL;
+        this._authURL = authURL;
     }
 
     public void setIPRestrictOnOff(boolean isIPRestrictOnOff) {

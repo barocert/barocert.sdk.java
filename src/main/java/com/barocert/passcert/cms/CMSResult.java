@@ -6,7 +6,8 @@ public class CMSResult {
     private int state;
     private String receiverHP;
     private String receiverName;
-    private String receiverBirthday;
+    private String receiverDay;
+    private String receiverYear;
     private String receiverGender;
     private String receiverTelcoType;
     private String signedData;
@@ -44,12 +45,20 @@ public class CMSResult {
         this.receiverName = receiverName;
     }
 
-    public String getReceiverBirthday() {
-        return this.receiverBirthday;
+    public String getReceiverDay() {
+        return this.receiverDay;
     }
 
-    public void setReceiverBirthday(String receiverBirthday) {
-        this.receiverBirthday = receiverBirthday;
+    public void setReceiverDay(String receiverDay) {
+        this.receiverDay = receiverDay;
+    }
+
+    public String getReceiverYear() {
+        return this.receiverYear;
+    }
+
+    public void setReceiverYear(String receiverYear) {
+        this.receiverYear = receiverYear;
     }
 
     public String getReceiverGender() {

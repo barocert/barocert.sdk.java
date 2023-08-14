@@ -27,7 +27,10 @@ public class TEST_Identity {
         passcertService = service;
     }
 
-    // 본인인증 요청
+    /*
+     * 패스 이용자에게 본인인증을 요청합니다.
+     * https://developers.barocert.com/reference/pass/java/identity/api#RequestIdentity
+     */
     @Test
     public void TEST_RequestIdentity() throws BarocertException {
         try {
@@ -53,9 +56,9 @@ public class TEST_Identity {
             request.setToken(passcertService.encrypt("서명 원문"));
             
             // 사용자 동의 필요 여부
-            request.setUserAgreementYN(false);
+            request.setUserAgreementYN(true);
             // 사용자 정보 포함 여부
-            request.setReceiverInfoYN(false);
+            request.setReceiverInfoYN(true);
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Push 인증방식
             request.setAppUseYN(false);
@@ -78,7 +81,12 @@ public class TEST_Identity {
         }
     }
 
-    // 본인인증 상태확인
+    /*
+     * 본인인증 요청 후 반환받은 접수아이디로 본인인증 진행 상태를 확인합니다.
+     * 상태확인 함수는 본인인증 요청 함수를 호출한 당일 23시 59분 59초까지만 호출 가능합니다.
+     * 본인인증 요청 함수를 호출한 당일 23시 59분 59초 이후 상태확인 함수를 호출할 경우 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/pass/java/identity/api#GetIdentityStatus
+     */
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {                                                                                               
@@ -109,7 +117,13 @@ public class TEST_Identity {
         }
     }
 
-    // 본인인증 서명검증
+    /*
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 반환받은 전자서명값(signedData)과 [1. RequestIdentity] 함수 호출에 입력한 Token의 동일 여부를 확인하여 이용자의 본인인증 검증을 완료합니다.
+     * 검증 함수는 본인인증 요청 함수를 호출한 당일 23시 59분 59초까지만 호출 가능합니다.
+     * 본인인증 요청 함수를 호출한 당일 23시 59분 59초 이후 검증 함수를 호출할 경우 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/pass/java/identity/api#VerifyIdentity
+     */
     @Test
     public void TEST_VerifyIdentity() throws BarocertException {
         try {
@@ -123,9 +137,10 @@ public class TEST_Identity {
             IdentityResult result = passcertService.verifyIdentity("023040000001", "02307100230400000010000000000004", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
-            System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
+            System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4),미처리(5)
             System.out.println("ReceiverName : " + result.getReceiverName());
-            System.out.println("ReceiverBirthday : " + result.getReceiverBirthday());
+            System.out.println("ReceiverYear : " + result.getReceiverYear());
+            System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverGender : " + result.getReceiverGender());
             System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());
             System.out.println("SignedData : " + result.getSignedData());

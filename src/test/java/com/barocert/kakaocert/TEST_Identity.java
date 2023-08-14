@@ -25,8 +25,10 @@ public class TEST_Identity {
         kakaocertService = service;
     }
 
-    // 본인인증 요청
-    // https://developers.barocert.com/reference/kakao/java/identity/api#RequestIdentity
+    /*
+     * 카카오톡 이용자에게 본인인증을 요청합니다.
+     * https://developers.barocert.com/reference/kakao/java/identity/api#RequestIdentity
+     */
     @Test
     public void TEST_RequestIdentity() throws BarocertException {
         try {
@@ -64,8 +66,10 @@ public class TEST_Identity {
         }
     }
 
-    // 본인인증 상태확인
-    // https://developers.barocert.com/reference/kakao/java/identity/api#GetIdentityStatus
+    /* 
+     * 본인인증 요청 후 반환받은 접수아이디로 본인인증 진행 상태를 확인합니다.
+     * https://developers.barocert.com/reference/kakao/java/identity/api#GetIdentityStatus
+     */
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {
@@ -94,8 +98,13 @@ public class TEST_Identity {
         }
     }
 
-    // 본인인증 서명검증
-    // https://developers.barocert.com/reference/kakao/java/identity/api#VerifyIdentity
+    /* 
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 반환받은 전자서명값(signedData)과 [1. RequestIdentity] 함수 호출에 입력한 Token의 동일 여부를 확인하여 이용자의 본인인증 검증을 완료합니다.
+     * 카카오 보안정책에 따라 검증 API는 1회만 호출할 수 있습니다. 재시도시 오류가 반환됩니다.
+     * 전자서명 완료일시로부터 10분 이후에 검증 API를 호출하면 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/kakao/java/identity/api#VerifyIdentity
+     */
     @Test
     public void TEST_VerifyIdentity() throws BarocertException {
         try {

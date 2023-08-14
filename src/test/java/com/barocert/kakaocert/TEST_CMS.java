@@ -25,8 +25,10 @@ public class TEST_CMS {
         kakaocertService = service;
     }
 
-    // 출금동의 요청
-    // https://developers.barocert.com/reference/kakao/java/cms/api#RequestCMS 
+    /*
+     * 카카오톡 이용자에게 자동이체 출금동의를 요청합니다.
+     * https://developers.barocert.com/reference/kakao/java/cms/api#RequestCMS 
+     */
     @Test
     public void TEST_RequestCMS() {
         try {
@@ -77,8 +79,10 @@ public class TEST_CMS {
         }
     }
 
-    // 출금동의 상태확인
-    // https://developers.barocert.com/reference/kakao/java/cms/api#GetCMSStatus
+    /* 
+     * 자동이체 출금동의 요청 후 반환받은 접수아이디로 인증 진행 상태를 확인합니다.
+     * https://developers.barocert.com/reference/kakao/java/cms/api#GetCMSStatus
+     */ 
     @Test
     public void TEST_GetCMSStatus() throws BarocertException {
         try {
@@ -107,8 +111,12 @@ public class TEST_CMS {
         }
     }
 
-    // 출금동의 검증
-    // https://developers.barocert.com/reference/kakao/java/cms/api#VerifyCMS
+    /* 
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 카카오 보안정책에 따라 검증 API는 1회만 호출할 수 있습니다. 재시도시 오류가 반환됩니다.
+     * 전자서명 완료일시로부터 10분 이후에 검증 API를 호출하면 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/kakao/java/cms/api#VerifyCMS
+     */
     @Test
     public void TEST_VerifyCMS() throws BarocertException {
         try {

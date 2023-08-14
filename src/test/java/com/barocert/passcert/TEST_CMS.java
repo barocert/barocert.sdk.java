@@ -26,7 +26,10 @@ public class TEST_CMS {
         passcertService = service;
     }
 
-    // 출금동의 요청
+    /*
+     * 패스 이용자에게 자동이체 출금동의를 요청합니다.
+     * https://developers.barocert.com/reference/pass/java/cms/api#RequestCMS
+     */
     @Test
     public void TEST_RequestCMS() {
         try {
@@ -87,7 +90,12 @@ public class TEST_CMS {
         }
     }
 
-    // 출금동의 상태확인
+    /*
+     * 자동이체 출금동의 요청 후 반환받은 접수아이디로 인증 진행 상태를 확인합니다.
+     * 상태확인 함수는 자동이체 출금동의 요청 함수를 호출한 당일 23시 59분 59초까지만 호출 가능합니다.
+     * 자동이체 출금동의 요청 함수를 호출한 당일 23시 59분 59초 이후 상태확인 함수를 호출할 경우 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/pass/java/cms/api#GetCMSStatus
+     */
     @Test
     public void TEST_GetCMSStatus() throws BarocertException {
         try {
@@ -118,7 +126,12 @@ public class TEST_CMS {
         }
     }
 
-    // 출금동의 검증
+    /*
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 검증 함수는 자동이체 출금동의 요청 함수를 호출한 당일 23시 59분 59초까지만 호출 가능합니다.
+     * 자동이체 출금동의 요청 함수를 호출한 당일 23시 59분 59초 이후 검증 함수를 호출할 경우 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/pass/java/cms/api#VerifyCMS
+     */
     @Test
     public void TEST_VerifyCMS() throws BarocertException {
         try {
@@ -132,9 +145,10 @@ public class TEST_CMS {
             CMSResult result = passcertService.verifyCMS("023040000001", "02307100230400000010000000000006", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
-            System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
+            System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4),미처리(5)
             System.out.println("ReceiverName : " + result.getReceiverName());
-            System.out.println("ReceiverBirthday : " + result.getReceiverBirthday());
+            System.out.println("ReceiverYear : " + result.getReceiverYear());
+            System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverHP : " + result.getReceiverHP());
             System.out.println("ReceiverGender : " + result.getReceiverGender());
             System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());

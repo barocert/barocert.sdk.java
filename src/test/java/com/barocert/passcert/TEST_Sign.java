@@ -27,7 +27,10 @@ public class TEST_Sign {
         passcertService = service;
     }
 
-    // 전자서명 서명요청
+    /*
+     * 패스 이용자에게 문서의 전자서명을 요청합니다.
+     * https://developers.barocert.com/reference/pass/java/sign/api#RequestSign
+     */
     @Test
     public void TEST_RequestSign() throws BarocertException {
         try {
@@ -92,7 +95,12 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 상태확인
+    /*
+     * 전자서명 요청 후 반환받은 접수아이디로 인증 진행 상태를 확인합니다.
+     * 상태확인 함수는 전자서명 요청 함수를 호출한 당일 23시 59분 59초까지만 호출 가능합니다.
+     * 전자서명 요청 함수를 호출한 당일 23시 59분 59초 이후 상태확인 함수를 호출할 경우 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/pass/java/login/api#GetLoginStatus
+     */
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
@@ -126,7 +134,12 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 서명검증
+    /*
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 검증 함수는 전자서명 요청 함수를 호출한 당일 23시 59분 59초까지만 호출 가능합니다.
+     * 전자서명 요청 함수를 호출한 당일 23시 59분 59초 이후 검증 함수를 호출할 경우 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/pass/java/sign/api#VerifySign
+     */
     @Test
     public void TEST_VerifySign() throws BarocertException {
         try {
@@ -140,9 +153,10 @@ public class TEST_Sign {
             SignResult result = passcertService.verifySign("023040000001", "02307100230400000010000000000005", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
-            System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
+            System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4),미처리(5)
             System.out.println("ReceiverName : " + result.getReceiverName());
-            System.out.println("ReceiverBirthday : " + result.getReceiverBirthday());
+            System.out.println("ReceiverYear : " + result.getReceiverYear());
+            System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverHP : " + result.getReceiverHP());
             System.out.println("ReceiverGender : " + result.getReceiverGender());
             System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());
