@@ -140,6 +140,7 @@ public class TEST_Login {
             System.out.println("ReceiverYear : " + result.getReceiverYear());
             System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverGender : " + result.getReceiverGender());
+            System.out.println("ReceiverForeign : " + result.getReceiverForeign());
             System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());
             System.out.println("SignedData : " + result.getSignedData());
             System.out.println("CI : " + result.getCi());

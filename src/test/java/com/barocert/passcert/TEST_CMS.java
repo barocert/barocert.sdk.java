@@ -151,6 +151,7 @@ public class TEST_CMS {
             System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverHP : " + result.getReceiverHP());
             System.out.println("ReceiverGender : " + result.getReceiverGender());
+            System.out.println("ReceiverForeign : " + result.getReceiverForeign());
             System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());
             System.out.println("SignedData : " + result.getSignedData());
             System.out.println("CI : " + result.getCi());

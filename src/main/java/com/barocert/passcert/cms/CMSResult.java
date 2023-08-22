@@ -9,6 +9,7 @@ public class CMSResult {
     private String receiverDay;
     private String receiverYear;
     private String receiverGender;
+    private String receiverForeign;
     private String receiverTelcoType;
     private String signedData;
     private String ci;
@@ -67,6 +68,14 @@ public class CMSResult {
 
     public void setReceiverGender(String receiverGender) {
         this.receiverGender = receiverGender;
+    }
+
+    public String getReceiverForeign() {
+        return this.receiverForeign;
+    }
+
+    public void setReceiverForeign(String receiverForeign) {
+        this.receiverForeign = receiverForeign;
     }
 
     public String getReceiverTelcoType() {
