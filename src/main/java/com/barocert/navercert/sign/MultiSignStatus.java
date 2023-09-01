@@ -13,6 +13,7 @@ public class MultiSignStatus {
     private String tokenType;
     private String expireDT;
     private String scheme;
+    private String deviceOSType;
     private boolean appUseYN;
 
     public String getReceiptID() {
@@ -111,4 +112,11 @@ public class MultiSignStatus {
         this.appUseYN = appUseYN;
     }
 
+    public String getDeviceOSType() {
+        return deviceOSType;
+    }
+
+    public void setDeviceOSType(String deviceOSType) {
+        this.deviceOSType = deviceOSType;
+    }
 }

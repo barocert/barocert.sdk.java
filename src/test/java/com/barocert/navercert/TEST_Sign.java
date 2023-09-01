@@ -91,6 +91,7 @@ public class TEST_Sign {
             System.out.println("ReqTitle : " + result.getReqTitle());
             System.out.println("ReturnURL : " + result.getReturnURL());
             System.out.println("tokenType : " + result.getTokenType());
+            System.out.println("deviceOSType : " + result.getDeviceOSType());
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("Scheme : " + result.getScheme());
             System.out.println("AppUseYN : " + result.getAppUseYN());
@@ -225,6 +226,7 @@ public class TEST_Sign {
             System.out.println("ReqTitle : " + result.getReqTitle());
             System.out.println("ReturnURL : " + result.getReturnURL());
             System.out.println("tokenType : " + result.getTokenType());
+            System.out.println("deviceOSType : " + result.getDeviceOSType());
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("Scheme : " + result.getScheme());
             System.out.println("AppUseYN : " + result.getAppUseYN());

@@ -9,8 +9,8 @@ import org.junit.Test;
 
 public class TEST_Identity {
 
-    private final String testLinkID = "TESTER";
-    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
+    private final String testLinkID = "BKAKAO";
+    private final String testSecretKey = "egkxYN99ZObjLa3c0nr9/riG+a0VDkZu87LSGR8c37U=";
     private NavercertService navercertService;
     private String clientCode = "023060000088";
 
@@ -22,7 +22,7 @@ public class TEST_Identity {
         service.setUseStaticIP(false);
         service.setUseLocalTimeYN(true);
         service.setAuthURL("https://dev-auth.linkhub.kr");
-        service.setServiceURL("http://localhost:8080");
+        service.setServiceURL("https://bc-api.linkhub.kr");
         navercertService = service;
     }
 
