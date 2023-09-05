@@ -49,18 +49,18 @@ public class TEST_Sign {
             request.setToken(navercertService.encrypt("전자서명 단건 테스트 데이터"));
             // 서명 원문 유형
             // TEXT - 일반 텍스트, HASH - HASH 데이터
-            request.setTokenType(navercertService.encrypt("TEXT"));
+            request.setTokenType("TEXT");
 
 
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);
 
-            // ApptoApp 인증방식에서 사용
+            // AppToApp 인증방식에서 사용
             // 모바일장비 유형('ANDROID', 'IOS'), 대문자 입력(대소문자 구분)
             //request.setDeviceOSType("ANDROID");
 
-            // App to App 방식 이용시, 호출할 URL
+            // AppToApp 방식 이용시, 호출할 URL
             // request.setReturnURL("navercert://sign");
 
             SignReceipt result = navercertService.requestSign(clientCode, request);
@@ -80,7 +80,7 @@ public class TEST_Sign {
     public void TEST_GetSignStatus() throws BarocertException {
         try {
 
-            SignStatus result = navercertService.getSignStatus(clientCode, "02308230230600000880000000000030");
+            SignStatus result = navercertService.getSignStatus(clientCode, "02309050230600000880000000000008");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -107,7 +107,7 @@ public class TEST_Sign {
     public void TEST_VerifySign() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간 이내에만 요청가능 합니다.
-            SignResult result = navercertService.verifySign(clientCode, "02308230230600000880000000000024");
+            SignResult result = navercertService.verifySign(clientCode, "02309050230600000880000000000008");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
@@ -154,35 +154,35 @@ public class TEST_Sign {
             // 개별 요청 정보 객체
             MultiSignTokens token = new MultiSignTokens();
             // 인증요청 메시지 제목 - 최대 40자
-            token.setTokenType(navercertService.encrypt("TEXT"));
+            token.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
             request.addToken(token);
 
             MultiSignTokens token2 = new MultiSignTokens();
             // 인증요청 메시지 제목 - 최대 40자
-            token2.setTokenType(navercertService.encrypt("TEXT"));
+            token2.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token2.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
             request.addToken(token2);
             
             MultiSignTokens token3 = new MultiSignTokens();
             // 인증요청 메시지 제목 - 최대 40자
-            token3.setTokenType(navercertService.encrypt("TEXT"));
+            token3.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token3.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
             request.addToken(token3);
             
             MultiSignTokens token4 = new MultiSignTokens();
             // 인증요청 메시지 제목 - 최대 40자
-            token4.setTokenType(navercertService.encrypt("TEXT"));
+            token4.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token4.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
             request.addToken(token4);
             
             MultiSignTokens token5 = new MultiSignTokens();
             // 인증요청 메시지 제목 - 최대 40자
-            token5.setTokenType(navercertService.encrypt("TEXT"));
+            token5.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token5.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
             request.addToken(token5);
@@ -191,13 +191,12 @@ public class TEST_Sign {
             // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);
 
-
-            // ApptoApp 인증방식에서 사용
+            // AppToApp 인증방식에서 사용
             // 모바일장비 유형('ANDROID', 'IOS'), 대문자 입력(대소문자 구분)
-            // request.setDeviceOSType("ANDROID");
+             request.setDeviceOSType("IOS");
 
-            // App to App 방식 이용시, 에러시 호출할 URL
-            // request.setReturnURL("navercert://Sign");
+            // AppToApp 방식 이용시, 에러시 호출할 URL
+             request.setReturnURL("navercert://sign");
 
             MultiSignReceipt result = navercertService.requestMultiSign(clientCode, request);
 
@@ -215,7 +214,7 @@ public class TEST_Sign {
     @Test
     public void TEST_GetMultiSignStatus() throws BarocertException {
         try {
-            MultiSignStatus result = navercertService.getMultiSignStatus(clientCode, "02308250230600000880000000000003");
+            MultiSignStatus result = navercertService.getMultiSignStatus(clientCode, "02309050230600000880000000000007");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -225,7 +224,7 @@ public class TEST_Sign {
             System.out.println("CallCenterNum : " + result.getCallCenterNum());
             System.out.println("ReqTitle : " + result.getReqTitle());
             System.out.println("ReturnURL : " + result.getReturnURL());
-            System.out.println("tokenType : " + result.getTokenType());
+            System.out.println("tokenTypes : " + result.getTokenTypes());
             System.out.println("deviceOSType : " + result.getDeviceOSType());
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("Scheme : " + result.getScheme());
@@ -242,7 +241,7 @@ public class TEST_Sign {
     public void TEST_VerifyMultiSign() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간 이내에만 요청가능 합니다.
-            MultiSignResult result = navercertService.verifyMultiSign(clientCode, "02308250230600000880000000000003");
+            MultiSignResult result = navercertService.verifyMultiSign(clientCode, "02309050230600000880000000000007");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

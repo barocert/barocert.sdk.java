@@ -9,8 +9,8 @@ import org.junit.Test;
 
 public class TEST_Identity {
 
-    private final String testLinkID = "BKAKAO";
-    private final String testSecretKey = "egkxYN99ZObjLa3c0nr9/riG+a0VDkZu87LSGR8c37U=";
+    private final String testLinkID = "TESTER";
+    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
     private NavercertService navercertService;
     private String clientCode = "023060000088";
 
@@ -21,8 +21,6 @@ public class TEST_Identity {
         service.setIPRestrictOnOff(false);
         service.setUseStaticIP(false);
         service.setUseLocalTimeYN(true);
-        service.setAuthURL("https://dev-auth.linkhub.kr");
-        service.setServiceURL("https://bc-api.linkhub.kr");
         navercertService = service;
     }
 
@@ -35,26 +33,26 @@ public class TEST_Identity {
             Identity request = new Identity();
 
             // 수신자 휴대폰번호 - 11자 (하이픈 제외)
-            request.setReceiverHP(navercertService.encrypt("01012341234"));
+            request.setReceiverHP(navercertService.encrypt("01054437896"));
             // 수신자 성명 - 80자
-            request.setReceiverName(navercertService.encrypt("홍길동"));
+            request.setReceiverName(navercertService.encrypt("최상혁"));
             // 수신자 생년월일 - 8자 (yyyyMMdd)
-            request.setReceiverBirthday(navercertService.encrypt("19700101"));
+            request.setReceiverBirthday(navercertService.encrypt("19880301"));
 
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
-            request.setExpireIn(1);
+            request.setExpireIn(1000);
 
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);
 
-            // ApptoApp 인증방식에서 사용
+            // AppToApp 인증방식에서 사용
             // 모바일장비 유형('ANDROID', 'IOS'), 대문자 입력(대소문자 구분)
             // request.setDeviceOSType("ANDROID");
 
-            // App to App 방식 이용시, 호출할 URL
+            // AppToApp 방식 이용시, 호출할 URL
             // request.setReturnURL("navercert://Identity");
 
             IdentityReceipt result = navercertService.requestIdentity(clientCode, request);
@@ -73,7 +71,7 @@ public class TEST_Identity {
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {
-            IdentityStatus result = navercertService.getIdentityStatus(clientCode, "02308230230600000880000000000035");
+            IdentityStatus result = navercertService.getIdentityStatus(clientCode, "02309050230600000880000000000010");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -82,7 +80,6 @@ public class TEST_Identity {
             System.out.println("CallCenterName : " + result.getCallCenterName());
             System.out.println("CallCenterNum : " + result.getCallCenterNum());
             System.out.println("ReturnURL : " + result.getReturnURL());
-            System.out.println("RequestDT : " + result.getRequestDT());
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("Scheme : " + result.getScheme());
             System.out.println("AppUseYN : " + result.getAppUseYN());
@@ -98,7 +95,7 @@ public class TEST_Identity {
     public void TEST_VerifyIdentity() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간 이내에만 요청가능 합니다.
-            IdentityResult result = navercertService.verifyIdentity(clientCode, "02308230230600000880000000000035");
+            IdentityResult result = navercertService.verifyIdentity(clientCode, "02309050230600000880000000000010");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

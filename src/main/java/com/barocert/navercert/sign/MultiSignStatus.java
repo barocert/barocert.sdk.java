@@ -1,5 +1,7 @@
 package com.barocert.navercert.sign;
 
+import java.util.List;
+
 public class MultiSignStatus {
 
     private String receiptID;
@@ -10,7 +12,7 @@ public class MultiSignStatus {
     private String callCenterNum;
     private String reqTitle;
     private String returnURL;
-    private String tokenType;
+    private List<String> tokenTypes;
     private String expireDT;
     private String scheme;
     private String deviceOSType;
@@ -80,14 +82,6 @@ public class MultiSignStatus {
         this.returnURL = returnURL;
     }
 
-    public String getTokenType() {
-        return this.tokenType;
-    }
-
-    public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
-    }
-
     public String getExpireDT() {
         return expireDT;
     }
@@ -118,5 +112,13 @@ public class MultiSignStatus {
 
     public void setDeviceOSType(String deviceOSType) {
         this.deviceOSType = deviceOSType;
+    }
+
+    public List<String> getTokenTypes() {
+        return tokenTypes;
+    }
+
+    public void setTokenTypes(List<String> tokenTypes) {
+        this.tokenTypes = tokenTypes;
     }
 }

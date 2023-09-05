@@ -9,7 +9,6 @@ public class IdentityStatus {
     private String callCenterName;
     private String callCenterNum;
     private String returnURL;
-    private String requestDT;
     private String expireDT;
     private String scheme;
     private String deviceOSType;
@@ -69,14 +68,6 @@ public class IdentityStatus {
 
     public void setReturnURL(String returnURL) {
         this.returnURL = returnURL;
-    }
-
-    public String getRequestDT() {
-        return requestDT;
-    }
-
-    public void setRequestDT(String requestDT) {
-        this.requestDT = requestDT;
     }
 
     public String getExpireDT() {
