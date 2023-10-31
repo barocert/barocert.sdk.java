@@ -1,7 +1,9 @@
 package com.barocert.passcert;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.barocert.BarocertException;
 import com.barocert.ServiceImpBase;
@@ -25,8 +27,31 @@ import com.barocert.passcert.sign.SignReceipt;
 import com.barocert.passcert.sign.SignResult;
 import com.barocert.passcert.sign.SignStatus;
 import com.barocert.passcert.sign.SignVerify;
+import kr.co.linkhub.auth.Token;
 
 public class PasscertServiceImp extends ServiceImpBase implements PasscertService {
+    private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
+
+    @Override
+    protected Token findToken(String key) {
+        if (tokenTable.containsKey(key)) return tokenTable.get(key);
+        return null;
+    }
+
+    @Override
+    protected boolean removeToken(String key) {
+        if (tokenTable.containsKey(key)){
+            tokenTable.remove(key);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected Token putToken(String key, Token token) {
+        tokenTable.put(key, token);
+        return token;
+    }
 
     @Override
     protected List<String> getScopes() {

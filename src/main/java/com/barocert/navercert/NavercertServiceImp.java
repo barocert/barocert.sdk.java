@@ -7,11 +7,36 @@ import com.barocert.navercert.identity.IdentityReceipt;
 import com.barocert.navercert.identity.IdentityResult;
 import com.barocert.navercert.identity.IdentityStatus;
 import com.barocert.navercert.sign.*;
+import kr.co.linkhub.auth.Token;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NavercertServiceImp extends ServiceImpBase implements NavercertService {
+    private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
+
+    @Override
+    protected Token findToken(String key) {
+        if (tokenTable.containsKey(key)) return tokenTable.get(key);
+        return null;
+    }
+
+    @Override
+    protected boolean removeToken(String key) {
+        if (tokenTable.containsKey(key)){
+            tokenTable.remove(key);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected Token putToken(String key, Token token) {
+        tokenTable.put(key, token);
+        return token;
+    }
 
     @Override
     protected List<String> getScopes() {
@@ -30,6 +55,7 @@ public class NavercertServiceImp extends ServiceImpBase implements NavercertServ
         if (isNullOrEmpty(identity.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
         if (isNullOrEmpty(identity.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
         if (isNullOrEmpty(identity.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if (isNullOrEmpty(identity.getCallCenterNum())) throw new BarocertException(-99999999, "고객센터 연락처가 입력되지 않았습니다.");
         if (identity.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
 
         String postData = toJsonString(identity);

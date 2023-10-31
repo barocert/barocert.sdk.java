@@ -62,7 +62,6 @@ public abstract class ServiceImpBase {
     private Encryptor encryptor;
 
     private Gson _gsonParser = new Gson();
-    private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
 
     public String getURL() {
         // ServiceURL 값이 설정 되었다면 useStaticIP 설정에 관계없이 serviceURL 우선 적용.
@@ -103,11 +102,15 @@ public abstract class ServiceImpBase {
         return tokenBuilder;
     }
 
+    protected abstract Token findToken(String key);
+    protected abstract boolean removeToken(String key);
+    protected abstract Token putToken(String key, Token token);
+
     private String getSessionToken() throws BarocertException {
         Token token = null;
         Date UTCTime = null;
 
-        if (tokenTable.containsKey(_linkID)) token = tokenTable.get(_linkID);
+        token = findToken(_linkID);
 
         boolean expired = true;
 
@@ -131,8 +134,7 @@ public abstract class ServiceImpBase {
         }
 
         if (expired) {
-            if (tokenTable.containsKey(_linkID))
-                tokenTable.remove(_linkID);
+            removeToken(_linkID);
 
             try {
                 if (isIPRestrictOnOff) { // 인증토큰 발급 IP 제한. 기본값(true)
@@ -140,7 +142,7 @@ public abstract class ServiceImpBase {
                 } else {
                     token = getTokenbuilder().build(null, "*");
                 }
-                tokenTable.put(_linkID, token);
+                putToken(_linkID, token);
             } catch (LinkhubException le) {
                 throw new BarocertException(le);
             }
@@ -174,7 +176,6 @@ public abstract class ServiceImpBase {
      * 
      * @param <T>
      * @param url
-     * @param clientCode
      * @param clazz
      * @return
      * @throws BarocertException
@@ -208,7 +209,6 @@ public abstract class ServiceImpBase {
      * 
      * @param <T>
      * @param url
-     * @param clientCode
      * @param PostData
      * @param clazz
      * @return

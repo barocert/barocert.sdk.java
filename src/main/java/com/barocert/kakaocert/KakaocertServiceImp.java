@@ -1,7 +1,10 @@
 package com.barocert.kakaocert;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.barocert.BarocertException;
 import com.barocert.ServiceImpBase;
 import com.barocert.kakaocert.cms.CMS;
@@ -22,8 +25,32 @@ import com.barocert.kakaocert.sign.SignReceipt;
 import com.barocert.kakaocert.sign.SignStatus;
 import com.barocert.kakaocert.sign.MultiSignResult;
 import com.barocert.kakaocert.sign.SignResult;
+import kr.co.linkhub.auth.Token;
 
 public class KakaocertServiceImp extends ServiceImpBase implements KakaocertService {
+
+    private static final Map<String, Token> tokenTable = new HashMap<String, Token>();
+
+    @Override
+    protected Token findToken(String key) {
+        if (tokenTable.containsKey(key)) return tokenTable.get(key);
+        return null;
+    }
+
+    @Override
+    protected boolean removeToken(String key) {
+        if (tokenTable.containsKey(key)){
+            tokenTable.remove(key);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected Token putToken(String key, Token token) {
+        tokenTable.put(key, token);
+        return token;
+    }
 
     @Override
     protected List<String> getScopes() {
