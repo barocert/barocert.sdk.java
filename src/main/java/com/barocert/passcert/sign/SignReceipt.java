@@ -2,16 +2,16 @@ package com.barocert.passcert.sign;
 
 public class SignReceipt {
 
-    private String receiptId;
+    private String receiptID;
     private String scheme;
     private String marketUrl;
 
     public String getReceiptID() {
-        return this.receiptId;
+        return this.receiptID;
     }
 
-    public void setReceiptID(String receiptId) {
-        this.receiptId = receiptId;
+    public void setReceiptID(String receiptID) {
+        this.receiptID = receiptID;
     }
 
     public String getScheme() {

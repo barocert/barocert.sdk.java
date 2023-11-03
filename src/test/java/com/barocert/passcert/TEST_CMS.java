@@ -43,9 +43,9 @@ public class TEST_CMS {
             // 수신자 생년월일 - 8자 (yyyyMMdd)
             request.setReceiverBirthday(passcertService.encrypt("19700101"));
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("패스써트 출금동의 인증요청 타이틀");
+            request.setReqTitle("출금동의 요청 메시지 제목");
             // 인증요청 메시지 - 최대 500자
-            request.setReqMessage(passcertService.encrypt("패스써트 출금동의 인증요청 내용"));
+            request.setReqMessage(passcertService.encrypt("출금동의 요청 메시지"));
 
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");

@@ -45,15 +45,15 @@ public class TEST_Identity {
             request.setReceiverBirthday(passcertService.encrypt("19700101"));
 
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("본인인증 메시지 제목");
+            request.setReqTitle("본인인증 요청 메시지 제목");
             // 인증요청 메시지 - 최대 500자
-            request.setReqMessage(passcertService.encrypt("본인인증 메시지 내용"));
+            request.setReqMessage(passcertService.encrypt("본인인증 요청 메시지"));
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
             // 서명 원문 - 최대 2,800자 까지 입력가능
-            request.setToken(passcertService.encrypt("서명 원문"));
+            request.setToken(passcertService.encrypt("본인인증 요청 원문"));
             
             // 사용자 동의 필요 여부
             request.setUserAgreementYN(true);

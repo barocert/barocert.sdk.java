@@ -45,19 +45,19 @@ public class TEST_Sign {
             request.setReceiverBirthday(passcertService.encrypt("19700101"));
 
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("패스써트 전자서명 인증요청 타이틀");
+            request.setReqTitle("전자서명 요청 메시지 제목");
             // 인증요청 메시지 - 최대 500자
-            request.setReqMessage(passcertService.encrypt("패스써트 전자서명 인증요청 메시지"));
+            request.setReqMessage(passcertService.encrypt("전자서명 요청 메시지"));
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            request.setToken(passcertService.encrypt("패스써트 전자서명테스트데이터"));
+            request.setToken(passcertService.encrypt("전자서명 요청 원문"));
             // 서명 원문 유형
             // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터, 'URL' - URL 데이터
             // 원본데이터(originalTypeCode, originalURL, originalFormatCode) 입력시 'TEXT'사용 불가
-            request.setTokenType(passcertService.encrypt("URL"));
+            request.setTokenType("URL");
 
             // 사용자 동의 필요 여부
             request.setUserAgreementYN(true);
@@ -83,7 +83,7 @@ public class TEST_Sign {
             // 모바일장비 유형('ANDROID', 'IOS'), 대문자 입력(대소문자 구분)
             // request.setDeviceOSType("IOS");
 
-            SignReceipt result = passcertService.requestSign("023040000001", request);
+            SignReceipt result = passcertService.requestSign("023070000014", request);
 
             // 접수아이디, 앱스킴, 앱다운로드URL 
             System.out.println("ReceiptID : " + result.getReceiptID());
