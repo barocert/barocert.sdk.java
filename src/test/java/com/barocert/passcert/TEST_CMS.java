@@ -22,7 +22,6 @@ public class TEST_CMS {
         service.setSecretKey(testSecretKey);
         service.setIPRestrictOnOff(true);
         service.setUseStaticIP(false);
-        service.setUseLocalTimeYN(true);
         passcertService = service;
     }
 

@@ -17,7 +17,6 @@ public class TEST_Sign {
         service.setSecretKey(testSecretKey);
         service.setIPRestrictOnOff(false);
         service.setUseStaticIP(true);
-        service.setUseLocalTimeYN(true);
         navercertService = service;
     }
 

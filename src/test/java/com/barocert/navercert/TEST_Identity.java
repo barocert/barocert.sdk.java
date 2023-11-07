@@ -20,7 +20,6 @@ public class TEST_Identity {
         service.setSecretKey(testSecretKey);
         service.setIPRestrictOnOff(false);
         service.setUseStaticIP(false);
-        service.setUseLocalTimeYN(true);
         navercertService = service;
     }
 
@@ -33,11 +32,11 @@ public class TEST_Identity {
             Identity request = new Identity();
 
             // 수신자 휴대폰번호 - 11자 (하이픈 제외)
-            request.setReceiverHP(navercertService.encrypt("01054437896"));
+            request.setReceiverHP(navercertService.encrypt("01012341234"));
             // 수신자 성명 - 80자
-            request.setReceiverName(navercertService.encrypt("최상혁"));
+            request.setReceiverName(navercertService.encrypt("홍길동"));
             // 수신자 생년월일 - 8자 (yyyyMMdd)
-            request.setReceiverBirthday(navercertService.encrypt("19880301"));
+            request.setReceiverBirthday(navercertService.encrypt("19700101"));
 
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");

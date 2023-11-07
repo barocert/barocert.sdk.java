@@ -21,7 +21,6 @@ public class TEST_Identity {
         service.setSecretKey(testSecretKey);
         service.setIPRestrictOnOff(true);
         service.setUseStaticIP(false);
-        service.setUseLocalTimeYN(true);
         kakaocertService = service;
     }
 
