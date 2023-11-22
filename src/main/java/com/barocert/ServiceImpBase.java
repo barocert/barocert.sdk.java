@@ -16,9 +16,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.zip.GZIPInputStream;
 
@@ -425,7 +423,15 @@ public abstract class ServiceImpBase {
 
             try {
                 errorIs = httpURLConnection.getErrorStream();
-                result = fromStream(errorIs);
+                
+                if (null != httpURLConnection.getContentEncoding()
+                    && httpURLConnection.getContentEncoding()
+                                        .equals("gzip")) {
+                    result = fromGzipStream(errorIs);
+                } else {
+                    result = fromStream(errorIs);
+                }
+
                 error = fromJsonString(result, ErrorResponse.class);
             } catch (Exception ignored) {
                 throw new BarocertException(-99999999, "Barocert parseResponse func InputStream Exception", ignored);
