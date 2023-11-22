@@ -46,7 +46,7 @@ public class TEST_Sign {
             // 수신자 생년월일 - 8자 (yyyyMMdd)
             request.setReceiverBirthday(kakaocertService.encrypt("19700101"));
 
-            // 인증요청 메시지 제목 - 최대 40자
+            // 서명 요청 제목 - 최대 40자
             request.setSignTitle("전자서명(단건) 서명 요청 제목");
             // 상세 설명 - 최대 500자
             request.setExtraMessage(kakaocertService.encrypt("전자서명(단건) 상세 설명"));
