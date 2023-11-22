@@ -6,6 +6,7 @@ public class CMS {
 	private String receiverName;
 	private String receiverBirthday;
 	private String reqTitle;
+	private String extraMessage;
 	private Integer expireIn;
 	private String returnURL;	
 	private String requestCorp;
@@ -46,6 +47,14 @@ public class CMS {
 
 	public void setReqTitle(String reqTitle) {
 		this.reqTitle = reqTitle;
+	}
+
+	public String getExtraMessage() {
+		return this.extraMessage;
+	}
+
+	public void setExtraMessage(String extraMessage) {
+		this.extraMessage = extraMessage;
 	}
 
 	public Integer getExpireIn() {

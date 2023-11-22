@@ -6,6 +6,7 @@ public class Identity {
     private String receiverName;
     private String receiverBirthday;
     private String reqTitle;
+    private String extraMessage;
     private Integer expireIn;
     private String token;
     private String returnURL;
@@ -37,6 +38,14 @@ public class Identity {
 
     public String getReqTitle() {
         return reqTitle;
+    }
+
+    public String getExtraMessage() {
+        return this.extraMessage;
+    }
+
+    public void setExtraMessage(String extraMessage) {
+        this.extraMessage = extraMessage;
     }
 
     public void setReqTitle(String reqTitle) {

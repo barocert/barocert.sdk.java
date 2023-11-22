@@ -9,7 +9,7 @@ public class TEST_Sign {
     private final String testLinkID = "TESTER";
     private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
     private NavercertService navercertService;
-    private String clientCode = "023060000088";
+    private String clientCode = "023090000021";
 
     public TEST_Sign() {
         NavercertServiceImp service = new NavercertServiceImp();
@@ -36,16 +36,16 @@ public class TEST_Sign {
             request.setReceiverBirthday(navercertService.encrypt("19700101"));
 
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("전자서명단건테스트");
+            request.setReqTitle("전자서명(단건) 요청 메시지 제목");
 
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
             // 인증요청 메시지 - 최대 500자
-            request.setReqMessage(navercertService.encrypt("전자서명 인증요청 메시지"));
+            request.setReqMessage(navercertService.encrypt("전자서명(단건) 요청 메시지"));
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            request.setToken(navercertService.encrypt("전자서명 단건 테스트 데이터"));
+            request.setToken(navercertService.encrypt("전자서명(단건) 요청 원문"));
             // 서명 원문 유형
             // TEXT - 일반 텍스트, HASH - HASH 데이터
             request.setTokenType("TEXT");
@@ -141,49 +141,54 @@ public class TEST_Sign {
             request.setReceiverBirthday(navercertService.encrypt("19700101"));
 
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("전자서명(복수)");
+            request.setReqTitle("전자서명(복수) 메시지 제목");
             // 고객센터 연락처 - 최대 12자
             request.setCallCenterNum("1600-9854");
             // 인증요청 메시지 - 최대 500자
-            request.setReqMessage(navercertService.encrypt("전자서명 인증요청 메시지"));
+            request.setReqMessage(navercertService.encrypt("전자서명(복수) 요청 메시지"));
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
 
-            // 개별문서 등록 - 최대 20 건
+            // 개별문서 등록 - 최대 50 건
             // 개별 요청 정보 객체
             MultiSignTokens token = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
+            // 서명 원문 유형
+            // TEXT - 일반 텍스트, HASH - HASH 데이터
             token.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 1"));
             request.addToken(token);
 
             MultiSignTokens token2 = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
+            // 서명 원문 유형
+            // TEXT - 일반 텍스트, HASH - HASH 데이터
             token2.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token2.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token2.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 2"));
             request.addToken(token2);
             
             MultiSignTokens token3 = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
+            // 서명 원문 유형
+            // TEXT - 일반 텍스트, HASH - HASH 데이터
             token3.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token3.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token3.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 3"));
             request.addToken(token3);
             
             MultiSignTokens token4 = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
+            // 서명 원문 유형
+            // TEXT - 일반 텍스트, HASH - HASH 데이터
             token4.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token4.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token4.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 4"));
             request.addToken(token4);
             
             MultiSignTokens token5 = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
+            // 서명 원문 유형
+            // TEXT - 일반 텍스트, HASH - HASH 데이터
             token5.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token5.setToken(navercertService.encrypt("본 계약서는 네이버써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token5.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 5"));
             request.addToken(token5);
 
             // AppToApp 인증요청 여부
@@ -192,10 +197,10 @@ public class TEST_Sign {
 
             // AppToApp 인증방식에서 사용
             // 모바일장비 유형('ANDROID', 'IOS'), 대문자 입력(대소문자 구분)
-             request.setDeviceOSType("IOS");
+            // request.setDeviceOSType("IOS");
 
             // AppToApp 방식 이용시, 에러시 호출할 URL
-             request.setReturnURL("navercert://sign");
+            // request.setReturnURL("navercert://sign");
 
             MultiSignReceipt result = navercertService.requestMultiSign(clientCode, request);
 

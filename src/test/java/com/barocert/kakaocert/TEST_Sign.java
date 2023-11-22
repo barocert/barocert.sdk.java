@@ -47,11 +47,13 @@ public class TEST_Sign {
             request.setReceiverBirthday(kakaocertService.encrypt("19700101"));
 
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("전자서명단건테스트");
+            request.setSignTitle("전자서명(단건) 서명 요청 제목");
+            // 커스텀 메시지 제목 - 최대 500자
+            request.setExtraMessage(kakaocertService.encrypt("전자서명(단건) 요청 메시지"));
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            request.setToken(kakaocertService.encrypt("전자서명단건테스트데이터"));
+            request.setToken(kakaocertService.encrypt("전자서명(단건) 요청 원문"));
             // 서명 원문 유형
             // TEXT - 일반 텍스트, HASH - HASH 데이터
             request.setTokenType("TEXT");
@@ -80,7 +82,7 @@ public class TEST_Sign {
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
-            SignStatus result = kakaocertService.getSignStatus("023040000001", "02307100230400000010000000000003");
+            SignStatus result = kakaocertService.getSignStatus("023040000001", "02311220230400000010000000000009");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -115,7 +117,7 @@ public class TEST_Sign {
     public void TEST_VerifySign() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
-            SignResult result = kakaocertService.verifySign("023040000001", "02307100230400000010000000000003");
+            SignResult result = kakaocertService.verifySign("023040000001", "02311220230400000010000000000009");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
@@ -145,45 +147,47 @@ public class TEST_Sign {
             request.setReceiverBirthday(kakaocertService.encrypt("19700101"));
 
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("전자서명(복수)");
+            request.setReqTitle("전자서명(복수) 요청 메시지 제목");
+            // 커스텀 메시지 제목 - 최대 500자
+            request.setExtraMessage(kakaocertService.encrypt("전자서명(복수) 요청 메시지"));
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
 
             // 개별문서 등록 - 최대 20 건
             // 개별 요청 정보 객체
             MultiSignTokens token = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
-            token.setReqTitle("계약1");
+            // 서명 요청 제목 - 최대 40자
+            token.setSignTitle("전자서명(복수) 서명 요청 제목 1");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 1"));
             request.addToken(token);
 
             MultiSignTokens token2 = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
-            token2.setReqTitle("계약2");
+            // 서명 요청 제목 - 최대 40자
+            token2.setSignTitle("전자서명(복수) 서명 요청 제목 2");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token2.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token2.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 2"));
             request.addToken(token2);
             
             MultiSignTokens token3 = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
-            token3.setReqTitle("계약3");
+            // 서명 요청 제목 - 최대 40자
+            token3.setSignTitle("전자서명(복수) 서명 요청 제목 3");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token3.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token3.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 3"));
             request.addToken(token3);
             
             MultiSignTokens token4 = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
-            token4.setReqTitle("계약4");
+            // 서명 요청 제목 - 최대 40자
+            token4.setSignTitle("전자서명(복수) 서명 요청 제목 4");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token4.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token4.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 4"));
             request.addToken(token4);
             
             MultiSignTokens token5 = new MultiSignTokens();
-            // 인증요청 메시지 제목 - 최대 40자
-            token5.setReqTitle("계약5");
+            // 서명 요청 제목 - 최대 40자
+            token5.setSignTitle("전자서명(복수) 서명 요청 제목 5");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            token5.setToken(kakaocertService.encrypt("본 계약서는 카카오써트의 서비스 이용을 신청하며 이하 내용에 동의 합니다."));
+            token5.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 5"));
             request.addToken(token5);
             
             // 서명 원문 유형
@@ -214,7 +218,7 @@ public class TEST_Sign {
     @Test
     public void TEST_GetMultiSignStatus() throws BarocertException {
         try {
-            MultiSignStatus result = kakaocertService.getMultiSignStatus("023040000001", "02307100230400000010000000000004");
+            MultiSignStatus result = kakaocertService.getMultiSignStatus("023040000001", "02311220230400000010000000000010");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -249,7 +253,7 @@ public class TEST_Sign {
     public void TEST_VerifyMultiSign() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
-            MultiSignResult result = kakaocertService.verifyMultiSign("023040000001", "02307100230400000010000000000004");
+            MultiSignResult result = kakaocertService.verifyMultiSign("023040000001", "02311220230400000010000000000010");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

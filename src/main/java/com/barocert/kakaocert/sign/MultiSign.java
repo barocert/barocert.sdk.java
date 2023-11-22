@@ -9,6 +9,7 @@ public class MultiSign {
     private String receiverName;
     private String receiverBirthday;
     private String reqTitle;
+    private String extraMessage;
     private Integer expireIn;
 
     private List<MultiSignTokens> tokens = new ArrayList<MultiSignTokens>();
@@ -47,6 +48,14 @@ public class MultiSign {
 
     public void setReqTitle(String reqTitle) {
         this.reqTitle = reqTitle;
+    }
+
+    public String getExtraMessage() {
+        return this.extraMessage;
+    }
+
+    public void setExtraMessage(String extraMessage) {
+        this.extraMessage = extraMessage;
     }
 
     public Integer getExpireIn() {

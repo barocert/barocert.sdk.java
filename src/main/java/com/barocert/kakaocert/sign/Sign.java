@@ -6,6 +6,8 @@ public class Sign {
     private String receiverName;
     private String receiverBirthday;
     private String reqTitle;
+    private String signTitle;
+    private String extraMessage;
     private Integer expireIn;
     private String token;
     private String tokenType;
@@ -42,6 +44,22 @@ public class Sign {
 
     public void setReqTitle(String reqTitle) {
         this.reqTitle = reqTitle;
+    }
+
+    public String getSignTitle() {
+        return this.signTitle;
+    }
+
+    public void setSignTitle(String signTitle) {
+        this.signTitle = signTitle;
+    }
+
+    public String getExtraMessage() {
+        return this.extraMessage;
+    }
+
+    public void setExtraMessage(String extraMessage) {
+        this.extraMessage = extraMessage;
     }
 
     public Integer getExpireIn() {

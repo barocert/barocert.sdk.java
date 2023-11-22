@@ -122,7 +122,7 @@ public class KakaocertServiceImp extends ServiceImpBase implements KakaocertServ
         if (isNullOrEmpty(sign.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
-        if (isNullOrEmpty(sign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (isNullOrEmpty(sign.getSignTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
         if (sign.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getToken())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
         if (isNullOrEmpty(sign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
@@ -179,7 +179,7 @@ public class KakaocertServiceImp extends ServiceImpBase implements KakaocertServ
         if (isNullOrEmpty(multiSign.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         if (isNullOrEmpty(multiSign.getReqTitle())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
         if (multiSign.getExpireIn() == null ) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
-        if (isNullorEmptyTitle(multiSign.getTokens())) throw new BarocertException(-99999999, "인증요청 메시지 제목이 입력되지 않았습니다.");
+        if (isNullorEmptyTitle(multiSign.getTokens())) throw new BarocertException(-99999999, "서명 요청 제목이 입력되지 않았습니다.");
         if (isNullorEmptyToken(multiSign.getTokens())) throw new BarocertException(-99999999, "토큰 원문이 입력되지 않았습니다.");
         if (isNullOrEmpty(multiSign.getTokenType())) throw new BarocertException(-99999999, "원문 유형이 입력되지 않았습니다.");
 
@@ -304,7 +304,7 @@ public class KakaocertServiceImp extends ServiceImpBase implements KakaocertServ
         if(list.isEmpty()) return true;
         for(MultiSignTokens multiSignToken : list) {
             if(multiSignToken == null) return true;
-            if(isNullOrEmpty(multiSignToken.getReqTitle())) return true;
+            if(isNullOrEmpty(multiSignToken.getSignTitle())) return true;
         }
         return false;
     }

@@ -1,7 +1,5 @@
 package com.barocert.navercert.sign;
 
-import java.util.List;
-
 public class SignResult {
 
     private String receiptID;

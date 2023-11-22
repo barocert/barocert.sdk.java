@@ -9,6 +9,7 @@ public class SignStatus {
     private String callCenterName;
     private String callCenterNum;
     private String reqTitle;
+    private String signTitle;
     private String authCategory;
     private String returnURL;
     private String tokenType;
@@ -74,6 +75,14 @@ public class SignStatus {
 
     public void setReqTitle(String reqTitle) {
         this.reqTitle = reqTitle;
+    }
+
+    public String getSignTitle() {
+        return this.signTitle;
+    }
+
+    public void setSignTitle(String signTitle) {
+        this.signTitle = signTitle;
     }
 
     public String getAuthCategory() {

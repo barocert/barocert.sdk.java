@@ -11,7 +11,7 @@ import com.barocert.kakaocert.identity.IdentityResult;
 public class TEST_Identity {
 
     private final String testLinkID = "TESTER";
-    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
+    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";;
 
     private KakaocertService kakaocertService;
 
@@ -42,11 +42,13 @@ public class TEST_Identity {
             request.setReceiverBirthday(kakaocertService.encrypt("19700101"));
 
             // 인증요청 메시지 제목 - 최대 40자
-            request.setReqTitle("인증요청 메시지 제목란");
+            request.setReqTitle("본인인증 요청 메시지 제목");
+            // 상세 설명 - 최대 500자
+            request.setExtraMessage(kakaocertService.encrypt("본인인증 상세 설명"));
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
             // 서명 원문 - 최대 2,800자 까지 입력가능
-            request.setToken(kakaocertService.encrypt("본인인증요청토큰"));
+            request.setToken(kakaocertService.encrypt("본인인증 요청 원문"));
 
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식
@@ -72,7 +74,7 @@ public class TEST_Identity {
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {
-            IdentityStatus result = kakaocertService.getIdentityStatus("023040000001", "02307100230400000010000000000002");
+            IdentityStatus result = kakaocertService.getIdentityStatus("023040000001", "02311220230400000010000000000008");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -108,7 +110,7 @@ public class TEST_Identity {
     public void TEST_VerifyIdentity() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
-            IdentityResult result = kakaocertService.verifyIdentity("023040000001", "02307100230400000010000000000002");
+            IdentityResult result = kakaocertService.verifyIdentity("023040000001", "02311220230400000010000000000008");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
