@@ -24,6 +24,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.barocert.crypto.Encryptor;
+import com.barocert.crypto.HASH;
 import com.google.gson.Gson;
 
 import kr.co.linkhub.auth.Base64;
@@ -58,6 +59,7 @@ public abstract class ServiceImpBase {
     private TokenBuilder tokenBuilder;
     
     private Encryptor encryptor;
+    private HASH hash;
 
     private Gson _gsonParser = new Gson();
 
@@ -481,6 +483,15 @@ public abstract class ServiceImpBase {
     public String encrypt(String plainText, String algorithm) throws BarocertException {
         setupEncryptor();
         return encryptor.enc(plainText, algorithm);
+    }
+
+    private void setupHASH() throws BarocertException {
+        if(hash == null) this.hash = new HASH();
+    }
+
+    public String sha256(String target) throws BarocertException {
+        setupHASH();
+        return hash.sha256(target);
     }
 
     public String getServiceURL() {
