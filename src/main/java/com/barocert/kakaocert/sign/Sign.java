@@ -38,10 +38,12 @@ public class Sign {
         this.receiverBirthday = receiverBirthday;
     }
 
+    @Deprecated
     public String getReqTitle() {
         return reqTitle;
     }
 
+    @Deprecated
     public void setReqTitle(String reqTitle) {
         this.reqTitle = reqTitle;
     }

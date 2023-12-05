@@ -5,20 +5,13 @@ public class IdentityStatus {
     private String receiptID;
     private String clientCode;
     private int state;
-    @Deprecated
     private int expireIn;
-    @Deprecated
     private String callCenterName;
-    @Deprecated
     private String callCenterNum;
-    @Deprecated
     private String returnURL;
     private String expireDT;
-    @Deprecated
     private String scheme;
-    @Deprecated
     private String deviceOSType;
-    @Deprecated
     private boolean appUseYN;
 
     public String getReceiptID() {

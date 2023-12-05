@@ -5,33 +5,21 @@ public class LoginStatus {
     private String clientCode;
     private String receiptID;
     private int state;
-    @Deprecated
     private int expireIn;
-    @Deprecated
     private String callCenterName;
-    @Deprecated
     private String callCenterNum;
-    @Deprecated
     private String reqTitle;
-    @Deprecated
     private String reqMessage;
     private String requestDT;
     private String completeDT;
     private String expireDT;
     private String rejectDT;
-    @Deprecated
     private String tokenType;
-    @Deprecated
     private boolean userAgreementYN;
-    @Deprecated
     private boolean receiverInfoYN;
-    @Deprecated
     private String telcoType;
-    @Deprecated
     private String deviceOSType;
-    @Deprecated
     private String scheme;
-    @Deprecated
     private boolean appUseYN;
 
     public String getClientCode() {

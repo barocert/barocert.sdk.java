@@ -6,10 +6,12 @@ public class MultiSignTokens {
     private String signTitle;
     private String token;
 
+    @Deprecated
     public String getReqTitle() {
         return reqTitle;
     }
 
+    @Deprecated
     public void setReqTitle(String reqTitle) {
         this.reqTitle = reqTitle;
     }

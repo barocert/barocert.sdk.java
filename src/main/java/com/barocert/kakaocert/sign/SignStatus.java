@@ -5,31 +5,20 @@ public class SignStatus {
     private String receiptID;
     private String clientCode;
     private int state;
-    @Deprecated
     private int expireIn;
-    @Deprecated
     private String callCenterName;
-    @Deprecated
     private String callCenterNum;
-    @Deprecated
     private String reqTitle;
-    @Deprecated
     private String signTitle;
-    @Deprecated
     private String authCategory;
-    @Deprecated
     private String returnURL;
-    @Deprecated
     private String tokenType;
-    @Deprecated
     private String requestDT;
     private String viewDT;
     private String completeDT;
     private String expireDT;
     private String verifyDT;
-    @Deprecated
     private String scheme;
-    @Deprecated
     private boolean appUseYN;
 
     public String getReceiptID() {
