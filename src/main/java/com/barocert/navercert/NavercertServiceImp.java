@@ -6,7 +6,19 @@ import com.barocert.navercert.identity.Identity;
 import com.barocert.navercert.identity.IdentityReceipt;
 import com.barocert.navercert.identity.IdentityResult;
 import com.barocert.navercert.identity.IdentityStatus;
-import com.barocert.navercert.sign.*;
+import com.barocert.navercert.sign.Sign;
+import com.barocert.navercert.sign.SignReceipt;
+import com.barocert.navercert.sign.SignResult;
+import com.barocert.navercert.sign.SignStatus;
+import com.barocert.navercert.sign.MultiSign;
+import com.barocert.navercert.sign.MultiSignTokens;
+import com.barocert.navercert.sign.MultiSignReceipt;
+import com.barocert.navercert.sign.MultiSignResult;
+import com.barocert.navercert.sign.MultiSignStatus;
+import com.barocert.navercert.cms.CMS;
+import com.barocert.navercert.cms.CMSReceipt;
+import com.barocert.navercert.cms.CMSResult;
+import com.barocert.navercert.cms.CMSStatus;
 import kr.co.linkhub.auth.Token;
 
 import java.util.Arrays;
@@ -40,7 +52,7 @@ public class NavercertServiceImp extends ServiceImpBase implements NavercertServ
 
     @Override
     protected List<String> getScopes() {
-        return Arrays.asList("421", "422", "423");
+        return Arrays.asList("421", "422", "423", "424");
     }
 
     // 본인인증 서명요청
@@ -208,6 +220,58 @@ public class NavercertServiceImp extends ServiceImpBase implements NavercertServ
         String postData = toJsonString("");
 
         return httpPost("/NAVER/MultiSign/" + clientCode + "/" + receiptID, postData, MultiSignResult.class);
+    }
+
+    // 출금동의 서명요청
+    @Override
+    public CMSReceipt requestCMS(String clientCode, CMS cms) throws BarocertException {
+
+        // 필수 값 체크.
+        if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
+        if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
+        if (cms == null) throw new BarocertException(-99999999, "출금동의 서명요청 정보가 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getReceiverHP())) throw new BarocertException(-99999999, "수신자 휴대폰번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getReceiverName())) throw new BarocertException(-99999999, "수신자 성명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getCallCenterNum())) throw new BarocertException(-99999999, "고객센터 연락처가 입력되지 않았습니다.");
+        if (cms.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
+
+        String postData = toJsonString(cms);
+
+        return httpPost("/NAVER/CMS/" + clientCode, postData, CMSReceipt.class);
+    }
+
+    // 출금동의 상태확인
+    @Override
+    public CMSStatus getCMSStatus(String clientCode, String receiptID) throws BarocertException {
+
+        // 필수 값 체크.
+        if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
+        if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
+        if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+        if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
+        if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
+
+        return httpGet("/NAVER/CMS/" + clientCode + "/" + receiptID, CMSStatus.class);
+    }
+
+    // 출금동의 서명검증
+    @Override
+    public CMSResult verifyCMS(String clientCode, String receiptID) throws BarocertException {
+
+        // 필수 값 체크.
+        if (isNullOrEmpty(clientCode)) throw new BarocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+        if (false == clientCode.matches("^\\d+$")) throw new BarocertException(-99999999, "이용기관코드는 숫자만 입력할 수 있습니다.");
+        if (clientCode.length() != 12) throw new BarocertException(-99999999, "이용기관코드는 12자 입니다.");
+        if (isNullOrEmpty(receiptID)) throw new BarocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+        if (false == receiptID.matches("^\\d+$")) throw new BarocertException(-99999999, "접수아이디는 숫자만 입력할 수 있습니다.");
+        if (receiptID.length() != 32) throw new BarocertException(-99999999, "접수아이디는 32자 입니다.");
+
+        String postData = toJsonString("");
+
+        return httpPost("/NAVER/CMS/" + clientCode + "/" + receiptID, postData, CMSResult.class);
     }
 
     private boolean isNullOrEmpty(String string) {

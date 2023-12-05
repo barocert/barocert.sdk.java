@@ -77,7 +77,7 @@ public class TEST_CMS {
             // 모바일장비 유형('ANDROID', 'IOS'), 대문자 입력(대소문자 구분)
             // request.setDeviceOSType("IOS");
             
-            CMSReceipt result = passcertService.requestCMS("023040000001", request);
+            CMSReceipt result = passcertService.requestCMS("023070000014", request);
 
             // 접수아이디, 앱스킴, 앱다운로드URL 
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -98,27 +98,15 @@ public class TEST_CMS {
     @Test
     public void TEST_GetCMSStatus() throws BarocertException {
         try {
-            CMSStatus result = passcertService.getCMSStatus("023040000001", "02307100230400000010000000000006");
+            CMSStatus result = passcertService.getCMSStatus("023070000014", "02307100230700000140000000000006");
 
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("ExpireIn : " + result.getExpireIn()); // 단위: 초(s)
-            System.out.println("CallCenterName : " + result.getCallCenterName());
-            System.out.println("CallCenterNum : " + result.getCallCenterNum());
-            System.out.println("ReqTitle : " + result.getReqTitle());
-            System.out.println("ReqMessage : " + result.getReqMessage());
             System.out.println("RequestDT : " + result.getRequestDT());
             System.out.println("CompleteDT : " + result.getCompleteDT());
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("RejectDT : " + result.getRejectDT());
-            System.out.println("TokenType : " + result.getTokenType());
-            System.out.println("UserAgreementYN : " + result.getUserAgreementYN());
-            System.out.println("ReceiverInfoYN : " + result.getReceiverInfoYN());
-            System.out.println("TelcoType : " + result.getTelcoType()); // 통신사 유형('SKT', 'KT', 'LGU')
-            System.out.println("DeviceOSType : " + result.getDeviceOSType()); // 모바일장비 유형('ANDROID'
-            System.out.println("Scheme : " + result.getScheme());
-            System.out.println("AppUseYN : " + result.getAppUseYN());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
@@ -141,7 +129,7 @@ public class TEST_CMS {
             // 검증 요청자 성명 - 최대 80자
             request.setReceiverName(passcertService.encrypt("홍길동"));
 
-            CMSResult result = passcertService.verifyCMS("023040000001", "02307100230400000010000000000006", request);
+            CMSResult result = passcertService.verifyCMS("023070000014", "02307100230700000140000000000006", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4),미처리(5)

@@ -5,7 +5,18 @@ import com.barocert.navercert.identity.Identity;
 import com.barocert.navercert.identity.IdentityReceipt;
 import com.barocert.navercert.identity.IdentityResult;
 import com.barocert.navercert.identity.IdentityStatus;
-import com.barocert.navercert.sign.*;
+import com.barocert.navercert.sign.Sign;
+import com.barocert.navercert.sign.SignReceipt;
+import com.barocert.navercert.sign.SignResult;
+import com.barocert.navercert.sign.SignStatus;
+import com.barocert.navercert.sign.MultiSign;
+import com.barocert.navercert.sign.MultiSignReceipt;
+import com.barocert.navercert.sign.MultiSignResult;
+import com.barocert.navercert.sign.MultiSignStatus;
+import com.barocert.navercert.cms.CMS;
+import com.barocert.navercert.cms.CMSReceipt;
+import com.barocert.navercert.cms.CMSResult;
+import com.barocert.navercert.cms.CMSStatus;
 
 public interface NavercertService {
 	
@@ -126,6 +137,45 @@ public interface NavercertService {
 	 */
 	public MultiSignResult verifyMultiSign(String clientCode, String receiptID) throws BarocertException;
 	
+	/**
+	 * 출금동의 요청
+	 * 
+	 * @param clientCode
+	 * 			이용기관코드
+	 * @param cms
+	 * 			출금동의 요청정보
+	 * @return ResponseVerify
+	 * 			출금동의 요청 응답정보
+	 * @throws BarocertException
+	 */
+	public CMSReceipt requestCMS(String clientCode, CMS cms) throws BarocertException;
+	
+	/**
+	 * 출금동의 상태확인
+	 * 
+	 * @param clientCode
+	 * 			이용기관코드
+	 * @param receiptID
+	 * 			출금동의 접수아이디
+	 * @return ResponseCMSStatus
+	 * 			출금동의 상태확인 응답정보
+	 * @throws BarocertException
+	 */
+	public CMSStatus getCMSStatus(String clientCode, String receiptID) throws BarocertException;
+	
+	/**
+	 * 출금동의 서명검증
+	 * 
+	 * @param clientCode
+	 * 			이용기관코드
+	 * @param receiptID
+	 * 			출금동의 접수아이디
+	 * @return CMSResult
+	 * 			출금동의 서명검증 응답정보
+	 * @throws BarocertException
+	 */
+	public CMSResult verifyCMS(String clientCode, String receiptID) throws BarocertException;
+
 	public String encrypt(String plainText) throws BarocertException;
 
 }

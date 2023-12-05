@@ -1,7 +1,15 @@
 package com.barocert.navercert;
 
 import com.barocert.BarocertException;
-import com.barocert.navercert.sign.*;
+import com.barocert.navercert.sign.Sign;
+import com.barocert.navercert.sign.SignReceipt;
+import com.barocert.navercert.sign.SignResult;
+import com.barocert.navercert.sign.SignStatus;
+import com.barocert.navercert.sign.MultiSign;
+import com.barocert.navercert.sign.MultiSignTokens;
+import com.barocert.navercert.sign.MultiSignReceipt;
+import com.barocert.navercert.sign.MultiSignResult;
+import com.barocert.navercert.sign.MultiSignStatus;
 import org.junit.Test;
 
 public class TEST_Sign {
@@ -20,8 +28,10 @@ public class TEST_Sign {
         navercertService = service;
     }
 
-    // 전자서명 서명요청(단건)
-    // https://developers.barocert.com/reference/naver/java/sign/api-single#RequestSign
+    /*
+     * 네이버 이용자에게 단건(1건) 문서의 전자서명을 요청합니다.
+     * https://developers.barocert.com/reference/naver/java/sign/api-single#RequestSign
+     */
     @Test
     public void TEST_RequestSign() throws BarocertException {
         try {
@@ -60,6 +70,7 @@ public class TEST_Sign {
             //request.setDeviceOSType("ANDROID");
 
             // AppToApp 방식 이용시, 호출할 URL
+            // "http", "https"등의 웹프로토콜 사용 불가
             // request.setReturnURL("navercert://sign");
 
             SignReceipt result = navercertService.requestSign(clientCode, request);
@@ -73,8 +84,10 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 상태확인(단건)
-    // https://developers.barocert.com/reference/naver/java/sign/api-single#GetSignStatus
+    /*
+     * 전자서명(단건) 요청 후 반환받은 접수아이디로 인증 진행 상태를 확인합니다.
+     * https://developers.barocert.com/reference/naver/java/sign/api-single#GetSignStatus
+     */
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
@@ -84,24 +97,19 @@ public class TEST_Sign {
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("ExpireIn : " + result.getExpireIn());
-            System.out.println("CallCenterName : " + result.getCallCenterName());
-            System.out.println("CallCenterNum : " + result.getCallCenterNum());
-            System.out.println("ReqTitle : " + result.getReqTitle());
-            System.out.println("ReturnURL : " + result.getReturnURL());
-            System.out.println("tokenType : " + result.getTokenType());
-            System.out.println("deviceOSType : " + result.getDeviceOSType());
             System.out.println("ExpireDT : " + result.getExpireDT());
-            System.out.println("Scheme : " + result.getScheme());
-            System.out.println("AppUseYN : " + result.getAppUseYN());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
         }
     }
 
-    // 전자서명 서명검증(단건)
-    // https://developers.barocert.com/reference/naver/java/sign/api-single#VerifySign
+    /*
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 네이버 보안정책에 따라 검증 API는 1회만 호출할 수 있습니다. 재시도시 오류가 반환됩니다.
+     * 전자서명 만료일시 이후에 검증 API를 호출하면 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/naver/java/sign/api-single#VerifySign
+     */
     @Test
     public void TEST_VerifySign() throws BarocertException {
         try {
@@ -125,8 +133,10 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 서명요청(복수)
-    // https://developers.barocert.com/reference/naver/java/sign/api-multi#RequestMultiSign
+    /*
+     * 네이버 이용자에게 복수(최대 50건) 문서의 전자서명을 요청합니다.
+     * https://developers.barocert.com/reference/naver/java/sign/api-multi#RequestMultiSign
+     */
     @Test
     public void TEST_RequestMultiSign() throws BarocertException {
         try {
@@ -200,6 +210,7 @@ public class TEST_Sign {
             // request.setDeviceOSType("IOS");
 
             // AppToApp 방식 이용시, 에러시 호출할 URL
+            // "http", "https"등의 웹프로토콜 사용 불가
             // request.setReturnURL("navercert://sign");
 
             MultiSignReceipt result = navercertService.requestMultiSign(clientCode, request);
@@ -213,8 +224,10 @@ public class TEST_Sign {
         }
     }
 
-    // 전자서명 상태확인(복수)
-    // https://developers.barocert.com/reference/naver/java/sign/api-multi#GetMultiSignStatus
+    /*
+     * 전자서명(복수) 요청 후 반환받은 접수아이디로 인증 진행 상태를 확인합니다.
+     * https://developers.barocert.com/reference/naver/java/sign/api-multi#GetMultiSignStatus
+     */
     @Test
     public void TEST_GetMultiSignStatus() throws BarocertException {
         try {
@@ -223,24 +236,19 @@ public class TEST_Sign {
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("ExpireIn : " + result.getExpireIn());
-            System.out.println("CallCenterName : " + result.getCallCenterName());
-            System.out.println("CallCenterNum : " + result.getCallCenterNum());
-            System.out.println("ReqTitle : " + result.getReqTitle());
-            System.out.println("ReturnURL : " + result.getReturnURL());
-            System.out.println("tokenTypes : " + result.getTokenTypes());
-            System.out.println("deviceOSType : " + result.getDeviceOSType());
             System.out.println("ExpireDT : " + result.getExpireDT());
-            System.out.println("Scheme : " + result.getScheme());
-            System.out.println("AppUseYN : " + result.getAppUseYN());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
         }
     }
 
-    // 전자서명 서명검증(복수)
-    // https://developers.barocert.com/reference/naver/java/sign/api-multi#VerifyMultiSign
+    /*
+     * 완료된 전자서명을 검증하고 전자서명값(signedData)을 반환 받습니다.
+     * 네이버 보안정책에 따라 검증 API는 1회만 호출할 수 있습니다. 재시도시 오류가 반환됩니다.
+     * 전자서명 만료일시 이후에 검증 API를 호출하면 오류가 반환됩니다.
+     * https://developers.barocert.com/reference/naver/java/sign/api-multi#VerifyMultiSign
+     */
     @Test
     public void TEST_VerifyMultiSign() throws BarocertException {
         try {

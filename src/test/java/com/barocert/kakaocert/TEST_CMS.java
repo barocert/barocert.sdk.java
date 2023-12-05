@@ -91,20 +91,11 @@ public class TEST_CMS {
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("ExpireIn : " + result.getExpireIn());
-            System.out.println("CallCenterName : " + result.getCallCenterName());
-            System.out.println("CallCenterNum : " + result.getCallCenterNum());
-            System.out.println("ReqTitle : " + result.getReqTitle());
-            System.out.println("AuthCategory : " + result.getAuthCategory());
-            System.out.println("ReturnURL : " + result.getReturnURL());
-            System.out.println("tokenType : " + result.getTokenType());
             System.out.println("RequestDT : " + result.getRequestDT());
             System.out.println("ViewDT : " + result.getViewDT());
             System.out.println("CompleteDT : " + result.getCompleteDT());
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("VerifyDT : " + result.getVerifyDT());
-            System.out.println("Scheme : " + result.getScheme());
-            System.out.println("AppUseYN : " + result.getAppUseYN());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());

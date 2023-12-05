@@ -93,22 +93,10 @@ public class TEST_Login {
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
-            System.out.println("ExpireIn : " + result.getExpireIn()); // 단위: 초(s)
-            System.out.println("CallCenterName : " + result.getCallCenterName());
-            System.out.println("CallCenterNum : " + result.getCallCenterNum());
-            System.out.println("ReqTitle : " + result.getReqTitle());
-            System.out.println("ReqMessage : " + result.getReqMessage());
             System.out.println("RequestDT : " + result.getRequestDT());
             System.out.println("CompleteDT : " + result.getCompleteDT());
             System.out.println("ExpireDT : " + result.getExpireDT());
             System.out.println("RejectDT : " + result.getRejectDT());
-            System.out.println("TokenType : " + result.getTokenType());
-            System.out.println("UserAgreementYN : " + result.getUserAgreementYN());
-            System.out.println("ReceiverInfoYN : " + result.getReceiverInfoYN());
-            System.out.println("TelcoType : " + result.getTelcoType()); // 통신사 유형('SKT', 'KT', 'LGU')
-            System.out.println("DeviceOSType : " + result.getDeviceOSType()); // 모바일장비 유형('ANDROID', 'IOS')
-            System.out.println("Scheme : " + result.getScheme());
-            System.out.println("AppUseYN : " + result.getAppUseYN());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
