@@ -40,6 +40,10 @@ public class Base64 {
         return new String(result);
     }
 
+    public static String urlEncode(byte[] input) {
+        return encode(input).replace("+", "-").replace("/", "_").replace("=", "");
+    }
+
     private static final byte[] decodeTable = new byte[128];
     private static final byte PADDING = 127;
 

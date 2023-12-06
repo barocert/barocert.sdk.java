@@ -12,7 +12,7 @@ public class HASH {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(target.getBytes());
 
-			sha256EncodedData = Base64.encode(md.digest()).replace("+", "-").replace("/", "_").replace("=", "");
+			sha256EncodedData = Base64.urlEncode(md.digest());
 		} catch (Exception e) {
 			throw new BarocertException(-99999999, "해시 생성에 실패하였습니다.");
 		}
