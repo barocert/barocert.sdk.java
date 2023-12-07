@@ -236,6 +236,11 @@ public class NavercertServiceImp extends ServiceImpBase implements NavercertServ
         if (isNullOrEmpty(cms.getReceiverBirthday())) throw new BarocertException(-99999999, "생년월일이 입력되지 않았습니다.");
         if (isNullOrEmpty(cms.getCallCenterNum())) throw new BarocertException(-99999999, "고객센터 연락처가 입력되지 않았습니다.");
         if (cms.getExpireIn() == null) throw new BarocertException(-99999999, "만료시간이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getRequestCorp())) throw new BarocertException(-99999999, "청구기관명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankName())) throw new BarocertException(-99999999, "은행명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankAccountNum())) throw new BarocertException(-99999999, "계좌번호가 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankAccountName())) throw new BarocertException(-99999999, "예금주명이 입력되지 않았습니다.");
+        if (isNullOrEmpty(cms.getBankAccountBirthday()))throw new BarocertException(-99999999, "예금주 생년월일이 입력되지 않았습니다.");
 
         String postData = toJsonString(cms);
 
