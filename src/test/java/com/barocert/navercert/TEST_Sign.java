@@ -54,13 +54,16 @@ public class TEST_Sign {
             request.setExpireIn(1000);
             // 인증요청 메시지 - 최대 500자
             request.setReqMessage(navercertService.encrypt("전자서명(단건) 요청 메시지"));
-            // 서명 원문 - 원문 2,800자 까지 입력가능
-            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
-            request.setToken(navercertService.encrypt("전자서명(단건) 요청 원문"));
             // 서명 원문 유형
             // TEXT - 일반 텍스트, HASH - HASH 데이터
             request.setTokenType("TEXT");
-
+            // 서명 원문 - 원문 2,800자 까지 입력가능
+            request.setToken(navercertService.encrypt("전자서명(단건) 요청 원문"));
+            // 서명 원문 유형
+            // request.setTokenType("HASH");
+            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // request.setToken(navercertService.encrypt(navercertService.sha256("전자서명(단건) 요청 원문")));
+            
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);
@@ -163,47 +166,62 @@ public class TEST_Sign {
             // 개별 요청 정보 객체
             MultiSignTokens token = new MultiSignTokens();
             // 서명 원문 유형
-            // TEXT - 일반 텍스트, HASH - HASH 데이터
+            // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터
             token.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
             token.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 1"));
+            // 서명 원문 유형
+            // token.setTokenType("HASH");
+            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // token.setToken(navercertService.encrypt(navercertService.sha256("전자서명(복수) 요청 원문 1")));
             request.addToken(token);
 
             MultiSignTokens token2 = new MultiSignTokens();
             // 서명 원문 유형
-            // TEXT - 일반 텍스트, HASH - HASH 데이터
+            // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터
             token2.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
             token2.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 2"));
+            // 서명 원문 유형
+            // token2.setTokenType("HASH");
+            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // token2.setToken(navercertService.encrypt(navercertService.sha256("전자서명(복수) 요청 원문 2")));
             request.addToken(token2);
             
             MultiSignTokens token3 = new MultiSignTokens();
             // 서명 원문 유형
-            // TEXT - 일반 텍스트, HASH - HASH 데이터
+            // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터
             token3.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
             token3.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 3"));
+            // 서명 원문 유형
+            // token3.setTokenType("HASH");
+            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // token3.setToken(navercertService.encrypt(navercertService.sha256("전자서명(복수) 요청 원문 3")));
             request.addToken(token3);
             
             MultiSignTokens token4 = new MultiSignTokens();
             // 서명 원문 유형
-            // TEXT - 일반 텍스트, HASH - HASH 데이터
+            // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터
             token4.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
             token4.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 4"));
+            // 서명 원문 유형
+            // token4.setTokenType("HASH");
+            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // token4.setToken(navercertService.encrypt(navercertService.sha256("전자서명(복수) 요청 원문 4")));
             request.addToken(token4);
             
             MultiSignTokens token5 = new MultiSignTokens();
             // 서명 원문 유형
-            // TEXT - 일반 텍스트, HASH - HASH 데이터
+            // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터
             token5.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
-            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
             token5.setToken(navercertService.encrypt("전자서명(복수) 요청 원문 5"));
+            // 서명 원문 유형
+            // token5.setTokenType("HASH");
+            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // token5.setToken(navercertService.encrypt(navercertService.sha256("전자서명(복수) 요청 원문 5")));
             request.addToken(token5);
 
             // AppToApp 인증요청 여부
