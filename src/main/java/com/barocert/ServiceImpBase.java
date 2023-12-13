@@ -489,9 +489,9 @@ public abstract class ServiceImpBase {
         if(hash == null) this.hash = new HASH();
     }
 
-    public String sha256(String target) throws BarocertException {
+    public String sha256_base64url(String target) throws BarocertException {
         setupHASH();
-        return hash.sha256(target);
+        return hash.sha256ToBase64url(target);
     }
 
     public String getServiceURL() {

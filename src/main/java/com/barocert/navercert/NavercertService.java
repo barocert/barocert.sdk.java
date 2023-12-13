@@ -178,5 +178,5 @@ public interface NavercertService {
 
 	public String encrypt(String plainText) throws BarocertException;
 	
-	public String sha256(String tartget) throws BarocertException;
+	public String sha256_base64url(String tartget) throws BarocertException;
 }
