@@ -52,7 +52,7 @@ public class TEST_CMS {
             request.setRequestCorp(kakaocertService.encrypt("주식회사 링크허브"));
             // 출금은행명 - 최대 100자
             request.setBankName(kakaocertService.encrypt("국민은행"));
-            // 출금계좌번호 - 최대 32자
+            // 출금계좌번호 - 최대 31자
             request.setBankAccountNum(kakaocertService.encrypt("9-****-5117-58"));
             // 출금계좌 예금주명 - 최대 100자
             request.setBankAccountName(kakaocertService.encrypt("홍길동"));

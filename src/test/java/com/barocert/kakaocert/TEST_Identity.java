@@ -47,7 +47,7 @@ public class TEST_Identity {
             request.setExtraMessage(kakaocertService.encrypt("본인인증 커스텀 메시지"));
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
-            // 서명 원문 - 최대 2,800자 까지 입력가능
+            // 서명 원문 - 최대 40자 까지 입력가능
             request.setToken(kakaocertService.encrypt("본인인증 요청 원문"));
 
             // AppToApp 인증요청 여부
