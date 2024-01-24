@@ -85,11 +85,11 @@ public class CMS {
 		this.userAgreementYN = userAgreementYN;
 	}
 
-	public boolean getReceiverInfoYN() {
+	public Boolean getReceiverInfoYN() {
         return this.receiverInfoYN;
     }
 
-    public void setReceiverInfoYN(boolean receiverInfoYN) {
+    public void setReceiverInfoYN(Boolean receiverInfoYN) {
         this.receiverInfoYN = receiverInfoYN;
     }
 
