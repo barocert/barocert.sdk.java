@@ -12,7 +12,7 @@ public class Sign {
     private String token;
     private String tokenType;
     private boolean userAgreementYN;
-    private boolean receiverInfoYN;
+    private Boolean receiverInfoYN;
     private String originalTypeCode;
     private String originalURL;
     private String originalFormatCode;

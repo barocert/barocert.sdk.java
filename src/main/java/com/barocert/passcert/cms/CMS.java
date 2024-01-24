@@ -10,7 +10,7 @@ public class CMS {
 	private String callCenterNum;
 	private Integer expireIn;
 	private boolean userAgreementYN;
-	private boolean receiverInfoYN;
+	private Boolean receiverInfoYN;
 	private String bankName;
 	private String bankAccountNum;
 	private String bankAccountName;

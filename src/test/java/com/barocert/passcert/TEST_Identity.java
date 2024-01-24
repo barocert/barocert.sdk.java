@@ -68,7 +68,7 @@ public class TEST_Identity {
             // 모바일장비 유형('ANDROID', 'IOS'), 대문자 입력(대소문자 구분)
             // request.setDeviceOSType("IOS");
 
-            IdentityReceipt result = passcertService.requestIdentity("023040000001", request);
+            IdentityReceipt result = passcertService.requestIdentity("023070000014", request);
 
             // 접수아이디, 앱스킴, 앱다운로드URL 
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -89,7 +89,7 @@ public class TEST_Identity {
     @Test
     public void TEST_GetIdentityStatus() throws BarocertException {
         try {                                                                                               
-            IdentityStatus result = passcertService.getIdentityStatus("023040000001", "02307100230400000010000000000004");
+            IdentityStatus result = passcertService.getIdentityStatus("023070000014", "02307100230700000140000000000004");
 
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -114,14 +114,14 @@ public class TEST_Identity {
     @Test
     public void TEST_VerifyIdentity() throws BarocertException {
         try {
-            // 서명검증 요청 정보 객체
-            IdentityVerify request = new IdentityVerify();
-            // 서명검증 요청 휴대폰번호 - 11자 (하이픈 제외)
-            request.setReceiverHP(passcertService.encrypt("01012341234")); 
-            // 서명검증 요청 성명 - 최대 80자
-            request.setReceiverName(passcertService.encrypt("홍길동")); 
+            // 검증 요청 정보 객체
+            IdentityVerify verify = new IdentityVerify();
+            // 검증 요청자 휴대폰번호 - 11자 (하이픈 제외)
+            verify.setReceiverHP(passcertService.encrypt("01012341234")); 
+            // 검증 요청자 성명 - 최대 80자
+            verify.setReceiverName(passcertService.encrypt("홍길동"));
             
-            IdentityResult result = passcertService.verifyIdentity("023040000001", "02307100230400000010000000000004", request);
+            IdentityResult result = passcertService.verifyIdentity("023070000014", "02307100230700000140000000000004", verify);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4),미처리(5)

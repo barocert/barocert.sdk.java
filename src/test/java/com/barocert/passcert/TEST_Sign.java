@@ -103,7 +103,7 @@ public class TEST_Sign {
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
-            SignStatus result = passcertService.getSignStatus("023040000001", "02307100230400000010000000000005");
+            SignStatus result = passcertService.getSignStatus("023070000014", "02307100230700000140000000000005");
 
             System.out.println("ClientCode : " + result.getClientCode());
             System.out.println("ReceiptID : " + result.getReceiptID());
@@ -128,13 +128,13 @@ public class TEST_Sign {
     public void TEST_VerifySign() throws BarocertException {
         try {
             // 검증 요청 정보 객체
-            SignVerify request = new SignVerify();
+            SignVerify verify = new SignVerify();
             // 검증 요청자 휴대폰번호 - 11자 (하이픈 제외)
-            request.setReceiverHP(passcertService.encrypt("01012341234")); 
+            verify.setReceiverHP(passcertService.encrypt("01012341234")); 
             // 검증 요청자 성명 - 최대 80자
-            request.setReceiverName(passcertService.encrypt("홍길동"));
+            verify.setReceiverName(passcertService.encrypt("홍길동"));
 
-            SignResult result = passcertService.verifySign("023040000001", "02307100230400000010000000000005", request);
+            SignResult result = passcertService.verifySign("023070000014", "02307100230700000140000000000005", verify);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4),미처리(5)

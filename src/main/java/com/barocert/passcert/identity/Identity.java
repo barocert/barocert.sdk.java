@@ -10,7 +10,7 @@ public class Identity {
     private Integer expireIn;
     private String token;
     private boolean userAgreementYN;
-    private boolean receiverInfoYN;
+    private Boolean receiverInfoYN;
     private String telcoType;
     private String deviceOSType;
     private boolean appUseYN;

@@ -123,13 +123,13 @@ public class TEST_CMS {
     public void TEST_VerifyCMS() throws BarocertException {
         try {
              // 검증 요청 정보 객체
-            CMSVerify request = new CMSVerify(); 
+            CMSVerify verify = new CMSVerify(); 
             // 검증 요청자 휴대폰번호 - 11자 (하이픈 제외)
-            request.setReceiverHP(passcertService.encrypt("01012341234")); 
+            verify.setReceiverHP(passcertService.encrypt("01012341234")); 
             // 검증 요청자 성명 - 최대 80자
-            request.setReceiverName(passcertService.encrypt("홍길동"));
+            verify.setReceiverName(passcertService.encrypt("홍길동"));
 
-            CMSResult result = passcertService.verifyCMS("023070000014", "02307100230700000140000000000006", request);
+            CMSResult result = passcertService.verifyCMS("023070000014", "02307100230700000140000000000006", verify);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4),미처리(5)
