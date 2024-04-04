@@ -114,6 +114,10 @@ public class TEST_Sign {
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
             System.out.println("SignedData : " + result.getSignedData());
             System.out.println("Ci : " + result.getCi());
+            System.out.println("ReceiverName : " + result.getReceiverName());
+            System.out.println("ReceiverYear : " + result.getReceiverYear());
+            System.out.println("ReceiverDay : " + result.getReceiverDay());
+            System.out.println("ReceiverHP : " + result.getReceiverHP());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
@@ -244,6 +248,10 @@ public class TEST_Sign {
                 System.out.println("MultiSignedData " + i + " : " + result.getMultiSignedData().get(i));
 
             System.out.println("Ci : " + result.getCi());
+            System.out.println("ReceiverName : " + result.getReceiverName());
+            System.out.println("ReceiverYear : " + result.getReceiverYear());
+            System.out.println("ReceiverDay : " + result.getReceiverDay());
+            System.out.println("ReceiverHP : " + result.getReceiverHP());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
