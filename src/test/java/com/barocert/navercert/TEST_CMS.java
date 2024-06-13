@@ -18,7 +18,7 @@ public class TEST_CMS {
         NavercertServiceImp service = new NavercertServiceImp();
         service.setLinkID(testLinkID);
         service.setSecretKey(testSecretKey);
-        service.setIPRestrictOnOff(false);
+        service.setIPRestrictOnOff(true);
         service.setUseStaticIP(false);
         navercertService = service;
     }

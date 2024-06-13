@@ -25,7 +25,7 @@ public class TEST_Sign {
         service.setLinkID(testLinkID);
         service.setSecretKey(testSecretKey);
         service.setIPRestrictOnOff(true);
-        service.setUseStaticIP(true);
+        service.setUseStaticIP(false);
         kakaocertService = service;
     }
 
