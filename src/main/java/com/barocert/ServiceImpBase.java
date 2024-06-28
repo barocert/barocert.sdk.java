@@ -489,9 +489,15 @@ public abstract class ServiceImpBase {
         if(hash == null) this.hash = new HASH();
     }
 
+    @Deprecated
     public String sha256_base64url(String target) throws BarocertException {
         setupHASH();
         return hash.sha256ToBase64url(target);
+    }
+
+    public String sha256_base64url_file(byte[] target) throws BarocertException {
+        setupHASH();
+        return hash.sha256ToBase64urlFileFrom(target);
     }
 
     public String getServiceURL() {

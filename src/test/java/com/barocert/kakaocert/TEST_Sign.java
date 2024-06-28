@@ -1,5 +1,9 @@
 package com.barocert.kakaocert;
 
+import com.barocert.crypto.Filez;
+import com.barocert.crypto.HASH;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import org.junit.Test;
 
 import com.barocert.BarocertException;
@@ -16,7 +20,7 @@ import com.barocert.kakaocert.sign.SignResult;
 public class TEST_Sign {
 
     private final String testLinkID = "TESTER";
-    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
+    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";;
 
     private KakaocertService kakaocertService;
 
@@ -34,7 +38,7 @@ public class TEST_Sign {
      * https://developers.barocert.com/reference/kakao/java/sign/api-single#RequestSign
      */
     @Test
-    public void TEST_RequestSign() throws BarocertException {
+    public void TEST_RequestSign() throws BarocertException, FileNotFoundException {
         try {
             // 전자서명 요청 정보 객체
             Sign request = new Sign();
@@ -52,11 +56,16 @@ public class TEST_Sign {
             request.setExtraMessage(kakaocertService.encrypt("전자서명(단건) 커스텀 메시지"));
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
+            // 서명 원문 유형
+            // TEXT - 일반 텍스트, HASH - HASH 데이터, PDF - PDF 데이터
+            request.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             request.setToken(kakaocertService.encrypt("전자서명(단건) 요청 원문"));
             // 서명 원문 유형
-            // TEXT - 일반 텍스트, HASH - HASH 데이터
-            request.setTokenType("TEXT");
+            // request.setTokenType("PDF");
+            // 서명 원문 유형이 PDF인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // byte[] target = Filez.fileToBytesFrom("barocert.pdf");
+            // request.setToken(kakaocertService.encrypt(kakaocertService.sha256_base64url_file(target)));
 
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식
@@ -65,7 +74,7 @@ public class TEST_Sign {
             // App to App 방식 이용시, 호출할 URL
             // request.setReturnURL("https://www.kakaocert.com");
 
-            SignReceipt result = kakaocertService.requestSign("023040000001", request);
+            SignReceipt result = kakaocertService.requestSign("024050000038", request);
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("Scheme : " + result.getScheme());
@@ -82,7 +91,7 @@ public class TEST_Sign {
     @Test
     public void TEST_GetSignStatus() throws BarocertException {
         try {
-            SignStatus result = kakaocertService.getSignStatus("023040000001", "02311220230400000010000000000009");
+            SignStatus result = kakaocertService.getSignStatus("023040000001", "02406280230400000010000000000002");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -108,7 +117,7 @@ public class TEST_Sign {
     public void TEST_VerifySign() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간(10분)이내에만 요청가능 합니다.
-            SignResult result = kakaocertService.verifySign("023040000001", "02311220230400000010000000000009");
+            SignResult result = kakaocertService.verifySign("023040000001", "02406280230400000010000000000002");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)
@@ -129,7 +138,7 @@ public class TEST_Sign {
      * https://developers.barocert.com/reference/kakao/java/sign/api-multi#RequestMultiSign
      */
     @Test
-    public void TEST_RequestMultiSign() throws BarocertException {
+    public void TEST_RequestMultiSign() throws BarocertException, FileNotFoundException {
         try {
             // 전자서명 요청 정보 객체
             MultiSign request = new MultiSign();
@@ -148,6 +157,12 @@ public class TEST_Sign {
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
 
+            // 서명 원문 유형
+            // TEXT - 일반 텍스트, HASH - HASH 데이터, PDF - PDF 데이터
+            request.setTokenType("TEXT");
+            // 서명 원문 유형
+            // request.setTokenType("PDF");
+
             // 개별문서 등록 - 최대 20 건
             // 개별 요청 정보 객체
             MultiSignTokens token = new MultiSignTokens();
@@ -155,6 +170,9 @@ public class TEST_Sign {
             token.setSignTitle("전자서명(복수) 서명 요청 제목 1");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 1"));
+            // 서명 원문 유형이 PDF인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // byte[] target = Filez.fileToBytesFrom("barocert.pdf");
+            // token.setToken(kakaocertService.encrypt(kakaocertService.sha256_base64url_file(target)));
             request.addToken(token);
 
             MultiSignTokens token2 = new MultiSignTokens();
@@ -162,6 +180,9 @@ public class TEST_Sign {
             token2.setSignTitle("전자서명(복수) 서명 요청 제목 2");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token2.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 2"));
+            // 서명 원문 유형이 PDF인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // byte[] target = Filez.fileToBytesFrom("barocert.pdf");
+            // token2.setToken(kakaocertService.encrypt(kakaocertService.sha256_base64url_file(target)));
             request.addToken(token2);
             
             MultiSignTokens token3 = new MultiSignTokens();
@@ -169,6 +190,9 @@ public class TEST_Sign {
             token3.setSignTitle("전자서명(복수) 서명 요청 제목 3");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token3.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 3"));
+            // 서명 원문 유형이 PDF인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // byte[] target = Filez.fileToBytesFrom("barocert.pdf");
+            // token3.setToken(kakaocertService.encrypt(kakaocertService.sha256_base64url_file(target)));
             request.addToken(token3);
             
             MultiSignTokens token4 = new MultiSignTokens();
@@ -176,6 +200,9 @@ public class TEST_Sign {
             token4.setSignTitle("전자서명(복수) 서명 요청 제목 4");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token4.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 4"));
+            // 서명 원문 유형이 PDF인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // byte[] target = Filez.fileToBytesFrom("barocert.pdf");
+            // token4.setToken(kakaocertService.encrypt(kakaocertService.sha256_base64url_file(target)));
             request.addToken(token4);
             
             MultiSignTokens token5 = new MultiSignTokens();
@@ -183,12 +210,11 @@ public class TEST_Sign {
             token5.setSignTitle("전자서명(복수) 서명 요청 제목 5");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             token5.setToken(kakaocertService.encrypt("전자서명(복수) 요청 메시지 원문 5"));
+            // 서명 원문 유형이 PDF인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // byte[] target = Filez.fileToBytesFrom("barocert.pdf");
+            // token5.setToken(kakaocertService.encrypt(kakaocertService.sha256_base64url_file(target)));
             request.addToken(token5);
             
-            // 서명 원문 유형
-            // TEXT - 일반 텍스트, HASH - HASH 데이터
-            request.setTokenType("TEXT");
-
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);

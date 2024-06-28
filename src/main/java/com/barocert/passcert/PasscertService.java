@@ -212,4 +212,5 @@ public interface PasscertService {
      */
 	public String encrypt(String plainText, String algorithm) throws BarocertException;
 
+	public String sha256_base64url_file(byte[] target) throws BarocertException;
 }

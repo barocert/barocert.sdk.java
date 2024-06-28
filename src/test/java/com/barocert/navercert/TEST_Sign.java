@@ -1,6 +1,8 @@
 package com.barocert.navercert;
 
 import com.barocert.BarocertException;
+import com.barocert.crypto.Filez;
+import com.barocert.crypto.HASH;
 import com.barocert.navercert.sign.Sign;
 import com.barocert.navercert.sign.SignReceipt;
 import com.barocert.navercert.sign.SignResult;
@@ -10,6 +12,10 @@ import com.barocert.navercert.sign.MultiSignTokens;
 import com.barocert.navercert.sign.MultiSignReceipt;
 import com.barocert.navercert.sign.MultiSignResult;
 import com.barocert.navercert.sign.MultiSignStatus;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import org.junit.Test;
 
 public class TEST_Sign {
@@ -33,7 +39,7 @@ public class TEST_Sign {
      * https://developers.barocert.com/reference/naver/java/sign/api-single#RequestSign
      */
     @Test
-    public void TEST_RequestSign() throws BarocertException {
+    public void TEST_RequestSign() throws BarocertException, FileNotFoundException {
         try {
             // 전자서명 요청 정보 객체
             Sign request = new Sign();
@@ -55,15 +61,16 @@ public class TEST_Sign {
             // 인증요청 메시지 - 최대 500자
             request.setReqMessage(navercertService.encrypt("전자서명(단건) 요청 메시지"));
             // 서명 원문 유형
-            // TEXT - 일반 텍스트, HASH - HASH 데이터
+            // TEXT - 일반 텍스트, HASH - HASH 데이터, PDF - PDF 데이터
             request.setTokenType("TEXT");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             request.setToken(navercertService.encrypt("전자서명(단건) 요청 원문"));
             // 서명 원문 유형
-            // request.setTokenType("HASH");
-            // 서명 원문 유형이 HASH인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
-            // request.setToken(navercertService.encrypt(navercertService.sha256_base64url("전자서명(단건) 요청 원문")));
-            
+            // request.setTokenType("PDF");
+            // 서명 원문 유형이 PDF인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // byte[] target = Filez.fileToBytesFrom("barocert.pdf");
+            // request.setToken(navercertService.encrypt(navercertService.sha256_base64url_file(target)));
+
             // AppToApp 인증요청 여부
             // true - AppToApp 인증방식, false - Talk Message 인증방식
             request.setAppUseYN(false);
@@ -95,7 +102,7 @@ public class TEST_Sign {
     public void TEST_GetSignStatus() throws BarocertException {
         try {
 
-            SignStatus result = navercertService.getSignStatus(clientCode, "02309050230600000880000000000008");
+            SignStatus result = navercertService.getSignStatus(clientCode, "02406260230900000210000000000001");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("ClientCode : " + result.getClientCode());
@@ -117,7 +124,7 @@ public class TEST_Sign {
     public void TEST_VerifySign() throws BarocertException {
         try {
             // 검증하기 API는 완료된 전자서명 요청당 1회만 요청 가능하며, 사용자가 서명을 완료후 유효시간 이내에만 요청가능 합니다.
-            SignResult result = navercertService.verifySign(clientCode, "02309050230600000880000000000008");
+            SignResult result = navercertService.verifySign(clientCode, "02406260230900000210000000000001");
 
             System.out.println("ReceiptID : " + result.getReceiptID());
             System.out.println("State : " + result.getState()); // 대기(0),완료(1),만료(2),거절(3),실패(4)

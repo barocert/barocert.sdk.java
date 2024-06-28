@@ -177,6 +177,9 @@ public interface NavercertService {
 	public CMSResult verifyCMS(String clientCode, String receiptID) throws BarocertException;
 
 	public String encrypt(String plainText) throws BarocertException;
-	
-	public String sha256_base64url(String tartget) throws BarocertException;
+
+	@Deprecated
+	public String sha256_base64url(String target) throws BarocertException;
+	public String sha256_base64url_file(byte[] target) throws BarocertException;
+
 }

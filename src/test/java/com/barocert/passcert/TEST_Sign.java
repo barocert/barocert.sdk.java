@@ -1,5 +1,9 @@
 package com.barocert.passcert;
 
+import com.barocert.crypto.Filez;
+import com.barocert.crypto.HASH;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import org.junit.Test;
 
 import com.barocert.BarocertException;
@@ -31,7 +35,7 @@ public class TEST_Sign {
      * https://developers.barocert.com/reference/pass/java/sign/api#RequestSign
      */
     @Test
-    public void TEST_RequestSign() throws BarocertException {
+    public void TEST_RequestSign() throws BarocertException, FileNotFoundException {
         try {
             // 전자서명 요청 정보 객체
             Sign request = new Sign();
@@ -51,12 +55,18 @@ public class TEST_Sign {
             request.setCallCenterNum("1600-9854");
             // 인증요청 만료시간 - 최대 1,000(초)까지 입력 가능
             request.setExpireIn(1000);
+            // 서명 원문 유형
+            // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터, 'URL' - URL 데이터, 'PDF' - PDF 데이터
+            // 원본데이터(originalTypeCode, originalURL, originalFormatCode) 입력시 'TEXT', 'PDF' 사용 불가
+            request.setTokenType("URL");
             // 서명 원문 - 원문 2,800자 까지 입력가능
             request.setToken(passcertService.encrypt("전자서명 요청 원문"));
+
             // 서명 원문 유형
-            // 'TEXT' - 일반 텍스트, 'HASH' - HASH 데이터, 'URL' - URL 데이터
-            // 원본데이터(originalTypeCode, originalURL, originalFormatCode) 입력시 'TEXT'사용 불가
-            request.setTokenType("URL");
+            // request.setTokenType("PDF");
+            // 서명 원문 유형이 PDF인 경우, 원문은 SHA-256, Base64 URL Safe No Padding을 사용
+            // byte[] target = Filez.fileToBytesFrom("barocert.pdf");
+            // request.setToken(passcertService.encrypt(passcertService.sha256_base64url_file(target)));
 
             // 사용자 동의 필요 여부
             request.setUserAgreementYN(true);

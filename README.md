@@ -6,7 +6,7 @@ BaroCert SDK for JAVA
     <dependency>
         <groupId>kr.co.linkhub</groupId>
         <artifactId>barocert-sdk</artifactId>
-        <version>1.4.0</version>
+        <version>1.4.1</version>
     </dependency>
 
 1. KakaoCert 
@@ -14,7 +14,7 @@ BaroCert SDK for JAVA
   - 전자서명(단건)
   - 전자서명(복수)
   - 출금동의
-  - 간편로그인
+  - 간편로그인`
 
 2. PassCert
   - 본인인증
