@@ -44,6 +44,9 @@ public abstract class ServiceImpBase {
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
 
     private static final TimeZone TIMEZONE = TimeZone.getTimeZone("UTC");
+
+    private static final int READ_TIMEOUT = 1;
+    private static final int CONNECTION_TIMEOUT = 1;
     private String proxyIP;
     private Integer proxyPort;
 
@@ -199,6 +202,8 @@ public abstract class ServiceImpBase {
         httpURLConnection.setRequestProperty("Authorization", "Bearer " + getSessionToken());
         httpURLConnection.setRequestProperty("Accept-Encoding", "gzip");
         httpURLConnection.setRequestProperty("x-bc-version".toLowerCase(), APIVERSION);
+        httpURLConnection.setConnectTimeout(CONNECTION_TIMEOUT * 1000);
+        httpURLConnection.setReadTimeout(READ_TIMEOUT * 1000);
 
         String Result = parseResponse(httpURLConnection);
 
@@ -239,6 +244,8 @@ public abstract class ServiceImpBase {
         httpURLConnection.setRequestProperty("x-bc-date", date);
         httpURLConnection.setRequestProperty("Content-Type", "application/json; charset=utf8");
         httpURLConnection.setRequestProperty("Accept-Encoding", "gzip");
+        httpURLConnection.setConnectTimeout(CONNECTION_TIMEOUT * 1000);
+        httpURLConnection.setReadTimeout(READ_TIMEOUT * 1000);
 
         try {
             httpURLConnection.setRequestMethod("POST");
@@ -273,7 +280,8 @@ public abstract class ServiceImpBase {
                 output.write(btPostData);
                 output.flush();
             } catch (Exception e) {
-                throw new BarocertException(-99999999, "Barocert Fail to POST data to Server.", e);
+//                throw new BarocertException(-99999999, "Barocert Fail to POST data to Server.", e);
+                throw new BarocertException(-99999999, e.getMessage(), e);
             } finally {
                 try {
                     if (output != null)
