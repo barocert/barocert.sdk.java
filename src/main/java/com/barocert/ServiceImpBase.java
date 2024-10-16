@@ -45,8 +45,8 @@ public abstract class ServiceImpBase {
 
     private static final TimeZone TIMEZONE = TimeZone.getTimeZone("UTC");
 
-    private static final int READ_TIMEOUT = 1;
-    private static final int CONNECTION_TIMEOUT = 1;
+    private static final int READ_TIMEOUT = 70;
+    private static final int CONNECTION_TIMEOUT = 70;
     private String proxyIP;
     private Integer proxyPort;
 
