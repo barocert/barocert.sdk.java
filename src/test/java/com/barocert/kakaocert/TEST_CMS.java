@@ -122,6 +122,7 @@ public class TEST_CMS {
             System.out.println("ReceiverYear : " + result.getReceiverYear());
             System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverHP : " + result.getReceiverHP());
+            System.out.println("ReceiverGender : " + result.getReceiverGender());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());

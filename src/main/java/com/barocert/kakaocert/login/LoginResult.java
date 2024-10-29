@@ -10,6 +10,7 @@ public class LoginResult {
     private String receiverYear;
     private String receiverDay;
     private String receiverHP;
+    private String receiverGender;
 
     public String getTxID() {
         return txID;
@@ -74,5 +75,12 @@ public class LoginResult {
     public void setReceiverHP(String receiverHP) {
         this.receiverHP = receiverHP;
     }
-    
+
+    public String getReceiverGender() {
+        return receiverGender;
+    }
+
+    public void setReceiverGender(String receiverGender) {
+        this.receiverGender = receiverGender;
+    }
 }

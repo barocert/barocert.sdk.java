@@ -11,7 +11,7 @@ import com.barocert.kakaocert.identity.IdentityResult;
 public class TEST_Identity {
 
     private final String testLinkID = "TESTER";
-    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";;
+    private final String testSecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=";
 
     private KakaocertService kakaocertService;
 
@@ -111,6 +111,7 @@ public class TEST_Identity {
             System.out.println("ReceiverYear : " + result.getReceiverYear());
             System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverHP : " + result.getReceiverHP());
+            System.out.println("ReceiverGender : " + result.getReceiverGender());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
