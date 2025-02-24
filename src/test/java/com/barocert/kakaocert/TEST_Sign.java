@@ -128,6 +128,8 @@ public class TEST_Sign {
             System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverHP : " + result.getReceiverHP());
             System.out.println("ReceiverGender : " + result.getReceiverGender());
+            System.out.println("ReceiverForeign : " + result.getReceiverForeign());
+            System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());
@@ -280,6 +282,8 @@ public class TEST_Sign {
             System.out.println("ReceiverDay : " + result.getReceiverDay());
             System.out.println("ReceiverHP : " + result.getReceiverHP());
             System.out.println("ReceiverGender : " + result.getReceiverGender());
+            System.out.println("ReceiverForeign : " + result.getReceiverForeign());
+            System.out.println("ReceiverTelcoType : " + result.getReceiverTelcoType());
         } catch (BarocertException be) {
             System.out.println("Code : " + be.getCode());
             System.out.println("Message : " + be.getMessage());

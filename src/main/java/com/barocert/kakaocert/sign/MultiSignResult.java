@@ -15,6 +15,8 @@ public class MultiSignResult {
     private String receiverDay;
     private String receiverHP;
     private String receiverGender;
+    private String receiverForeign;
+    private String receiverTelcoType;
 
     public String getReceiptID() {
         return receiptID;
@@ -87,4 +89,12 @@ public class MultiSignResult {
     public void setReceiverGender(String receiverGender) {
         this.receiverGender = receiverGender;
     }
+
+    public String getReceiverForeign() {return receiverForeign;}
+
+    public void setReceiverForeign(String receiverForeign) {this.receiverForeign = receiverForeign;}
+
+    public String getReceiverTelcoType() {return receiverTelcoType;}
+
+    public void setReceiverTelcoType(String receiverTelcoType) {this.receiverTelcoType = receiverTelcoType;}
 }

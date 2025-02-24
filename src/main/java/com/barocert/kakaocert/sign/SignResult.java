@@ -11,6 +11,8 @@ public class SignResult {
     private String receiverDay;
     private String receiverHP;
     private String receiverGender;
+    private String receiverForeign;
+    private String receiverTelcoType;
 
     public String getReceiptID() {
         return receiptID;
@@ -74,11 +76,17 @@ public class SignResult {
 
     public void setReceiverHP(String receiverHP) {this.receiverHP = receiverHP;}
 
-    public String getReceiverGender() {
-        return receiverGender;
-    }
+    public String getReceiverGender() {return receiverGender;}
 
     public void setReceiverGender(String receiverGender) {
         this.receiverGender = receiverGender;
     }
+
+    public String getReceiverForeign() {return receiverForeign;}
+
+    public void setReceiverForeign(String receiverForeign) {this.receiverForeign = receiverForeign;}
+
+    public String getReceiverTelcoType() {return receiverTelcoType;}
+
+    public void setReceiverTelcoType(String receiverTelcoType) {this.receiverTelcoType = receiverTelcoType;}
 }

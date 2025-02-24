@@ -11,6 +11,8 @@ public class LoginResult {
     private String receiverDay;
     private String receiverHP;
     private String receiverGender;
+    private String receiverForeign;
+    private String receiverTelcoType;
 
     public String getTxID() {
         return txID;
@@ -83,4 +85,12 @@ public class LoginResult {
     public void setReceiverGender(String receiverGender) {
         this.receiverGender = receiverGender;
     }
+
+    public String getReceiverForeign() {return receiverForeign;}
+
+    public void setReceiverForeign(String receiverForeign) {this.receiverForeign = receiverForeign;}
+
+    public String getReceiverTelcoType() {return receiverTelcoType;}
+
+    public void setReceiverTelcoType(String receiverTelcoType) {this.receiverTelcoType = receiverTelcoType;}
 }
